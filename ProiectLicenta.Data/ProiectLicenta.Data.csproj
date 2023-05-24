@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1E86B288-9DA0-4DD8-9E70-1FAC8A862C86}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ProiectLicenta.Data</RootNamespace>
+    <AssemblyName>ProiectLicenta.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.Cryptography.2.1.1\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="MailKit, Version=4.0.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailKit.4.0.0\lib\net47\MailKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="MimeKit, Version=4.0.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeKit.4.0.0\lib\net47\MimeKit.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Migrations\202212171613455_FirstMigration.cs" />
+    <Compile Include="Migrations\202212171613455_FirstMigration.designer.cs">
+      <DependentUpon>202212171613455_FirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212181227304_UserIdStringAndUserDataCourseRelation.cs" />
+    <Compile Include="Migrations\202212181227304_UserIdStringAndUserDataCourseRelation.designer.cs">
+      <DependentUpon>202212181227304_UserIdStringAndUserDataCourseRelation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212181255269_UpdatedChanges.cs" />
+    <Compile Include="Migrations\202212181255269_UpdatedChanges.designer.cs">
+      <DependentUpon>202212181255269_UpdatedChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212181304274_CourseOwnerIdNotRequired.cs" />
+    <Compile Include="Migrations\202212181304274_CourseOwnerIdNotRequired.designer.cs">
+      <DependentUpon>202212181304274_CourseOwnerIdNotRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212181703357_EmailUserData.cs" />
+    <Compile Include="Migrations\202212181703357_EmailUserData.designer.cs">
+      <DependentUpon>202212181703357_EmailUserData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303151652191_VideoFileAdd.cs" />
+    <Compile Include="Migrations\202303151652191_VideoFileAdd.designer.cs">
+      <DependentUpon>202303151652191_VideoFileAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202304051530173_AddChapters.cs" />
+    <Compile Include="Migrations\202304051530173_AddChapters.designer.cs">
+      <DependentUpon>202304051530173_AddChapters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202304171810406_AddSubchapter.cs" />
+    <Compile Include="Migrations\202304171810406_AddSubchapter.designer.cs">
+      <DependentUpon>202304171810406_AddSubchapter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202304190947527_AddTests.cs" />
+    <Compile Include="Migrations\202304190947527_AddTests.designer.cs">
+      <DependentUpon>202304190947527_AddTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202304191200527_AddQuestions.cs" />
+    <Compile Include="Migrations\202304191200527_AddQuestions.designer.cs">
+      <DependentUpon>202304191200527_AddQuestions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305011929154_addAnswers.cs" />
+    <Compile Include="Migrations\202305011929154_addAnswers.designer.cs">
+      <DependentUpon>202305011929154_addAnswers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305031031453_addTestAnswer.cs" />
+    <Compile Include="Migrations\202305031031453_addTestAnswer.designer.cs">
+      <DependentUpon>202305031031453_addTestAnswer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305031615499_ChosenAnswerIdSerialization.cs" />
+    <Compile Include="Migrations\202305031615499_ChosenAnswerIdSerialization.designer.cs">
+      <DependentUpon>202305031615499_ChosenAnswerIdSerialization.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305061241193_AddCourseDeactivationFields.cs" />
+    <Compile Include="Migrations\202305061241193_AddCourseDeactivationFields.designer.cs">
+      <DependentUpon>202305061241193_AddCourseDeactivationFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305071058020_AddReviews.cs" />
+    <Compile Include="Migrations\202305071058020_AddReviews.designer.cs">
+      <DependentUpon>202305071058020_AddReviews.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305071915506_AddCourseReviewSuspension.cs" />
+    <Compile Include="Migrations\202305071915506_AddCourseReviewSuspension.designer.cs">
+      <DependentUpon>202305071915506_AddCourseReviewSuspension.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305101626464_UserDataAndWarningUpdate.cs" />
+    <Compile Include="Migrations\202305101626464_UserDataAndWarningUpdate.designer.cs">
+      <DependentUpon>202305101626464_UserDataAndWarningUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305101630377_UserDataRoleFIeld.cs" />
+    <Compile Include="Migrations\202305101630377_UserDataRoleFIeld.designer.cs">
+      <DependentUpon>202305101630377_UserDataRoleFIeld.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305181038177_IssueRevoled.cs" />
+    <Compile Include="Migrations\202305181038177_IssueRevoled.designer.cs">
+      <DependentUpon>202305181038177_IssueRevoled.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305231636121_AddSubchANDChnumbering.cs" />
+    <Compile Include="Migrations\202305231636121_AddSubchANDChnumbering.designer.cs">
+      <DependentUpon>202305231636121_AddSubchANDChnumbering.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305232032358_CourseImagePath.cs" />
+    <Compile Include="Migrations\202305232032358_CourseImagePath.designer.cs">
+      <DependentUpon>202305232032358_CourseImagePath.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305241122233_AddCourseFile.cs" />
+    <Compile Include="Migrations\202305241122233_AddCourseFile.designer.cs">
+      <DependentUpon>202305241122233_AddCourseFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305241343233_SubChapterfilesCorrection.cs" />
+    <Compile Include="Migrations\202305241343233_SubChapterfilesCorrection.designer.cs">
+      <DependentUpon>202305241343233_SubChapterfilesCorrection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\Chapter.cs" />
+    <Compile Include="Models\SubChapterFiles.cs" />
+    <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\CourseReview.cs" />
+    <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\UserAnswer.cs" />
+    <Compile Include="Models\SubChapter.cs" />
+    <Compile Include="Models\Test.cs" />
+    <Compile Include="Models\UserData.cs" />
+    <Compile Include="Models\Video.cs" />
+    <Compile Include="Models\Warnings.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ApplicationDbContext.cs" />
+    <Compile Include="Services\ISubChapterFilesData.cs" />
+    <Compile Include="Services\IWarningData.cs" />
+    <Compile Include="Services\ICourseReviewData.cs" />
+    <Compile Include="Services\IAnswerData.cs" />
+    <Compile Include="Services\IQuestionData.cs" />
+    <Compile Include="Services\IUserAnswerData.cs" />
+    <Compile Include="Services\ITestData.cs" />
+    <Compile Include="Services\IChapterData.cs" />
+    <Compile Include="Services\ICourseData.cs" />
+    <Compile Include="Services\ISubChapterData.cs" />
+    <Compile Include="Services\IUserData.cs" />
+    <Compile Include="Services\IVideoData.cs" />
+    <Compile Include="Services\SqlChapterData.cs" />
+    <Compile Include="Services\SqlCourseData.cs" />
+    <Compile Include="Services\SqlSubChapterFilesData.cs" />
+    <Compile Include="Services\SqlCourseReviewData.cs" />
+    <Compile Include="Services\SqlQuestionData.cs" />
+    <Compile Include="Services\SqlAnswerData.cs" />
+    <Compile Include="Services\SqlWarningData.cs" />
+    <Compile Include="Services\SqlTestData.cs" />
+    <Compile Include="Services\SqlSubChapterData.cs" />
+    <Compile Include="Services\SqlUserAnswerData.cs" />
+    <Compile Include="Services\SqlUserData.cs" />
+    <Compile Include="Services\SqlVideoData.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202212171613455_FirstMigration.resx">
+      <DependentUpon>202212171613455_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212181227304_UserIdStringAndUserDataCourseRelation.resx">
+      <DependentUpon>202212181227304_UserIdStringAndUserDataCourseRelation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212181255269_UpdatedChanges.resx">
+      <DependentUpon>202212181255269_UpdatedChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212181304274_CourseOwnerIdNotRequired.resx">
+      <DependentUpon>202212181304274_CourseOwnerIdNotRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212181703357_EmailUserData.resx">
+      <DependentUpon>202212181703357_EmailUserData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303151652191_VideoFileAdd.resx">
+      <DependentUpon>202303151652191_VideoFileAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304051530173_AddChapters.resx">
+      <DependentUpon>202304051530173_AddChapters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304171810406_AddSubchapter.resx">
+      <DependentUpon>202304171810406_AddSubchapter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304190947527_AddTests.resx">
+      <DependentUpon>202304190947527_AddTests.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304191200527_AddQuestions.resx">
+      <DependentUpon>202304191200527_AddQuestions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305011929154_addAnswers.resx">
+      <DependentUpon>202305011929154_addAnswers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305031031453_addTestAnswer.resx">
+      <DependentUpon>202305031031453_addTestAnswer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305031615499_ChosenAnswerIdSerialization.resx">
+      <DependentUpon>202305031615499_ChosenAnswerIdSerialization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305061241193_AddCourseDeactivationFields.resx">
+      <DependentUpon>202305061241193_AddCourseDeactivationFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305071058020_AddReviews.resx">
+      <DependentUpon>202305071058020_AddReviews.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305071915506_AddCourseReviewSuspension.resx">
+      <DependentUpon>202305071915506_AddCourseReviewSuspension.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305101626464_UserDataAndWarningUpdate.resx">
+      <DependentUpon>202305101626464_UserDataAndWarningUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305101630377_UserDataRoleFIeld.resx">
+      <DependentUpon>202305101630377_UserDataRoleFIeld.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305181038177_IssueRevoled.resx">
+      <DependentUpon>202305181038177_IssueRevoled.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305231636121_AddSubchANDChnumbering.resx">
+      <DependentUpon>202305231636121_AddSubchANDChnumbering.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305232032358_CourseImagePath.resx">
+      <DependentUpon>202305232032358_CourseImagePath.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305241122233_AddCourseFile.resx">
+      <DependentUpon>202305241122233_AddCourseFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305241343233_SubChapterfilesCorrection.resx">
+      <DependentUpon>202305241343233_SubChapterfilesCorrection.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>

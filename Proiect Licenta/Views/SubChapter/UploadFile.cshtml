@@ -1,0 +1,85 @@
+﻿@model ProiectLicenta.Data.Models.SubChapter
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 class="text-left text-primary">Details</h2>
+
+<style>
+    .form-horizontal {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+        text-align: left;
+    }
+
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    dd {
+        text-align: left;
+        padding-top: 7px;
+    }
+
+    .back-link {
+        margin-top: 20px;
+        text-align: left;
+    }
+
+    dt {
+        text-align: left;
+        font-weight: bold;
+        padding-top: 7px;
+    }
+</style>
+
+@using (Html.BeginForm("UploadFile", "SubChapter", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <h4>Course</h4>
+    <hr />
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.HiddenFor(model => model.SubchapterId)
+            @Html.DisplayNameFor(model => model.SubchapterTitle):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubchapterDescription)
+        </dd>
+
+
+
+        <dt>
+            Upload File:
+        </dt>
+
+        <dd>
+
+            <div class="form-group">
+
+                <input type="file" name="file" id="file" />
+            </div>
+            <button type="submit" class="btn btn-primary">Upload Image</button>
+
+        </dd>
+
+
+    </dl>
+}
+
+<p class="back-link">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SubchapterId }, new { @class = "btn btn-default" }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,50 @@
+﻿@model ProiectLicenta.Data.Models.CourseReview
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 class="text-left text-primary">Details</h2>
+
+<style>
+    .form-horizontal {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
+
+        .form-horizontal h4 {
+            color: #333;
+        }
+
+    .back-link {
+        margin-top: 20px;
+        text-align: left;
+    }
+</style>
+
+<div class="form-horizontal">
+    <dl class="dl-horizontal">
+        <dt>
+            <strong>@Html.DisplayNameFor(model => model.ReviewText):</strong>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewText)
+        </dd>
+
+        <dt>
+            <strong>@Html.DisplayNameFor(model => model.Stars):</strong>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stars)
+        </dd>
+    </dl>
+</div>
+
+<p class="back-link">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CourseReviewId}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

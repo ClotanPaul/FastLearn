@@ -1,0 +1,13 @@
+﻿@model Proiect_Licenta.ViewModels.FileListViewModel
+@{
+    ViewBag.Title = "DownloadFile";
+}
+
+<h2>DownloadFile</h2>
+
+
+@using (Html.BeginForm("Download", "Video", FormMethod.Get))
+{
+    @Html.DropDownList("fileName", new SelectList(Model.Files), "Select a file")
+    <input type="submit" value="Download" />
+}

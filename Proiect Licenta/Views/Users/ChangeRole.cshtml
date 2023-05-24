@@ -1,0 +1,74 @@
+﻿@model Proiect_Licenta.ViewModels.ChangeRoleViewModel
+
+@{
+    ViewBag.Title = "ChangeRole";
+}
+
+<h2 class="text-left text-primary">Change Role</h2>
+
+<style>
+    .form-horizontal {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
+
+    .form-horizontal h4 {
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .control-label {
+        text-align: left;
+        padding-top: 7px;
+        font-size: 1.5rem;
+    }
+
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="text-left">Change the role for @Model.Email</h4>
+                <h4 class="text-left">Current Role: @Model.currentRole</h4>
+                <h4 class="text-left">Possible Roles: "admin", "student", "professor" or "helping_student"</h4>
+                <hr />
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.LabelFor(model => model.NewRole, htmlAttributes: new { @class = "control-label" })
+                        @Html.HiddenFor(model => model.UserId)
+                        @Html.DropDownListFor(model => model.NewRole, new SelectList(Model.PossibleRoles), "Select a role", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12 text-left">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

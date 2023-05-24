@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ProiectLicenta.Data.Models.Question>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Question Index";
+}
+
+<div class="container mt-3">
+    <h2 class="text-left">Question Index</h2>
+
+    <div class="text-left my-4">
+        @Html.ActionLink("Add a new question", "Create", "Question", new { testId = ViewData["testId"] }, new { @class = "btn btn-primary" })
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.QuestionString)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.questionPointPercentage)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestId)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QuestionString)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.questionPointPercentage)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TestId)
+                    </td>
+                    <td>
+                        @if (item.test.SubChapter.Chapter.Course.OwnerId == (string)ViewData["userId"])
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { questionId = item.QuestionId }, new { @class = "btn btn-link" }) <text> | </text>
+                            @Html.ActionLink("Details", "Details", new { questionId = item.QuestionId }, new { @class = "btn btn-link" }) <text> | </text>
+                            @Html.ActionLink("Delete", "Delete", new { questionId = item.QuestionId }, new { @class = "btn btn-link" }) <text> | </text>
+                        }
+                        @Html.ActionLink("Show Answers", "Index", "Answer", new { questionId = item.QuestionId }, null)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,35 @@
+﻿@model ProiectLicenta.Data.Models.Chapter
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Chapter</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ChapterTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChapterTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChapterDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChapterDescription)
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ChapterId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

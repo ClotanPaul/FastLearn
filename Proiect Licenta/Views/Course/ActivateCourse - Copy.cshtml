@@ -1,0 +1,57 @@
+﻿@model ProiectLicenta.Data.Models.Course
+
+@{
+    ViewBag.Title = "ActivateCourse";
+}
+
+<h2>ActivateCourse</h2>
+
+<h3>Are you sure you want to activate this course?</h3>
+<div>
+    <h4>Course</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Active)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Active)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeactivationReason)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeactivationReason)
+        </dd>
+
+        @Html.HiddenFor(model => model.OwnerId)
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="ActivateCourse" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

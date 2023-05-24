@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ProiectLicenta.Data.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Active)
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    if (item.Active == true || (item.OwnerId == (string)ViewData["userId"] && item.OwnerId != null))
+    {
+
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseDescription)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Active)
+        </td>
+
+        <td>
+            @Html.ActionLink("Chapters", "Index", "Chapter", new { courseId = item.CourseId }, null)
+            @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, null) <text> | </text>
+            @if (User.Identity.IsAuthenticated && (string)ViewData["userId"] == item.OwnerId)
+            {
+                <text> ( </text>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) <text> | </text>
+                @Html.ActionLink("Details", "Details", new { id = item.CourseId }) <text> | </text>
+                @Html.ActionLink("Activate Course", "ActivateCourse", new { id = item.CourseId }) <text> | </text>
+                @Html.ActionLink("Deactivate Course", "DeactivateCourse", new { id = item.CourseId }) <text> | </text>
+                @Html.ActionLink("Delete", "Delete", new { id = item.CourseId })
+                <text> ) </text>
+            }
+        </td>
+    </tr>
+    }
+}
+
+</table>

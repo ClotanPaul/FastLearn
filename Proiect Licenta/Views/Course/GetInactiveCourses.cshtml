@@ -1,0 +1,81 @@
+﻿@model IEnumerable<ProiectLicenta.Data.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+
+    .card {
+        background: #f8f9fa;
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        height: 400px;
+        width: auto;
+    }
+
+    .card-img-top {
+        width: 320px;
+        height: 200px;
+    }
+
+    .card-title {
+        font-weight: bold;
+    }
+</style>
+
+
+
+<h2 class="text-left text-primary">Inactive Course List</h2>
+
+
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="~/Content/images/proiectLicentaPhoto.jpg" class="card-img-top" alt="Course Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.CourseName)</h5>
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.CourseDescription)</p>
+                        @if (item.IssueResolved)
+                            {
+                                <p class=" card-text"> <strong>The user requests a review of the deactivation.</strong></p>
+                            }
+
+                        @if (User.IsInRole("admin") || (item.OwnerId == (string)ViewData["userId"] && item.OwnerId != null))
+                        {
+                            <p class="card-text">Active: @Html.DisplayFor(modelItem => item.Active)</p>
+                            if (!item.Active)
+                            {
+
+                                <p class="card-text">Deactivation Reason: @Html.DisplayFor(modelItem => item.DeactivationReason)</p>
+
+                            }
+
+                        }
+                    <div class="text-center">
+                        <text>(</text>
+                        @Html.ActionLink("Chapters", "Index", "Chapter", new { courseId = item.CourseId }, null) <text> | </text>
+                        @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, null) <text> | </text>
+                        @if (User.IsInRole("admin"))
+                        {
+                            @Html.ActionLink("Activate Course", "ActivateCourse", new { id = item.CourseId }) <text> ) </text>
+                        }
+                        @if (item.IssueResolved)
+                        {
+                            @Html.ActionLink("Reject Course Activation", "RejectActivation", new { courseId = item.CourseId })
+                        }
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

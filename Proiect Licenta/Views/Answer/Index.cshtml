@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ProiectLicenta.Data.Models.Answer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Add a new answer", "Create", "Answer", new { questionId = ViewData["questionId"] }, null)
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AnswerText)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsCorrect)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuestionId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AnswerText)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsCorrect)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuestionId)
+        </td>
+        <td>
+            @if(item.Question.test.SubChapter.Chapter.Course.OwnerId == (string)ViewData["userId"]) { 
+            @Html.ActionLink("Edit", "Edit", new { answerId = item.AnswerId }) 
+            @Html.ActionLink("Delete", "Delete", new { answerId = item.AnswerId })
+            }
+        </td>
+    </tr>
+}
+
+</table>

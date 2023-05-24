@@ -1,0 +1,91 @@
+﻿@model ProiectLicenta.Data.Models.Course
+
+@{
+    ViewBag.Title = "ActivateCourse";
+}
+
+<h2 class="text-left text-primary">Activate Course</h2>
+<style>
+    .form-horizontal {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
+
+        .form-horizontal h4 {
+            color: #333;
+        }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .showInline {
+        display: inline-block;
+    }
+
+    .control-label {
+        text-align: left;
+        padding-top: 7px;
+    }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    .back-link {
+        margin-top: 20px;
+        text-align: left;
+    }
+</style>
+
+@Html.HiddenFor(model => model.CourseId)
+@Html.HiddenFor(model => model.OwnerId)
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+
+            <div class="form-group">
+                <h4><strong>@Html.DisplayNameFor(model => model.CourseName):</strong></h4>
+                <p>@Html.DisplayFor(model => model.CourseName)</p>
+            </div>
+
+            <div class="form-group">
+                <h4><strong>@Html.DisplayNameFor(model => model.CourseDescription):</strong></h4>
+                <p>@Html.DisplayFor(model => model.CourseDescription)</p>
+            </div>
+
+            <div class="form-group">
+                <h4><strong>@Html.DisplayNameFor(model => model.Active):</strong></h4>
+                <p>@Html.DisplayFor(model => model.Active)</p>
+            </div>
+
+            <div class="form-group">
+                <h4><strong>@Html.DisplayNameFor(model => model.DeactivationReason):</strong></h4>
+                <p>@Html.DisplayFor(model => model.DeactivationReason)</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-actions no-color">
+        <input type="submit" value="Activate Course" class="btn btn-default" />
+    </div>
+}
+
+<div class="back-link">
+    @Html.ActionLink("Back to List", "Index")
+</div>

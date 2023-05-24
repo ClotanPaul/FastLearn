@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ProiectLicenta.Data.Models.CourseReview>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    h2 {
+        color: #333;
+    }
+
+    .table {
+        border-radius: 5px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+        .table th {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .table td {
+            color: #333;
+        }
+
+    a {
+        color: #007bff;
+    }
+</style>
+
+<h2 class="text-left text-primary">Index</h2>
+
+<p>
+    @if (ViewData["CanAdd"] == "true") {
+    @Html.ActionLink("Add a new review", "Create", new { courseId = ViewData["courseId"] }, new { @class = "btn btn-primary" })}
+
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewText)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stars)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stars)
+            </td>
+            <td>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                {
+                    <text> ( </text>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CourseReviewId }) <text> | </text>
+                    @Html.ActionLink("Details", "Details", new { id = item.CourseReviewId }) <text> | </text>
+
+                    @Html.ActionLink("Delete", "Delete", new { courseReviewId = item.CourseReviewId }) <text> | </text>
+
+                    @Html.ActionLink("Deactivate Review", "DeactivateReview", new { id = item.CourseReviewId }) <text> | </text>
+                    @Html.ActionLink("Activate Review", "ActivateReview", new { id = item.CourseReviewId }) <text> ) </text>
+                }
+            </td>
+        </tr>
+    }
+</table>

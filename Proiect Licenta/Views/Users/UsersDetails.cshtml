@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Proiect_Licenta.Models.UserData>
+
+@{
+    ViewBag.Title = "UsersDetails";
+}
+
+<h2>UsersDetails</h2>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .table {
+        background-color: #fff;
+    }
+
+    .table thead th {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    .btn-group .btn {
+        margin: 0 10px;
+    }
+
+    .form-button {
+        display: inline-block;
+        margin-right: 10px;
+    }
+</style>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.UserId)</th>
+                <th>@Html.DisplayNameFor(model => model.UserName)</th>
+                <th>@Html.DisplayNameFor(model => model.Email)</th>
+                <th>@Html.DisplayNameFor(model => model.Points)</th>
+                <th>@Html.DisplayNameFor(model => model.UserRole)</th>
+                <th>@Html.DisplayNameFor(model => model.SuspendedUntil)</th>
+                <th>@Html.DisplayNameFor(model => model.IsSuspended)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.UserId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Points)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UserRole)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SuspendedUntil)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IsSuspended)</td>
+                    <td>
+                        <text>(</text>
+                        @Html.ActionLink("ChangeRole", "ChangeRole", new { userId = item.UserId })<text> | </text>
+                        @Html.ActionLink("Warn User", "WarnUser", new { userDataId = item.UserDataId })<text> | </text>
+                        @Html.ActionLink("Warning List", "UserWarnings", new { userDataId = item.UserDataId })<text> | </text>
+                        @Html.ActionLink("Suspend User", "SuspendUser", new { userDataId = item.UserDataId })<text> | </text>
+                        @Html.ActionLink("UnSuspend User", "RemoveUserSuspension", new { userDataId = item.UserDataId })<text>) </text>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

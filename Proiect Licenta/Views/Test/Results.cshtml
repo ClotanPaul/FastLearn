@@ -1,0 +1,38 @@
+﻿@model Proiect_Licenta.ViewModels.ResultsViewModel
+
+@{
+    ViewBag.Title = "Result";
+}
+
+<h2>Test Result</h2>
+
+<p>
+    <strong>Score:</strong> @Model.UserAnswer.Score
+</p><p>
+    <strong>Percentage:</strong> @Model.ScorePercentage %
+</p>
+<p>
+    <strong>Result:</strong> @(Model.UserAnswer.Passed ? "Passed" : "Failed")
+</p>
+
+<p>
+    <a href="@Url.Action("Index", "Home")">Return to Home</a>
+</p>
+
+
+<h3>Answer Summary</h3>
+
+<ul>
+    @foreach (var q in Model.QuestionResponses)
+    {
+       <li>
+           <div>@q.Question.QuestionString</div>
+           <div><strong>Your Answer:</strong></div>
+           <div>@q.UserAnswer</div>
+
+           <div><strong>Correct Answer:</strong></div>
+           <div>@q.CorrectAnswer</div>
+
+       </li>
+    }          
+</ul>

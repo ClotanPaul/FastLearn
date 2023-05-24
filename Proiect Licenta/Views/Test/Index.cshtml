@@ -1,0 +1,48 @@
+﻿@model ProiectLicenta.Data.Models.Test
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Test Index";
+}
+
+<div class="container mt-3">
+    <h2 class="text-left">Test Index</h2>
+
+    <div class="text-left my-4">
+        @Html.ActionLink("Add Test", "Create", new { subChapterId = ViewData["subChapterId"] }, new { @class = "btn btn-primary" })
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.MinimumScore)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.MinimumScore)
+                </dd>
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.TestDescription)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.TestDescription)
+                </dd>
+
+                <dd class="col-sm-12">
+                    @if (Model!=null && Model.SubChapter.Chapter.Course.OwnerId == (string)ViewData["userId"])
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { subChapterId = ViewData["subChapterId"] }, new { @class = "btn btn-link" }) <text> | </text>
+                        @Html.ActionLink("Delete", "Delete", new { subChapterId = ViewData["subChapterId"] }, new { @class = "btn btn-link" }) <text> | </text>
+                    }
+                    @Html.ActionLink("Back to subChapter", "Index", "SubChapter", new { chapterId = ViewData["chapterId"] }, new { @class = "btn btn-link" }) |
+                    @if (Model != null)
+                    {
+                        @Html.ActionLink("Questions", "Index", "Question", new { testId = Model.TestId }, new { @class = "btn btn-link" })
+                        @Html.ActionLink("TakeTest", "TakeTest", new { testId = Model.TestId }, new { @class = "btn btn-link" })
+                    }
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
