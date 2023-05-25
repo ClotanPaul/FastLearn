@@ -7,10 +7,12 @@
 
 <div class="container mt-3">
     <h2 class="text-left">Chapter Index</h2>
-
+    @if (User.IsInRole("professor")|| User.IsInRole("admin"))
+    {
     <div class="text-left my-4">
         @Html.ActionLink("Add a new Chapter", "Create", new { courseId = ViewData["courseId"] }, new { @class = "btn btn-primary" })
     </div>
+    }
 
     <table class="table table-striped">
         <thead>
@@ -51,7 +53,7 @@
                             @Html.ActionLink("Details", "Details", new { id = item.ChapterId }, new { @class = "btn btn-link" }) <text></text>
                             @Html.ActionLink("Delete", "Delete", new { id = item.ChapterId }, new { @class = "btn btn-link" }) <text></text>
                         }
-                        @Html.ActionLink("Show SubChapters", "Index", "SubChapter", new { chapterId = item.ChapterId }, new { @class = "btn btn-link" })
+                        @Html.ActionLink("To Subchapters", "Index", "SubChapter", new { chapterId = item.ChapterId }, new { @class = "btn btn-link" })
                     </td>
                 </tr>
             }

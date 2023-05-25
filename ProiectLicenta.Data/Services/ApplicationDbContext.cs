@@ -34,5 +34,17 @@ namespace ProiectLicenta.Data.Services
         public DbSet<Warning> Warnings { get; set; }
 
         public DbSet<SubChapterFiles> SubChapterFiles { get; set; }
+
+        public DbSet<EnrolledStudentInCourse> EnrolledStudentsInCourses { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<SubChapter>()
+                .HasOptional(s => s.Test)  // if Test is optional for a SubChapter
+                .WithRequired(t => t.SubChapter)
+                .WillCascadeOnDelete(true);
+
+        }
     }
 }

@@ -17,14 +17,18 @@ namespace Proiect_Licenta.Controllers
         private readonly IQuestionData questionDb;
         private readonly IAnswerData answerDb;
         private readonly IUserAnswerData userAnswerDb;
+        private readonly IUserData userDataDb;
+        private readonly IEnrolledSudentInCourse enrollmentDb;
 
-        public TestController(ITestData testDb, ISubChapterData subChapterDb, IQuestionData questionDb, IAnswerData answerDb, IUserAnswerData userAnswerDb)
+        public TestController(ITestData testDb, ISubChapterData subChapterDb, IQuestionData questionDb, IAnswerData answerDb, IUserAnswerData userAnswerDb, IUserData userDataDb, IEnrolledSudentInCourse enrollmentDb)
         {
             this.testDb = testDb;
             this.subChapterDb = subChapterDb;
             this.questionDb = questionDb;
             this.answerDb = answerDb;
             this.userAnswerDb = userAnswerDb;
+            this.userDataDb = userDataDb;
+            this.enrollmentDb = enrollmentDb;
         }
 
 
@@ -205,6 +209,24 @@ namespace Proiect_Licenta.Controllers
 
             userAnswerDb.addTestAnswer(userAnswer);
 
+            if (userAnswer.Passed)
+            {
+                var userData = userDataDb.getUserData(userAnswer.UserId);
+
+                var test = testDb.getTestById(userAnswer.TestId);
+                var courseId = test.SubChapter.Chapter.CourseId;
+
+                var enrollment = enrollmentDb.getEnrolledStudentInfo(courseId, userAnswer.UserId);
+
+                var nextSubchapter = subChapterDb.GetNextSubChapter(test.SubChapter.SubchapterId);
+
+                enrollment.LastCompletedSubChapterId = nextSubchapter.SubchapterId;
+                enrollment.LastCompletedChapterId = nextSubchapter.ChapterId;
+
+                enrollmentDb.UpdateEnrollment(enrollment);
+
+            }
+
             // show the results of the test:
             return RedirectToAction("Results", new { userAnswerId = userAnswer.UserAnswerId });
         }
@@ -231,7 +253,7 @@ namespace Proiect_Licenta.Controllers
             var resultsViewModel = new ResultsViewModel
             {
                 UserAnswer = userAnswer,
-                ScorePercentage = userAnswer.Score,
+                ScorePercentage = userAnswer.Test.MinimumScore,
                 QuestionResponses = questionsResponses,
             };
 

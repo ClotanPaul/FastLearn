@@ -31,8 +31,9 @@
 <h2 class="text-left text-primary">Index</h2>
 
 <p>
-    @if (ViewData["CanAdd"] == "true") {
-    @Html.ActionLink("Add a new review", "Create", new { courseId = ViewData["courseId"] }, new { @class = "btn btn-primary" })}
+    @if ((string)ViewData["CanAdd"] == "true" && User.Identity.IsAuthenticated) {
+        @Html.ActionLink("Add a new review", "Create", new { courseId = ViewData["courseId"] }, new { @class = "btn btn-primary" })
+    }
 
 </p>
 
@@ -57,14 +58,18 @@
                 @Html.DisplayFor(modelItem => item.Stars)
             </td>
             <td>
-                @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                @if ((string)ViewData["UserId"] == item.UserId)
                 {
                     <text> ( </text>
                     @Html.ActionLink("Edit", "Edit", new { id = item.CourseReviewId }) <text> | </text>
                     @Html.ActionLink("Details", "Details", new { id = item.CourseReviewId }) <text> | </text>
 
-                    @Html.ActionLink("Delete", "Delete", new { courseReviewId = item.CourseReviewId }) <text> | </text>
+                    @Html.ActionLink("Delete", "Delete", new { courseReviewId = item.CourseReviewId }) <text> ) </text>
+                }
 
+                @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                {
+                    <text> ( </text>
                     @Html.ActionLink("Deactivate Review", "DeactivateReview", new { id = item.CourseReviewId }) <text> | </text>
                     @Html.ActionLink("Activate Review", "ActivateReview", new { id = item.CourseReviewId }) <text> ) </text>
                 }

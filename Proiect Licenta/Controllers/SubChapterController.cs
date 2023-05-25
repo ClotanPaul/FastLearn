@@ -44,6 +44,20 @@ namespace Proiect_Licenta.Controllers
             return View(model);
         }
 
+        public ActionResult UserIndex(int chapterId)
+        {
+            var model = subChapterDb.GetSubChapters(chapterId);
+            ViewData["chapterId"] = chapterId;
+            ViewData["userId"] = User.Identity.GetUserId();
+
+            if (model == null)
+            {
+                // to implement
+            }
+
+            return View(model);
+        }
+
         [HttpGet]
         public ActionResult Create(int chapterId)
         {
@@ -226,6 +240,31 @@ namespace Proiect_Licenta.Controllers
             return File(fullPath, contentType, nameofFile);
 
 
+        }
+
+        public ActionResult ViewSubChapter(int subchapterId)
+        {
+            var subChapter = subChapterDb.GetSubChapter(subchapterId);
+
+            if (subChapter == null)
+            {
+                return View("NoSuchSubchapterFound");
+            }
+
+            return View(subChapter);
+        }
+
+        public ActionResult NextSubChapter(int currentSubChapterId)
+        {
+            var nextSubChapter = subChapterDb.GetNextSubChapter(currentSubChapterId);
+
+            if (nextSubChapter == null) // either the course was finished, or an error occured
+            {
+                return View("YouPromotedTheCourse");
+            }
+
+
+            return RedirectToAction("ViewSubChapter", new { subchapterId = nextSubChapter.SubchapterId });
         }
 
     }

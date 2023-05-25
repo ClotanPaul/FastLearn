@@ -10,6 +10,9 @@ namespace ProiectLicenta.Data.Services
     public interface ISubChapterData
     {
         SubChapter GetSubChapter(int subChapterId);
+
+        SubChapter GetNextSubChapter(int currentsubChapterId);
+
         void AddSubChapter(SubChapter SubChapter);
 
 

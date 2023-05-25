@@ -39,7 +39,9 @@ namespace ProiectLicenta.Data.Models
 
         public string ImagePath { get; set; }
 
-        
+        public virtual ICollection<EnrolledStudentInCourse> EnrolledStudentsInCourses { get; set; }
+
+
 
         //public int CommentId { get; set; }
     }

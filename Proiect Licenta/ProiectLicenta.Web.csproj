@@ -762,7 +762,6 @@
     <Content Include="Views\Users\UserNotSuspended.cshtml" />
     <Content Include="Views\Users\RemoveUserSuspension - Copy.cshtml" />
     <Content Include="Views\Users\SuspendUser - Copy.cshtml" />
-    <Content Include="Views\Course\Index - Copy.cshtml" />
     <Content Include="Views\Users\RemoveWarning - Copy.cshtml" />
     <Content Include="Views\Course\Edit - Copy.cshtml" />
     <Content Include="Views\Course\DeactivateCourse - Copy.cshtml" />
@@ -787,6 +786,14 @@
     <Content Include="Views\SubChapter\UploadFile.cshtml" />
     <Content Include="Views\SubChapter\GetFileList.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy - Copy.cshtml" />
+    <Content Include="Views\Course\Index - Copy %282%29.cshtml" />
+    <Content Include="Views\Course\StudentIndex.cshtml" />
+    <Content Include="Views\SubChapter\UserIndex.cshtml" />
+    <Content Include="Views\Course\EnrollInCourse.cshtml" />
+    <Content Include="Views\Course\CancelEnrollment.cshtml" />
+    <Content Include="Views\Course\NoSuchSubchapterFound.cshtml" />
+    <Content Include="Views\SubChapter\ViewSubChapter.cshtml" />
+    <Content Include="Views\SubChapter\YouPromotedTheCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -20,6 +20,8 @@ namespace ProiectLicenta.Data.Services
         public SubChapter getSubChapter(int subchapterId)
         {
             return db.SubChapterList.Include("Chapter.Subchapters")
+                .Include("SubchapterFiles")
+                .Include("Test")
                 .FirstOrDefault(sch=>sch.SubchapterId== subchapterId);
         }
 
@@ -143,5 +145,40 @@ namespace ProiectLicenta.Data.Services
             }
         }
 
+        // if the chapter is finished, the subchapter of the next course will be returned.
+        // null if the course is finished
+        public SubChapter GetNextSubChapter(int currentsubChapterId)
+        {
+            var currentSubchapter = getSubChapter(currentsubChapterId);
+
+            var numberOfSubchapters = currentSubchapter.Chapter.Subchapters.Count();
+
+            if(currentSubchapter.SubchapterNumber == numberOfSubchapters)
+            {
+                //the user has promoted the chapter!
+
+                var currentChapter = currentSubchapter.Chapter;
+                var numberOfChapters = currentChapter.Course.Chapters.Count();
+
+                if(numberOfChapters < currentChapter.ChapterNumber + 1) // the student finished the course
+                {
+                    return null;
+                } 
+
+                var nextChapter = db.ChapterList.FirstOrDefault(
+                    ch => ch.CourseId == currentChapter.CourseId &&ch.ChapterNumber == (currentChapter.ChapterNumber + 1));
+                var subchapterToReturn = nextChapter.Subchapters.OrderBy(sc => sc.SubchapterNumber).FirstOrDefault();
+
+                return subchapterToReturn;
+            }
+
+            //caz clasic
+            var nextSubChapterId = db.SubChapterList.
+                FirstOrDefault(ch => ch.ChapterId == currentSubchapter.ChapterId && 
+                ch.SubchapterNumber == (currentSubchapter.SubchapterNumber + 1)).SubchapterId;
+
+            var subchapter = getSubChapter(nextSubChapterId);
+            return subchapter;
+        }
     }
 }

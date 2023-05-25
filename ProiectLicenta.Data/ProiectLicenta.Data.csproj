@@ -192,9 +192,18 @@
     <Compile Include="Migrations\202305241343233_SubChapterfilesCorrection.designer.cs">
       <DependentUpon>202305241343233_SubChapterfilesCorrection.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305242056069_StudentEnrolledInCourseTable.cs" />
+    <Compile Include="Migrations\202305242056069_StudentEnrolledInCourseTable.designer.cs">
+      <DependentUpon>202305242056069_StudentEnrolledInCourseTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305251022235_TestDeleteOnCourse.cs" />
+    <Compile Include="Migrations\202305251022235_TestDeleteOnCourse.designer.cs">
+      <DependentUpon>202305251022235_TestDeleteOnCourse.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Chapter.cs" />
+    <Compile Include="Models\EnrolledStudentInCourse.cs" />
     <Compile Include="Models\SubChapterFiles.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseReview.cs" />
@@ -207,6 +216,7 @@
     <Compile Include="Models\Warnings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApplicationDbContext.cs" />
+    <Compile Include="Services\IEnrolledSudentInCourse.cs" />
     <Compile Include="Services\ISubChapterFilesData.cs" />
     <Compile Include="Services\IWarningData.cs" />
     <Compile Include="Services\ICourseReviewData.cs" />
@@ -221,6 +231,7 @@
     <Compile Include="Services\IVideoData.cs" />
     <Compile Include="Services\SqlChapterData.cs" />
     <Compile Include="Services\SqlCourseData.cs" />
+    <Compile Include="Services\SqlEnrolledStudentInCourse.cs" />
     <Compile Include="Services\SqlSubChapterFilesData.cs" />
     <Compile Include="Services\SqlCourseReviewData.cs" />
     <Compile Include="Services\SqlQuestionData.cs" />
@@ -305,6 +316,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305241343233_SubChapterfilesCorrection.resx">
       <DependentUpon>202305241343233_SubChapterfilesCorrection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305242056069_StudentEnrolledInCourseTable.resx">
+      <DependentUpon>202305242056069_StudentEnrolledInCourseTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305251022235_TestDeleteOnCourse.resx">
+      <DependentUpon>202305251022235_TestDeleteOnCourse.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

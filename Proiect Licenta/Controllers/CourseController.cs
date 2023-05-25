@@ -20,15 +20,26 @@ namespace Proiect_Licenta.Controllers
         private readonly ICourseData courseDb;
         private readonly IUserData userDb;
         private readonly IVideoData imageDb;
-        public CourseController(ICourseData db, IUserData userDb, IVideoData imageDb)
+        private readonly IEnrolledSudentInCourse enrollStudentInCourseDb;
+        private readonly ISubChapterData subchapterDb;
+        public CourseController(ICourseData db, IUserData userDb, IVideoData imageDb, IEnrolledSudentInCourse enrollStudentInCourseDb, ISubChapterData subchapterDb)
         {
             this.courseDb = db;
             this.userDb = userDb;
             this.imageDb = imageDb;
+            this.enrollStudentInCourseDb= enrollStudentInCourseDb;
+            this.subchapterDb = subchapterDb;
         }
         // GET: Course
         [AllowAnonymous]
         public ActionResult Index()
+        {
+            List<Course> courses = courseDb.GetAll();
+            ViewData["userId"] = User.Identity.GetUserId();
+            return View(courses);
+        }
+
+        public ActionResult StudentIndex()
         {
             List<Course> courses = courseDb.GetAll();
             ViewData["userId"] = User.Identity.GetUserId();
@@ -251,6 +262,75 @@ namespace Proiect_Licenta.Controllers
             }
             
             return RedirectToAction("GetUserCourses");
+        }
+
+
+        public ActionResult EnrollInCourse(int courseId)
+        {
+            var model = courseDb.GetCourse(courseId);
+
+            if (model == null)
+                return View("NotFound");
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EnrollInCourse(int courseId, FormCollection form)
+        {
+            var userId = User.Identity.GetUserId();
+            var userDataId = userDb.getUserId(userId);
+            enrollStudentInCourseDb.EnrollInCourse(courseId, userDataId);
+            return RedirectToAction("StudentIndex");
+
+        }
+
+        public ActionResult CancelEnrollment(int courseId)
+        {
+            var model = courseDb.GetCourse(courseId);
+
+            if (model == null)
+                return View("NotFound");
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CancelEnrollment(int courseId, FormCollection form)
+        {
+            var userId = User.Identity.GetUserId();
+            var userDataId = userDb.getUserId(userId);
+            enrollStudentInCourseDb.CancelEnrollment(courseId, userDataId);
+            return RedirectToAction("StudentIndex");
+
+        }
+
+        public ActionResult ExploreCourse(int courseId)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var courseStudentData = enrollStudentInCourseDb.getEnrolledStudentInfo(courseId, userId);
+
+            if(courseStudentData == null)// student not enrolled/ no data of student
+            {
+                var course = courseDb.GetCourse(courseId);
+
+                var firstChapter = course.Chapters.OrderBy(ch => ch.ChapterNumber).FirstOrDefault();
+                if (firstChapter != null)
+                {
+                    var firstSubChapter = firstChapter.Subchapters.OrderBy(sc => sc.SubchapterNumber).FirstOrDefault();
+                    if (firstSubChapter != null)
+                    {
+                        return RedirectToAction("ViewSubchapter", "SubChapter", new { subchapterId = firstSubChapter.SubchapterId });
+                    }
+                }
+
+                // If there's no chapter or subchapter, show an error or some kind of placeholder
+                return View("NoContent");
+            }
+
+            var lastCompletedSubChapterId = courseStudentData.LastCompletedSubChapterId;
+
+            return RedirectToAction("ViewSubchapter", "SubChapter", new { subchapterId = lastCompletedSubChapterId });
+
         }
 
 

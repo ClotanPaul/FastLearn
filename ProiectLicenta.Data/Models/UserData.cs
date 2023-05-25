@@ -29,6 +29,8 @@ namespace Proiect_Licenta.Models
 
         public virtual ICollection<Warning> Warnings { get; set; }
 
+        public virtual ICollection<EnrolledStudentInCourse> EnrolledStudentsInCourse { get; set; }
+
         public DateTime SuspendedUntil { get; set; }
 
         public bool IsSuspended { get; set; }

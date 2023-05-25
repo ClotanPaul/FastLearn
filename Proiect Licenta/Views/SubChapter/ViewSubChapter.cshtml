@@ -1,0 +1,47 @@
+﻿@model ProiectLicenta.Data.Models.SubChapter
+
+@{
+    ViewBag.Title = "View SubChapter";
+}
+
+<h2>@Model.SubchapterTitle</h2>
+
+<div>
+    <h4>Subchapter</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SubchapterDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubchapterDescription)
+        </dd>
+
+        <!-- Files related to the subchapter -->
+        @foreach (var file in Model.SubchapterFiles)
+        {
+            <dt>
+                @Html.DisplayNameFor(modelItem => file.Title)
+            </dt>
+            <dd>
+                @Html.DisplayFor(modelItem => file.Title)
+            </dd>
+        }
+
+        <!-- Test related to the subchapter -->
+        @if (Model.Test != null)
+        {
+            <dt>
+                Test
+            </dt>
+            <dd>
+                @Html.ActionLink("Start Test", "TakeTest", "Test", new { testId = Model.Test.TestId }, null)
+            </dd>
+        }
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Next SubChapter", "NextSubChapter", new { currentSubChapterId = Model.SubchapterId })
+    @Html.ActionLink("Back to Course", "ViewCourse", new { courseId = Model.Chapter.CourseId })
+</p>

@@ -16,6 +16,12 @@ namespace Proiect_Licenta.Controllers
             {
                 return RedirectToAction("GetUserCourses", "Course");
             }
+
+            if (User.IsInRole("student"))
+            {
+                return RedirectToAction("StudentIndex", "Course");
+            }
+
             return RedirectToAction("Index", "Course");
         }
 

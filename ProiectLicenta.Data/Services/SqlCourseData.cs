@@ -52,6 +52,7 @@ namespace ProiectLicenta.Data.Services
         public void DeleteCourse(int courseId)
         {
             var currentCourse = db.Courses.FirstOrDefault(x=> x.CourseId == courseId);
+            // daca are test creat nu poate fi sters cursul??
             db.Courses.Remove(currentCourse);
             db.SaveChanges();
         }

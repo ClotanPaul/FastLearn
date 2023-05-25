@@ -7,10 +7,12 @@
 
 <div class="container mt-3">
     <h2 class="text-left">SubChapter Index</h2>
-
+    @if (!User.IsInRole("student"))
+    {
     <div class="text-lext my-4">
         @Html.ActionLink("Add a new Subchapter", "Create", new { chapterId = ViewData["chapterId"] }, new { @class = "btn btn-primary" })
     </div>
+    }
 
     <table class="table table-striped">
         <thead>
@@ -53,7 +55,7 @@
                             @Html.ActionLink("Details", "Details", new { id = item.SubchapterId }, new { @class = "btn btn-link" }) <text> | </text>
                             @Html.ActionLink("Delete", "Delete", new { id = item.SubchapterId }, new { @class = "btn btn-link" }) <text> | </text>
                         }
-                        @Html.ActionLink("Go to test", "Index", "Test", new { subChapterId = item.SubchapterId }, new { @class = "btn btn-link" })
+                        @Html.ActionLink("Take Test", "Index", "Test", new { subChapterId = item.SubchapterId }, new { @class = "btn btn-link" })
                     </td>
                 </tr>
             }

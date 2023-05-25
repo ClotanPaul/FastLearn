@@ -27,15 +27,17 @@ namespace Proiect_Licenta.Controllers
         {
             var reviews = courseReviewDb.getReviews(courseId);
             ViewData["courseId"] = courseId;
+            ViewData["UserId"] = User.Identity.GetUserId();
             var course = courseDb.GetCourse(courseId);
 
             // determine if the user can add a new review or not
-            if (course.OwnerId == User.Identity.GetUserId())
+            if (!User.IsInRole("admin") && !User.IsInRole("professor"))
             {
-                ViewData["CanAdd"] = false;
+                ViewData["CanAdd"] = "true";
             }
             else
-                ViewData["CanAdd"] = true;
+                ViewData["CanAdd"] = "false";
+
 
             return View(reviews);
         }

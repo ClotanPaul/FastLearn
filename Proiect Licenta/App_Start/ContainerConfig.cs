@@ -60,6 +60,10 @@ namespace Proiect_Licenta.App_Start
                 .As<ISubChapterFileData>()
                 .InstancePerRequest();
 
+            builder.RegisterType<SqlEnrolledStudentInCourse>()
+                .As<IEnrolledSudentInCourse>()
+                .InstancePerRequest();
+
             builder.RegisterType<SqlUserAnswerData>()
                 .As<IUserAnswerData>().InstancePerRequest();
 

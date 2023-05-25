@@ -64,7 +64,8 @@ namespace ProiectLicenta.Data.Services
 
         public Test getTestById(int testId)
         {
-            var test = db.Tests.FirstOrDefault(t => t.TestId == testId);
+            var test = db.Tests.Include("SubChapter.Chapter")
+                .FirstOrDefault(t => t.TestId == testId);
             if (test != null)
                 return test;
             else return null;

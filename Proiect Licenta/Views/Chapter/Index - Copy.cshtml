@@ -6,9 +6,12 @@
 
 <h2>Index</h2>
 
+@if(!User.IsInRole("student"))
+{ 
 <p>
     @Html.ActionLink("Add a new Chapter", "Create", new { courseId = ViewData["courseId"] })
 </p>
+}
 <table class="table">
     <tr>
         <th>
