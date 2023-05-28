@@ -16,5 +16,7 @@ namespace ProiectLicenta.Data.Services
         void CancelEnrollment(int courseId, int UserDataId);
 
         EnrolledStudentInCourse getEnrolledStudentInfo(int courseId, string userId);
+
+        bool IsEnrolledInCourse(string userId, int courseId);
     }
 }

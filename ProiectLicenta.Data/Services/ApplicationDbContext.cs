@@ -37,6 +37,10 @@ namespace ProiectLicenta.Data.Services
 
         public DbSet<EnrolledStudentInCourse> EnrolledStudentsInCourses { get; set; }
 
+        public DbSet<Chat> Chats { get; set; }
+
+        public DbSet<Message> Mesages { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 

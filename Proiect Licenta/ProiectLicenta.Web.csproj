@@ -239,10 +239,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\ChapterController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CourseReviewController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\SubChapterController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -794,6 +796,27 @@
     <Content Include="Views\Course\NoSuchSubchapterFound.cshtml" />
     <Content Include="Views\SubChapter\ViewSubChapter.cshtml" />
     <Content Include="Views\SubChapter\YouPromotedTheCourse.cshtml" />
+    <Content Include="Views\Course\GetStudentEnrolledCourses.cshtml" />
+    <Content Include="Views\Course\CourseSyllabus.cshtml" />
+    <Content Include="Views\Course\GetStudentUnEnrolledCourses.cshtml" />
+    <Content Include="Views\Course\NotEnrolled.cshtml" />
+    <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\Chat\NoChatsFound.cshtml" />
+    <Content Include="Views\Chat\Create.cshtml" />
+    <Content Include="Views\Chat\ChatNotFound.cshtml" />
+    <Content Include="Views\Chat\OpenChat.cshtml" />
+    <Content Include="Views\Chat\NoNewChats.cshtml" />
+    <Content Include="Views\Chat\GetChatRequests.cshtml" />
+    <Content Include="Views\Chat\TakeChat.cshtml" />
+    <Content Include="Views\Chat\GetHelpingStudentChats.cshtml" />
+    <Content Include="Views\Chat\LeaveChat.cshtml" />
+    <Content Include="Views\Chat\ThisChatAlreadyHasAHelperAssigned.cshtml" />
+    <Content Include="Views\Chat\ThisChatHasNoHelperAssigned.cshtml" />
+    <Content Include="Views\Chat\OpenChat - Copy.cshtml" />
+    <Content Include="Views\Chat\OpenChat - Copy %282%29.cshtml" />
+    <Content Include="Views\Shared\_Layout - Copy %283%29.cshtml" />
+    <Content Include="Views\Message\EditMessage.cshtml" />
+    <Content Include="Views\Message\DeleteMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

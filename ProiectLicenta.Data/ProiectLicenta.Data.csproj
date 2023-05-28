@@ -200,10 +200,28 @@
     <Compile Include="Migrations\202305251022235_TestDeleteOnCourse.designer.cs">
       <DependentUpon>202305251022235_TestDeleteOnCourse.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305272348249_AddChatAndMessage.cs" />
+    <Compile Include="Migrations\202305272348249_AddChatAndMessage.designer.cs">
+      <DependentUpon>202305272348249_AddChatAndMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305280004367_HelpingStudentOptional.cs" />
+    <Compile Include="Migrations\202305280004367_HelpingStudentOptional.designer.cs">
+      <DependentUpon>202305280004367_HelpingStudentOptional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305281516337_RemoveDefaultTimestamp.cs" />
+    <Compile Include="Migrations\202305281516337_RemoveDefaultTimestamp.designer.cs">
+      <DependentUpon>202305281516337_RemoveDefaultTimestamp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305281517206_PutDefaultValueForTimeStamp.cs" />
+    <Compile Include="Migrations\202305281517206_PutDefaultValueForTimeStamp.designer.cs">
+      <DependentUpon>202305281517206_PutDefaultValueForTimeStamp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Chapter.cs" />
+    <Compile Include="Models\Chat.cs" />
     <Compile Include="Models\EnrolledStudentInCourse.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\SubChapterFiles.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseReview.cs" />
@@ -216,7 +234,9 @@
     <Compile Include="Models\Warnings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApplicationDbContext.cs" />
+    <Compile Include="Services\IChatData.cs" />
     <Compile Include="Services\IEnrolledSudentInCourse.cs" />
+    <Compile Include="Services\IMessageData.cs" />
     <Compile Include="Services\ISubChapterFilesData.cs" />
     <Compile Include="Services\IWarningData.cs" />
     <Compile Include="Services\ICourseReviewData.cs" />
@@ -230,8 +250,10 @@
     <Compile Include="Services\IUserData.cs" />
     <Compile Include="Services\IVideoData.cs" />
     <Compile Include="Services\SqlChapterData.cs" />
+    <Compile Include="Services\SqlChatData.cs" />
     <Compile Include="Services\SqlCourseData.cs" />
     <Compile Include="Services\SqlEnrolledStudentInCourse.cs" />
+    <Compile Include="Services\SqlMessageData.cs" />
     <Compile Include="Services\SqlSubChapterFilesData.cs" />
     <Compile Include="Services\SqlCourseReviewData.cs" />
     <Compile Include="Services\SqlQuestionData.cs" />
@@ -322,6 +344,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305251022235_TestDeleteOnCourse.resx">
       <DependentUpon>202305251022235_TestDeleteOnCourse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305272348249_AddChatAndMessage.resx">
+      <DependentUpon>202305272348249_AddChatAndMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305280004367_HelpingStudentOptional.resx">
+      <DependentUpon>202305280004367_HelpingStudentOptional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305281516337_RemoveDefaultTimestamp.resx">
+      <DependentUpon>202305281516337_RemoveDefaultTimestamp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305281517206_PutDefaultValueForTimeStamp.resx">
+      <DependentUpon>202305281517206_PutDefaultValueForTimeStamp.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,0 +1,28 @@
+﻿@model List<ProiectLicenta.Data.Models.Chat>
+
+<style>
+    .chat-container {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<h2>Active Requests</h2>
+
+@foreach (var chat in Model)
+{
+    <div class="chat-container">
+        <h4>@chat.Topic</h4>
+        <p>
+            <strong>Course:</strong> @chat.SubChapter.Chapter.Course.CourseName<br />
+            <strong>Chapter:</strong> @chat.SubChapter.Chapter.ChapterTitle<br />
+            <strong>Subchapter:</strong> @chat.SubChapter.SubchapterTitle<br />
+            <strong>Student:</strong> @chat.Student.Email
+        </p>
+        <p>
+            @Html.ActionLink("Open Chat", "OpenChat", "Chat", new { chatId = chat.ChatId }, null)<text>  </text>
+            @Html.ActionLink("Help Student", "TakeChat", "Chat", new { chatId = chat.ChatId }, null)
+        </p>
+    </div>
+}

@@ -268,6 +268,11 @@ namespace Proiect_Licenta.Controllers
         public ActionResult EnrollInCourse(int courseId)
         {
             var model = courseDb.GetCourse(courseId);
+            var userId = User.Identity.GetUserId();
+            if (enrollStudentInCourseDb.IsEnrolledInCourse(userId, courseId))
+            {
+                return View("AlreadyEnrolledInCourse");
+            }
 
             if (model == null)
                 return View("NotFound");
@@ -287,6 +292,12 @@ namespace Proiect_Licenta.Controllers
         public ActionResult CancelEnrollment(int courseId)
         {
             var model = courseDb.GetCourse(courseId);
+            var userId = User.Identity.GetUserId();
+            
+            if (!enrollStudentInCourseDb.IsEnrolledInCourse(userId, courseId))
+            {
+                return View("NotEnrolled");
+            }
 
             if (model == null)
                 return View("NotFound");
@@ -298,6 +309,7 @@ namespace Proiect_Licenta.Controllers
         {
             var userId = User.Identity.GetUserId();
             var userDataId = userDb.getUserId(userId);
+            
             enrollStudentInCourseDb.CancelEnrollment(courseId, userDataId);
             return RedirectToAction("StudentIndex");
 
@@ -331,6 +343,54 @@ namespace Proiect_Licenta.Controllers
 
             return RedirectToAction("ViewSubchapter", "SubChapter", new { subchapterId = lastCompletedSubChapterId });
 
+        }
+
+        public ActionResult GetStudentEnrolledCourses()
+        {
+            var userId = User.Identity.GetUserId();
+            var coursesIds = courseDb.GetEnrolledCoursesIds(userId);
+
+            var courses = new List<Course>();
+            foreach(var id in coursesIds)
+            {
+                var course = courseDb.GetCourse(id);
+                if (course.Active)
+                {
+                    courses.Add(course);
+                }
+            }
+
+            ViewData["userId"] = User.Identity.GetUserId();
+            return View(courses);
+        }
+
+        public ActionResult GetStudentUnEnrolledCourses()
+        {
+            var userId = User.Identity.GetUserId();
+            var enrolledCoursesId = courseDb.GetEnrolledCoursesIds(userId);
+            var courses = courseDb.GetAll();
+
+            var toReturn = new List<Course>();
+
+            foreach(var course in courses)
+            {
+                if (!enrolledCoursesId.Contains(course.CourseId) && course.Active)
+                    toReturn.Add(course);
+            }
+
+
+            ViewData["userId"] = User.Identity.GetUserId();
+            return View(toReturn);
+        }
+
+        public ActionResult CourseSyllabus(int courseId)
+        {
+            var course = courseDb.GetCourse(courseId);
+
+            if (course == null)
+                return HttpNotFound();
+
+            return View(course);
         }
 
 

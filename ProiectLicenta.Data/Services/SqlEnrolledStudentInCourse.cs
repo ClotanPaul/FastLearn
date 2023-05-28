@@ -84,5 +84,16 @@ namespace ProiectLicenta.Data.Services
             db.EnrolledStudentsInCourses.AddOrUpdate(enrollment);
             db.SaveChanges();
         }
+
+        public bool IsEnrolledInCourse(string userId, int courseId)
+        {
+            var enrollment = getEnrolledStudentInfo(courseId, userId);
+
+            if (enrollment == null)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

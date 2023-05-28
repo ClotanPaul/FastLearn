@@ -35,6 +35,10 @@ namespace Proiect_Licenta.Models
 
         public bool IsSuspended { get; set; }
 
+        public virtual ICollection<Chat> Chats { get; set; }
+
+        public virtual ICollection<Message> Messages { get; set; }
+
 
     }
 }

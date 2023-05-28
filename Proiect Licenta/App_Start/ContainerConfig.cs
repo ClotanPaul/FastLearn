@@ -70,6 +70,13 @@ namespace Proiect_Licenta.App_Start
             builder.RegisterType<SqlCourseReviewData>()
                 .As<ICourseReviewData>().InstancePerRequest();
 
+            builder.RegisterType<SqlChatData>()
+                .As<IChatData>()
+                .InstancePerRequest();
+
+            builder.RegisterType <SqlMessageData>()
+                .As<IMessageData>()
+                .InstancePerRequest();
 
             builder.RegisterType<ApplicationDataDbContext>().InstancePerRequest();
 

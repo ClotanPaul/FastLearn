@@ -180,5 +180,6 @@ namespace ProiectLicenta.Data.Services
             var subchapter = getSubChapter(nextSubChapterId);
             return subchapter;
         }
+
     }
 }

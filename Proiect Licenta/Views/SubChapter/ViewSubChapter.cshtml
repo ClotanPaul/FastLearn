@@ -18,7 +18,6 @@
             @Html.DisplayFor(model => model.SubchapterDescription)
         </dd>
 
-        <!-- Files related to the subchapter -->
         @foreach (var file in Model.SubchapterFiles)
         {
             <dt>
@@ -29,7 +28,6 @@
             </dd>
         }
 
-        <!-- Test related to the subchapter -->
         @if (Model.Test != null)
         {
             <dt>
@@ -42,6 +40,7 @@
     </dl>
 </div>
 <p>
+    @Html.ActionLink("Open Chat", "Create", "Chat", new { subChapterId = Model.SubchapterId }, null)
     @Html.ActionLink("Next SubChapter", "NextSubChapter", new { currentSubChapterId = Model.SubchapterId })
     @Html.ActionLink("Back to Course", "ViewCourse", new { courseId = Model.Chapter.CourseId })
 </p>

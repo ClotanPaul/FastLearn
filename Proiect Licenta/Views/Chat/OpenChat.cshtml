@@ -1,0 +1,104 @@
+﻿@model ProiectLicenta.Data.Models.Chat
+
+<style>
+    .message-container {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+    }
+
+    .message-left {
+        align-items: flex-end;
+    }
+
+    .message-right {
+        align-items: flex-start;
+    }
+
+    .message-sender-info {
+        margin-bottom: 5px;
+    }
+
+    .message-content {
+        max-width: 70%;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .message-left .message-content {
+        background-color: #d0f0c0;
+    }
+
+    .message-right .message-content {
+        background-color: #d0d0f0;
+    }
+
+    .card-body {
+        min-height: 200px;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+</style>
+
+<form method="post" action="@Url.Action("AddMessage", "Message")">
+    @Html.AntiForgeryToken()
+
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-6">
+                    <div class="card" id="chat2">
+                        <div class="card-header d-flex justify-content-between align-items-center p-3">
+                            <h5 class="mb-0">@Model.Topic</h5>
+                        </div>
+                        <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
+                            @if (Model.ChatMessages != null && Model.ChatMessages.Count > 0)
+                            {
+                                string previousSender = string.Empty;
+
+                                foreach (var message in Model.ChatMessages)
+                                {
+                                    string senderRole = (message.UserId == Model.StudentId) ? "Student" : "Helping Student";
+                                    string senderEmail = (message.UserId == Model.StudentId) ? Model.Student.Email : Model?.HelpingStudent?.Email ?? "NotDefined";
+                                    bool showSenderInfo = (previousSender != senderEmail);
+
+                                    <div class="message-container @(message.UserId == Model.StudentId ? "message-left" : "message-right")">
+                                        @if (showSenderInfo)
+                                        {
+                                            <div class="message-sender-info">
+                                                <p class="small text-muted">@senderRole: @senderEmail</p>
+                                            </div>
+                                        }
+                                    <div class="message-content">
+                                        <p class="mb-1">@message.MessageContent</p>
+                                        <p class="small text-muted">@message.TimeStamp.ToString("HH:mm")</p>
+                                        @if (Context.User.Identity.Name == senderEmail)
+                                        {
+                                            @Html.ActionLink("Edit", "EditMessage", "Message", new { messageId = message.MessageId }, new { @class = "small text-muted" }) <text> | </text>
+                                            @Html.ActionLink("Delete", "DeleteMessage", "Message", new { messageId = message.MessageId }, new { @class = "small text-muted" })
+                                        }
+
+                                    </div>
+                                    </div>
+
+                                    previousSender = senderEmail;
+                                }
+                            }
+                            else
+                            {
+                                <h4>No chat history.</h4>
+                            }
+                        </div>
+                        <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
+                            <input type="text" class="form-control form-control-lg flex-grow-1" id="newMessage" name="newMessage" placeholder="Type message">
+                            <input type="hidden" name="chatId" value="@Model.ChatId" />
+                            <button type="submit" class="btn btn-primary ms-auto">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+
+

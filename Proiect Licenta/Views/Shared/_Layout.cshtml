@@ -27,7 +27,7 @@
                 {
                     @Html.ActionLink("FastLearn", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 }
-                
+
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -37,11 +37,26 @@
                         <li>@Html.ActionLink("Inactive Courses", "GetInactiveCourses", "Course")</li>
                     }
 
+
+
                     @if (User.Identity.IsAuthenticated && User.IsInRole("professor"))
                     {
                         <li>@Html.ActionLink("MyCourses", "GetUserCourses", "Course")</li>
                     }
+
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("helping_student"))
+                    {
+                        <li>@Html.ActionLink("Chat Requests", "GetChatRequests", "Chat")</li>
+                        <li>@Html.ActionLink("Help Students", "GetHelpingStudentChats", "Chat")</li>
+                    }
+
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("student"))
+                    {
+                        <li>@Html.ActionLink("MyCourses", "GetStudentEnrolledCourses", "Course")</li>
+                    }
+                    <li>@Html.ActionLink("MyChats", "Index", "Chat")</li>
                     <li>@Html.ActionLink("MyAccount", "Index", "Users")</li>
+
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
@@ -62,3 +77,4 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+

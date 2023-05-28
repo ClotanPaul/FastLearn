@@ -1,0 +1,10 @@
+﻿@model List<ProiectLicenta.Data.Models.Chat>
+
+<h2>Your Chats</h2>
+
+@foreach (var chat in Model)
+{
+    <div>
+        @Html.ActionLink(chat.Topic, "OpenChat", "Chat", new { chatId = chat.ChatId }, null)
+    </div>
+}

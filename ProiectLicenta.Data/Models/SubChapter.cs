@@ -30,5 +30,7 @@ namespace ProiectLicenta.Data.Models
         public virtual Test Test { get; set; }
 
         public virtual ICollection<SubChapterFiles> SubchapterFiles { get; set; }
+
+        public virtual ICollection<Chat> SubChapterChats { get; set; }
     }
 }

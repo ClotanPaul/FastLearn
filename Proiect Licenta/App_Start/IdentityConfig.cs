@@ -14,6 +14,7 @@ using MimeKit;
 using Proiect_Licenta.Models;
 using MailKit;
 using MailKit.Net.Smtp;
+using System.Net.Mail;
 
 namespace Proiect_Licenta
 {
@@ -22,30 +23,15 @@ namespace Proiect_Licenta
         public Task SendAsync(IdentityMessage message)
         {
 
-            MimeMessage mail = new MimeMessage();
-            mail.From.Add(new MailboxAddress("Fast Learn", "fastlearn@flearn.com"));
-            mail.To.Add(new MailboxAddress("User", message.Destination));
-            mail.Subject = message.Subject;
-            mail.Body = new TextPart("plain")
-            {
-                Text = message.Body,
-            };
 
-            //send email
-            using(var client = new SmtpClient())
-            {
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                client.Connect("smtp.mailgun.org", 587, false);
-                client.AuthenticationMechanisms.Remove("XOAUTH2");
-                client.Authenticate("postmaster@sandbox4a6c31648d91457e80aff541640c2a49.mailgun.org", "e6362fc228a68d2b14d26c75dcb1a157-07ec2ba2-addc31e0");
+            var mailMessage = new MailMessage("recovery.service.edu@gmail.com", message.Destination);
+            mailMessage.Subject = message.Subject;
+            mailMessage.Body = message.Body;
 
-                client.Send(mail);
-                client.Disconnect(true);
-            }
+            var smtpClient = new System.Net.Mail.SmtpClient();
+            return smtpClient.SendMailAsync(mailMessage);
 
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
         }
     }
 

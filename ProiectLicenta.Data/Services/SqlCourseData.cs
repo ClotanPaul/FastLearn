@@ -15,16 +15,19 @@ namespace ProiectLicenta.Data.Services
     {
 
         private ApplicationDataDbContext db;
+        private readonly IUserData userDataDb;
 
 
-        public SqlCourseData(ApplicationDataDbContext db)
+        public SqlCourseData(ApplicationDataDbContext db, IUserData userDataDb)
         {
             this.db = db;
+            this.userDataDb = userDataDb;
         }
 
         public Course GetCourse(int courseId)
         {
-            return db.Courses.FirstOrDefault(x=> x.CourseId == courseId);
+            return db.Courses.
+                FirstOrDefault(x=> x.CourseId == courseId);
             // to add checks for the user owner.
         }
 
@@ -104,5 +107,20 @@ namespace ProiectLicenta.Data.Services
             course.IssueResolved = false;
             db.SaveChanges();
         }
+
+        public List<int> GetEnrolledCoursesIds(string studentId)
+        {
+            var studentData = userDataDb.getUserData(studentId);
+            var enrollmentData = studentData.EnrolledStudentsInCourse.ToList();
+            var courseIds = new List<int>();
+            foreach(var enrollment in enrollmentData)
+            {
+                courseIds.Add(enrollment.CourseId);
+            }
+            return courseIds;
+
+        }
+
+        
     }
 }

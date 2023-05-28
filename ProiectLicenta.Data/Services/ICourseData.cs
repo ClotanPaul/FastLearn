@@ -13,6 +13,7 @@ namespace ProiectLicenta.Data.Services
 
         List<Course> GetUserCourses(string ownerId);
 
+
         Course GetCourse(int id);
 
         void AddCourse(Course course);
@@ -30,5 +31,9 @@ namespace ProiectLicenta.Data.Services
         void RequestActivation(int id);
 
         void RejectActivation(int id);
+
+        List<int> GetEnrolledCoursesIds(string studentId);
+
+
     }
 }
