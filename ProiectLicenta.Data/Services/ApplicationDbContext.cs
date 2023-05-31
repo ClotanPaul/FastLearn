@@ -41,11 +41,13 @@ namespace ProiectLicenta.Data.Services
 
         public DbSet<Message> Mesages { get; set; }
 
+        public DbSet<HelpingStudentApplication> HelpingStudentApplications { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
             modelBuilder.Entity<SubChapter>()
-                .HasOptional(s => s.Test)  // if Test is optional for a SubChapter
+                .HasOptional(s => s.Test)  
                 .WithRequired(t => t.SubChapter)
                 .WillCascadeOnDelete(true);
 

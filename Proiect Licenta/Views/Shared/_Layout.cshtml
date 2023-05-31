@@ -6,7 +6,9 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/ckeditor")
+
+
+    <link rel="stylesheet" href="~/Scripts/ckeditor/plugins/codesnippet/lib/highlight/styles/default.css">
 
 
 </head>
@@ -35,26 +37,31 @@
                     {
                         <li>@Html.ActionLink("AdminPanel", "UsersDetails", "Users")</li>
                         <li>@Html.ActionLink("Inactive Courses", "GetInactiveCourses", "Course")</li>
+                        <li>@Html.ActionLink("HelpingStudentRequests", "SeeHelpingStudentApplicationsForAdmin", "Users")</li>
                     }
-
-
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("professor"))
                     {
                         <li>@Html.ActionLink("MyCourses", "GetUserCourses", "Course")</li>
+                        <li>@Html.ActionLink("HelpingStudentRequests", "SeeHelpingStudentApplicationsForProfessor", "Users")</li>
+
                     }
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("helping_student"))
                     {
-                        <li>@Html.ActionLink("Chat Requests", "GetChatRequests", "Chat")</li>
+                        <li>@Html.ActionLink("MyChats", "Index", "Chat")</li>
                         <li>@Html.ActionLink("Help Students", "GetHelpingStudentChats", "Chat")</li>
+                        <li>@Html.ActionLink("Chat Requests", "GetChatRequests", "Chat")</li>
                     }
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("student"))
                     {
                         <li>@Html.ActionLink("MyCourses", "GetStudentEnrolledCourses", "Course")</li>
+                        <li>@Html.ActionLink("CourseArchive", "GetStudentFinishedCourses", "Course")</li>
+                        <li>@Html.ActionLink("MyChats", "Index", "Chat")</li>
+                        <li>@Html.ActionLink("HelpingStudentApplication", "YourHelpingStudentApplication", "Users")</li>
+
                     }
-                    <li>@Html.ActionLink("MyChats", "Index", "Chat")</li>
                     <li>@Html.ActionLink("MyAccount", "Index", "Users")</li>
 
                     <li>@Html.ActionLink("About", "About", "Home")</li>
@@ -74,6 +81,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/ckeditor")
     @RenderSection("scripts", required: false)
 </body>
 </html>

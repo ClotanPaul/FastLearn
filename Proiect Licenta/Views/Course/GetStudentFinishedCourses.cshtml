@@ -1,0 +1,66 @@
+﻿@model IEnumerable<ProiectLicenta.Data.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+
+    .card {
+        background: #f8f9fa;
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        height: 400px;
+        width: auto;
+    }
+
+    .card-img-top {
+        width: 320px;
+        height: 200px;
+    }
+
+    .card-title {
+        font-weight: bold;
+    }
+</style>
+
+
+
+<h2 class="text-left text-primary">Course List</h2>
+
+
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    @if (item.ImagePath != null)
+                    {
+                        <img src="@Url.Content(item.ImagePath)" class="card-img-top" alt="Course Image">
+                    }
+                    else
+                    {
+                        <img src="~/Content/images/proiectLicentaPhoto.jpg" class="card-img-top" alt="Course Image">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            @Html.ActionLink(item.CourseName, "ExploreCourse", "Course", new { courseId = item.CourseId }, null)
+                        </h5>
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.CourseDescription)</p>
+                        <div class="text-center">
+                            <text>(</text>
+                            @Html.ActionLink("Syllabus", "CourseSyllabus", "Course", new { courseId = item.CourseId }, null) <text> | </text>
+                            @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, null) <text> ) </text>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

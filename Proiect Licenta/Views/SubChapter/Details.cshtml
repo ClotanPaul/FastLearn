@@ -23,7 +23,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.SubchapterDescription)
+            @Html.Raw(Model.SubchapterDescription)
         </dd>
 
     </dl>
@@ -32,3 +32,8 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.SubchapterId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+@section scripts{
+    <script src="~/Scripts/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+}

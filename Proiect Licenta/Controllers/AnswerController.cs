@@ -13,9 +13,12 @@ namespace Proiect_Licenta.Controllers
     {
 
         private readonly IAnswerData answerDb;
-        public AnswerController(IAnswerData answerDb)
+        private readonly IQuestionData questionDb;
+
+        public AnswerController(IAnswerData answerDb, IQuestionData questionDb)
         {
             this.answerDb = answerDb;
+            this.questionDb = questionDb;
         }
 
         // GET: Answer
@@ -32,7 +35,23 @@ namespace Proiect_Licenta.Controllers
         [HttpGet]
         public ActionResult Create(int questionId)
         {
-            return View();
+            var question = questionDb.getQuestion(questionId);
+            var answerModel = new Answer();
+            var answers = question.Answers.ToList();
+            var trueAnswerExists = false;
+            foreach(var answer in answers)
+            {
+                if (answer.IsCorrect)
+                    trueAnswerExists = true;
+            }
+            if (trueAnswerExists)
+            {
+                ViewData["trueExists"] = "true";
+                answerModel.IsCorrect = false;
+            }
+            else
+                ViewData["trueExists"] = "false";
+            return View(answerModel);
         }
         [HttpPost]
         public ActionResult Create(Answer newAnswer, int questionId)

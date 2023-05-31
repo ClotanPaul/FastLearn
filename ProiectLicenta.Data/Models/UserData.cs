@@ -39,6 +39,8 @@ namespace Proiect_Licenta.Models
 
         public virtual ICollection<Message> Messages { get; set; }
 
+        public int? HelpingStudentApplicationId { get; set; }
+
 
     }
 }

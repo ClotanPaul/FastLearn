@@ -1,4 +1,5 @@
-﻿using ProiectLicenta.Data.Models;
+﻿using Newtonsoft.Json;
+using ProiectLicenta.Data.Models;
 using ProiectLicenta.Data.Services;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,14 @@ namespace ProiectLicenta.Data.Services
 
         private ApplicationDataDbContext db;
         private readonly IUserData userDataDb;
+        private readonly ISubChapterData subChapterDb;
 
 
-        public SqlCourseData(ApplicationDataDbContext db, IUserData userDataDb)
+        public SqlCourseData(ApplicationDataDbContext db, IUserData userDataDb, ISubChapterData subChapterDb)
         {
             this.db = db;
             this.userDataDb = userDataDb;
+            this.subChapterDb= subChapterDb;
         }
 
         public Course GetCourse(int courseId)
@@ -121,6 +124,68 @@ namespace ProiectLicenta.Data.Services
 
         }
 
-        
+        public List<Course> GetFinishedCourses(int userDataId)
+        {
+            var user = userDataDb.getUserByUserDataId(userDataId);
+
+            var enrolledStudentInCourses = db.EnrolledStudentsInCourses.Where(u => u.UserDataId == userDataId).ToList();
+
+            // sa fie enrolled in course si sa fi dat ultimu test.
+            var finishedCoursesId = new List<Course>();
+
+            foreach (var enrollment in enrolledStudentInCourses) {
+
+                var lastCompletedSubChapterId = enrollment.LastCompletedSubChapterId;
+
+                var nextSubChapter = subChapterDb.GetNextSubChapter(lastCompletedSubChapterId);
+                
+                if(nextSubChapter == null)
+                {
+                    finishedCoursesId.Add(enrollment.Course);
+                }
+            }
+            return finishedCoursesId;
+        }
+
+        public string GetFinishedCoursesSerialized(int userDataId)
+        {
+            var user = userDataDb.getUserByUserDataId(userDataId);
+
+            var enrolledStudentInCourses = db.EnrolledStudentsInCourses.Where(u => u.UserDataId == userDataId).ToList();
+
+            // sa fie enrolled in course si sa fi dat ultimu test.
+            var finishedCoursesId = new List<int>();
+
+            foreach (var enrollment in enrolledStudentInCourses)
+            {
+
+                var lastCompletedSubChapterId = enrollment.LastCompletedSubChapterId;
+
+                var nextSubChapter = subChapterDb.GetNextSubChapter(lastCompletedSubChapterId);
+
+                if (nextSubChapter == null)
+                {
+                    finishedCoursesId.Add(enrollment.CourseId);
+                }
+            }
+            var finishedCourses = SerializeFinishedCourses(finishedCoursesId);
+            return finishedCourses;
+        }
+
+        public List<int> FinishedCoursesDeserialization(string finishedCourses)
+        {
+            if (string.IsNullOrEmpty(finishedCourses))
+            {
+                var list = new List<int>();
+                return null;
+            }
+            else
+                return JsonConvert.DeserializeObject<List<int>>(finishedCourses);
+        }
+
+        public string SerializeFinishedCourses(List<int> finishedCourses)
+        {
+            return JsonConvert.SerializeObject(finishedCourses);
+        }
     }
 }

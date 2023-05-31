@@ -1,0 +1,42 @@
+﻿@model ProiectLicenta.Data.Models.HelpingStudentApplication
+
+@{
+    ViewBag.Title = "YourHelpingStudentApplication";
+}
+
+<h2>YourHelpingStudentApplication</h2>
+
+<div>
+    <h4>HelpingStudentApplication</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FinishedCoursesIds)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FinishedCoursesIds)
+        </dd>
+
+        @if (Model.ProfessorId != null)
+        {
+            <p>A professor is backing your application! It will shortly be reviewed by our admins</p>
+        }
+        else
+        {
+            <p>We are still waiting for a professor to back your application.</p>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsApproved)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsApproved)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

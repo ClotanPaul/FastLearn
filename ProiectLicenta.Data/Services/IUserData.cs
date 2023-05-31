@@ -1,4 +1,5 @@
 ﻿using Proiect_Licenta.Models;
+using ProiectLicenta.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,22 @@ namespace ProiectLicenta.Data.Services
         void WarnUser(int UserId, string Reason);
 
         UserData getUserByUserName(string userName);
+
+        void AddHelpingStudentApplication(HelpingStudentApplication application);
+
+        HelpingStudentApplication getHelpingStudentApplication(int userId);
+
+        List<HelpingStudentApplication> getHelpingStudentApplicationsForProfessor();
+
+        List<HelpingStudentApplication> getHelpingStudentApplicationsForAdmin();
+
+        HelpingStudentApplication getHelpingStudentApplicationById(int id);
+
+        void supportHelpingStudentApplication(int applicationId, int professorId);
+
+        void approveHelpingStudentApplication(int applicationId);
+
+        void AssignPointsToUser(int userDataId, int numberOfPoints);
 
     }
 }

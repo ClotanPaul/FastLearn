@@ -76,6 +76,7 @@ namespace Proiect_Licenta.Controllers
                 Student = userData,
                 SubChapter = subchapter,
                 ChatMessages = new List<Message>(),
+                IssueSolved= false,
                 Topic = topic
             };
 

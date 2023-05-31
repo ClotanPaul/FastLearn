@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Mvc;
 
@@ -21,13 +22,20 @@ namespace Proiect_Licenta.Controllers
         private readonly ICourseData courseDb;
         private readonly IUserData userDb;
         private readonly IWarningData warningDb;
+        private readonly IRoleData roleDb;
+        private readonly IChatData chatDb;
+
+        private readonly int pointsForStudent = 5;
+        private readonly int pointsForHelpingStudent = 20;
 
 
-        public UsersController(ICourseData courseDb, IUserData userDb, IWarningData warningDb)
+        public UsersController(ICourseData courseDb, IUserData userDb, IWarningData warningDb, IRoleData roleDb, IChatData chatDb)
         {
             this.courseDb = courseDb;
             this.userDb = userDb;
-            this.warningDb= warningDb;
+            this.warningDb = warningDb;
+            this.roleDb = roleDb;
+            this.chatDb = chatDb;
         }
         // GET: Users
         public ActionResult Index()
@@ -251,7 +259,146 @@ namespace Proiect_Licenta.Controllers
             return RedirectToAction("UsersDetails", "Users");
         }
 
+        // method used to apply for helping student role as a student
+        public ActionResult ApplyForHelpingStudent()
+        {
+            var userId = User.Identity.GetUserId();
+            var userData = userDb.getUserData(userId);
+
+            var application = new ProiectLicenta.Data.Models.HelpingStudentApplication();
+
+            application.StudentId = userData.UserDataId;
+            userData.HelpingStudentApplicationId= application.HelpingStudentApplicationId;
+
+            application.FinishedCoursesIds = courseDb.GetFinishedCoursesSerialized(userData.UserDataId);
+
+            application.IsApproved = false;
+
+            userDb.AddHelpingStudentApplication(application);
+
+            return RedirectToAction("YourHelpingStudentApplication");
+
+        }
+
+        public ActionResult YourHelpingStudentApplication()
+        {
+            var userId = User.Identity.GetUserId();
+            var userData = userDb.getUserData(userId);
+
+            var application = userDb.getHelpingStudentApplication(userData.UserDataId);
+            if (application == null)
+            {
+                return View("NoApplicationFound");
+            }
+
+            return View(application);
+
+
+        }
+
         
+        public ActionResult SeeHelpingStudentApplicationsForProfessor()
+        {
+
+            var applications = userDb.getHelpingStudentApplicationsForProfessor();
+
+
+            return View(applications);
+
+        }
+
+        public ActionResult SeeHelpingStudentApplicationsForAdmin()
+        {
+
+            var applications = userDb.getHelpingStudentApplicationsForAdmin();
+
+
+            return View(applications);
+
+        }
+        [HttpGet]
+
+        public ActionResult SupportHelpingStudentApplication(int applicationId)
+        {
+
+            var application = userDb.getHelpingStudentApplicationById(applicationId);
+
+
+            return View(application);
+
+        }
+        [HttpPost]
+        public ActionResult SupportHelpingStudentApplication(int applicationId, FormCollection form)
+        {
+
+            var application = userDb.getHelpingStudentApplicationById(applicationId);
+
+            var userId = User.Identity.GetUserId();
+            var userDataId = userDb.getUserId(userId);
+
+            userDb.supportHelpingStudentApplication(applicationId, userDataId);
+
+
+            return RedirectToAction("SeeHelpingStudentApplicationsForProfessor");
+
+        }
+
+        //For Admin
+        public ActionResult ApproveHelpingStudentApplication(int applicationId)
+        {
+
+            var application = userDb.getHelpingStudentApplicationById(applicationId);
+
+
+            return View(application);
+
+        }
+        [HttpPost]
+        public ActionResult ApproveHelpingStudentApplication(int applicationId, FormCollection form)
+        {
+
+            var application = userDb.getHelpingStudentApplicationById(applicationId);
+
+            var userId = application.StudentId;
+            var userData = userDb.getUserByUserDataId(userId);
+            var studentUserIdDb = userData.UserId;
+
+            userDb.approveHelpingStudentApplication(applicationId);
+            userDb.ChangeRole("HelpingStudent", studentUserIdDb);
+            roleDb.ChangeRole(studentUserIdDb, "helping_student");
+
+
+            return RedirectToAction("SeeHelpingStudentApplicationsForProfessor");
+
+        }
+
+        public ActionResult ProblemSolved(int chatId)
+        {
+
+            var chat = chatDb.getChatById(chatId);
+
+            if (chat.HelpingStudentId == null)
+            {
+                return View("NoHelpingStudentAssigned");
+            }
+
+            chat.IssueSolved = true;
+
+            var studentId = chat.StudentId;
+            
+
+            userDb.AssignPointsToUser(studentId, pointsForStudent);
+           
+            var helpingStudentId = chat.HelpingStudentId;
+            userDb.AssignPointsToUser((int)helpingStudentId, pointsForHelpingStudent);
+
+
+            return RedirectToAction("Index","Chat");
+
+        }
+
+
+
 
 
 

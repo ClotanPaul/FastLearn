@@ -2,6 +2,7 @@
 using Autofac.Integration.Mvc;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Proiect_Licenta.Models;
+using Proiect_Licenta.Services;
 using ProiectLicenta.Data.Services;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,10 @@ namespace Proiect_Licenta.App_Start
             builder.RegisterType<SqlChapterData>()
                 .As<IChapterData>()
                 .InstancePerRequest();
+
+            builder.RegisterType<SqlRoleData>()
+               .As<IRoleData>()
+               .InstancePerRequest();
 
             builder.RegisterType<SqlSubChapterData>()
                 .As<ISubChapterData>()
@@ -79,6 +84,7 @@ namespace Proiect_Licenta.App_Start
                 .InstancePerRequest();
 
             builder.RegisterType<ApplicationDataDbContext>().InstancePerRequest();
+            builder.RegisterType<ApplicationDbContext>().InstancePerRequest();
 
             //builder.RegisterType<Principal>();
 

@@ -1,6 +1,7 @@
 ﻿using Proiect_Licenta.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,11 @@ namespace ProiectLicenta.Data.Models
         public int UserDataId { get; set; }
 
         public virtual UserData UserData { get; set; }
+
+        [DefaultValue(false)]
+        public bool CompletedCourse { get; set; }
+
+
 
 
     }

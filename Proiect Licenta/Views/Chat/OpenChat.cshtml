@@ -69,16 +69,16 @@
                                                 <p class="small text-muted">@senderRole: @senderEmail</p>
                                             </div>
                                         }
-                                    <div class="message-content">
-                                        <p class="mb-1">@message.MessageContent</p>
-                                        <p class="small text-muted">@message.TimeStamp.ToString("HH:mm")</p>
-                                        @if (Context.User.Identity.Name == senderEmail)
-                                        {
-                                            @Html.ActionLink("Edit", "EditMessage", "Message", new { messageId = message.MessageId }, new { @class = "small text-muted" }) <text> | </text>
-                                            @Html.ActionLink("Delete", "DeleteMessage", "Message", new { messageId = message.MessageId }, new { @class = "small text-muted" })
-                                        }
+                                        <div class="message-content">
+                                            <p class="mb-1">@message.MessageContent</p>
+                                            <p class="small text-muted">@message.TimeStamp.ToString("HH:mm")</p>
+                                            @if (Context.User.Identity.Name == senderEmail)
+                                            {
+                                                @Html.ActionLink("Edit", "EditMessage", "Message", new { messageId = message.MessageId }, new { @class = "small text-muted" }) <text> | </text>
+                                                @Html.ActionLink("Delete", "DeleteMessage", "Message", new { messageId = message.MessageId }, new { @class = "small text-muted" })
+                                            }
 
-                                    </div>
+                                        </div>
                                     </div>
 
                                     previousSender = senderEmail;
@@ -89,16 +89,24 @@
                                 <h4>No chat history.</h4>
                             }
                         </div>
-                        <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
-                            <input type="text" class="form-control form-control-lg flex-grow-1" id="newMessage" name="newMessage" placeholder="Type message">
-                            <input type="hidden" name="chatId" value="@Model.ChatId" />
-                            <button type="submit" class="btn btn-primary ms-auto">Send</button>
-                        </div>
+                        @if(Model.IssueSolved == false) {
+                            <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
+                                <input type="text" class="form-control form-control-lg flex-grow-1" id="newMessage" name="newMessage" placeholder="Type message">
+                                <input type="hidden" name="chatId" value="@Model.ChatId" />
+                                <button type="submit" class="btn btn-primary ms-auto">Send</button>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </form>
+@if (User.Identity.IsAuthenticated && User.IsInRole("student") && Model.IssueSolved == false)
+{
+    <p>@Html.ActionLink("IssueSolved", "ProblemSolved", "Users", new { chatId = Model.ChatId }, null)</p>
+}
+    
+
 
 

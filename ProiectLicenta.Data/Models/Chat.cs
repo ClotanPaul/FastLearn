@@ -1,6 +1,7 @@
 ﻿using Proiect_Licenta.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -29,5 +30,8 @@ namespace ProiectLicenta.Data.Models
         public SubChapter SubChapter { get; set; }
 
         public virtual ICollection<Message> ChatMessages { get; set; }
+
+        [DefaultValue(false)]
+        public bool IssueSolved { get; set; }
     }
 }

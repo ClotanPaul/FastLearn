@@ -7,25 +7,26 @@
 <h2>Create</h2>
 
 @section scripts{
-    <script src="https://cdn.ckeditor.com/4.16.2/full/ckeditor.js"></script>
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('SubchapterDescription', {
+            extraPlugins: 'codesnippet',
+            codeSnippet_theme: 'default',
             toolbar: [
                 { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
                 { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
                 { name: 'colors', items: ['TextColor', 'BGColor'] },
-                { name: 'insert', items: ['Image', 'Table', 'HorizontalRule'] },
+                { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'CodeSnippet'] },
                 { name: 'document', items: ['Print'] },
                 { name: 'clipboard', items: ['Undo', 'Redo'] },
                 '/',
                 { name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Outdent', 'Indent'] },
                 { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
                 { name: 'tools', items: ['Maximize', 'ShowBlocks'] }
-            ]
+            ],
         });
     </script>
 }
-
 
 
 @using (Html.BeginForm())
@@ -36,7 +37,7 @@
         <h4>SubChapter</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model=>model.ChapterId)
+        @Html.HiddenFor(model => model.ChapterId)
         <div class="form-group">
             @Html.LabelFor(model => model.SubchapterTitle, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

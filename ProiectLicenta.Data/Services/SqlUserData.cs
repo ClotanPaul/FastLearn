@@ -98,5 +98,61 @@ namespace ProiectLicenta.Data.Services
             var user = db.UsersData.FirstOrDefault(u=> u.Email== userName);
             return user;
         }
+
+        public void AddHelpingStudentApplication(HelpingStudentApplication application)
+        {
+            if (application != null)
+            {
+                db.HelpingStudentApplications.Add(application);
+                db.SaveChanges();
+            }
+        }
+
+        public HelpingStudentApplication getHelpingStudentApplication(int userId)
+        {
+            var application = db.HelpingStudentApplications.FirstOrDefault(a=> a.StudentId == userId);
+            return application;
+
+        }
+
+        public List<HelpingStudentApplication> getHelpingStudentApplicationsForProfessor()
+        {
+            var applications = db.HelpingStudentApplications.Where(app => app.ProfessorId == null && app.IsApproved == false);
+            return applications.ToList();
+        }
+
+        public List<HelpingStudentApplication> getHelpingStudentApplicationsForAdmin()
+        {
+            var applications = db.HelpingStudentApplications.Where(app => app.ProfessorId != null && app.IsApproved == false);
+            return applications.ToList();
+        }
+
+        public HelpingStudentApplication getHelpingStudentApplicationById(int id)
+        {
+            return db.HelpingStudentApplications.FirstOrDefault(app => app.HelpingStudentApplicationId == id);
+        }
+
+        public void supportHelpingStudentApplication(int applicationId, int professorId)
+        {
+            var application = getHelpingStudentApplicationById(applicationId);
+            application.ProfessorId = professorId;
+            db.SaveChanges();
+        }
+
+        public void approveHelpingStudentApplication(int applicationId)
+        {
+            var application = getHelpingStudentApplicationById(applicationId);
+            application.IsApproved = true;
+
+            var newHelpingStudentId = application.StudentId;
+        }
+
+        public void AssignPointsToUser(int userDataId, int numberOfPoints)
+        {
+            var userData = getUserByUserDataId(userDataId);
+            userData.Points += numberOfPoints;
+
+            db.SaveChanges();
+        }
     }
 }

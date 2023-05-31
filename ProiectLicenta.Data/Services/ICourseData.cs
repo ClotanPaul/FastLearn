@@ -34,6 +34,10 @@ namespace ProiectLicenta.Data.Services
 
         List<int> GetEnrolledCoursesIds(string studentId);
 
+        List<Course> GetFinishedCourses(int userDataId);
+
+        string GetFinishedCoursesSerialized(int userDataId);
+
 
     }
 }

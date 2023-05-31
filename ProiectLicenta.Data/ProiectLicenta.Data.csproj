@@ -52,6 +52,9 @@
     <Reference Include="MimeKit, Version=4.0.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
       <HintPath>..\packages\MimeKit.4.0.0\lib\net47\MimeKit.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -216,11 +219,28 @@
     <Compile Include="Migrations\202305281517206_PutDefaultValueForTimeStamp.designer.cs">
       <DependentUpon>202305281517206_PutDefaultValueForTimeStamp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305291713314_HelpingStudentApplication.cs" />
+    <Compile Include="Migrations\202305291713314_HelpingStudentApplication.designer.cs">
+      <DependentUpon>202305291713314_HelpingStudentApplication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305291850244_FixHelpingStudentApplicationRelation.cs" />
+    <Compile Include="Migrations\202305291850244_FixHelpingStudentApplicationRelation.designer.cs">
+      <DependentUpon>202305291850244_FixHelpingStudentApplicationRelation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305301358183_ChatIssueSolvedField.cs" />
+    <Compile Include="Migrations\202305301358183_ChatIssueSolvedField.designer.cs">
+      <DependentUpon>202305301358183_ChatIssueSolvedField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305301728245_CompletedCourseEnrollment.cs" />
+    <Compile Include="Migrations\202305301728245_CompletedCourseEnrollment.designer.cs">
+      <DependentUpon>202305301728245_CompletedCourseEnrollment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Chapter.cs" />
     <Compile Include="Models\Chat.cs" />
     <Compile Include="Models\EnrolledStudentInCourse.cs" />
+    <Compile Include="Models\HelpingStudentApplication.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\SubChapterFiles.cs" />
     <Compile Include="Models\Course.cs" />
@@ -356,6 +376,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305281517206_PutDefaultValueForTimeStamp.resx">
       <DependentUpon>202305281517206_PutDefaultValueForTimeStamp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305291713314_HelpingStudentApplication.resx">
+      <DependentUpon>202305291713314_HelpingStudentApplication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305291850244_FixHelpingStudentApplicationRelation.resx">
+      <DependentUpon>202305291850244_FixHelpingStudentApplicationRelation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305301358183_ChatIssueSolvedField.resx">
+      <DependentUpon>202305301358183_ChatIssueSolvedField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305301728245_CompletedCourseEnrollment.resx">
+      <DependentUpon>202305301728245_CompletedCourseEnrollment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

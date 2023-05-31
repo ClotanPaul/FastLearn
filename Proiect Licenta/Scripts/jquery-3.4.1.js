@@ -1623,8 +1623,7 @@ getText = Sizzle.getText = function( elem ) {
 	} else if ( nodeType === 3 || nodeType === 4 ) {
 		return elem.nodeValue;
 	}
-	// Do not 
- comment or processing instruction nodes
+	// Do not comment or processing instruction nodes
 
 	return ret;
 };

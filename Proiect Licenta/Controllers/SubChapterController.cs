@@ -1,5 +1,6 @@
 ﻿using Ganss.Xss;
 using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security.OAuth.Messages;
 using Proiect_Licenta.ViewModels;
 using ProiectLicenta.Data.Models;
 using ProiectLicenta.Data.Services;
@@ -20,13 +21,15 @@ namespace Proiect_Licenta.Controllers
         private readonly IChapterData chapterDb;
         private readonly ISubChapterData subChapterDb;
         private readonly ISubChapterFileData subchapterFileDb;
-        public SubChapterController(ICourseData db, IUserData userDb, IChapterData chapterDb, ISubChapterData subChapterDb, ISubChapterFileData courseFileDb)
+        private readonly IEnrolledSudentInCourse enrollmentDb;
+        public SubChapterController(ICourseData db, IUserData userDb, IChapterData chapterDb, ISubChapterData subChapterDb, ISubChapterFileData courseFileDb, IEnrolledSudentInCourse enrollmentDb)
         {
             this.courseDb = db;
             this.userDb = userDb;
             this.chapterDb = chapterDb;
             this.subChapterDb = subChapterDb;
             this.subchapterFileDb = courseFileDb;
+            this.enrollmentDb = enrollmentDb;
         }
 
         // GET: Chapter
@@ -67,6 +70,7 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Create(SubChapter newSubChapter, int chapterId)
         {
             var sanitizer = new HtmlSanitizer();
+            sanitizer.AllowedAttributes.Add("class");
             newSubChapter.ChapterId = chapterId;
 
             newSubChapter.SubchapterDescription = sanitizer.Sanitize(newSubChapter.SubchapterDescription);
@@ -93,6 +97,7 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Edit(SubChapter subChapter)
         {
             var sanitizer = new HtmlSanitizer();
+            sanitizer.AllowedAttributes.Add("class");
             subChapter.SubchapterDescription = sanitizer.Sanitize(subChapter.SubchapterDescription);
             if (ModelState.IsValid)
             {
@@ -250,6 +255,17 @@ namespace Proiect_Licenta.Controllers
             {
                 return View("NoSuchSubchapterFound");
             }
+
+            //user should be enrolled in course in order to be able to access this.
+            var studentId = User.Identity.GetUserId();
+            var isEnrolled = enrollmentDb.IsEnrolledInCourse(studentId, subChapter.Chapter.CourseId);
+
+            if (!isEnrolled)
+            {
+                return View("YouAreNotEnrolledInThisCourse");
+            }
+
+            
 
             return View(subChapter);
         }

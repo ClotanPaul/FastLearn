@@ -172,7 +172,7 @@ namespace Proiect_Licenta.Controllers
             return View(testViewModel);
         }
 
-        public ActionResult SubmitTest(TestViewModel testViewModel)
+        public ActionResult SubmitTest(TestViewModel testViewModel, string submitButton)
         {
             // are all the questions answered?
 
@@ -198,6 +198,24 @@ namespace Proiect_Licenta.Controllers
 
             //saving everything in a userAnswer instance.
             int minimumScore = testDb.getTestById(testViewModel.TestId).MinimumScore;
+
+            if (submitButton == "SubmitTestWithPoints")
+            {
+                var user = userDataDb.getUserData(User.Identity.GetUserId());
+
+                if (user.Points >= 20)
+                {
+                    user.Points -= 20;
+                    minimumScore -= 15;
+                    if (minimumScore < 50)
+                    {
+                        minimumScore = 50;
+                    }
+                }
+            }
+                
+            
+
             var userAnswer = new UserAnswer
             {
                 UserId = User.Identity.GetUserId(),
@@ -219,6 +237,13 @@ namespace Proiect_Licenta.Controllers
                 var enrollment = enrollmentDb.getEnrolledStudentInfo(courseId, userAnswer.UserId);
 
                 var nextSubchapter = subChapterDb.GetNextSubChapter(test.SubChapter.SubchapterId);
+
+                if (nextSubchapter == null) // either the course was finished, or an error occured
+                {
+                    enrollment.CompletedCourse = true;
+                    enrollmentDb.UpdateEnrollment(enrollment);
+                    return View("YouPromotedTheCourse");
+                }
 
                 enrollment.LastCompletedSubChapterId = nextSubchapter.SubchapterId;
                 enrollment.LastCompletedChapterId = nextSubchapter.ChapterId;

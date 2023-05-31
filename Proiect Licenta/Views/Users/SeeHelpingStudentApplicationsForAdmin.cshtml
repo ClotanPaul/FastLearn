@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ProiectLicenta.Data.Models.HelpingStudentApplication>
+
+@{
+    ViewBag.Title = "SeeHelpingStudentApplicationsForProfessor";
+}
+
+<h2>SeeHelpingStudentApplicationsForProfessor</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FinishedCoursesIds)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProfessorId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsApproved)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinishedCoursesIds)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfessorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsApproved)
+            </td>
+            <td>
+                @Html.ActionLink("Approve Application", "ApproveHelpingStudentApplication", new { applicationId = item.HelpingStudentApplicationId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.HelpingStudentApplicationId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.HelpingStudentApplicationId })
+            </td>
+        </tr>
+    }
+
+</table>

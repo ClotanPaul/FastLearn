@@ -27,7 +27,7 @@ namespace Proiect_Licenta.Controllers
             this.courseDb = db;
             this.userDb = userDb;
             this.imageDb = imageDb;
-            this.enrollStudentInCourseDb= enrollStudentInCourseDb;
+            this.enrollStudentInCourseDb = enrollStudentInCourseDb;
             this.subchapterDb = subchapterDb;
         }
         // GET: Course
@@ -89,7 +89,7 @@ namespace Proiect_Licenta.Controllers
             if (ModelState.IsValid)
             {
                 courseDb.UpdateCourse(course);
-                return RedirectToAction("Details",new {id = course.CourseId });
+                return RedirectToAction("Details", new { id = course.CourseId });
             }
             return View();
         }
@@ -150,11 +150,11 @@ namespace Proiect_Licenta.Controllers
 
         }
 
-        
+
         [HttpPost]
         public ActionResult ActivateCourse(int id, FormCollection form)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 courseDb.ActivateCourse(id);
             }
@@ -188,7 +188,7 @@ namespace Proiect_Licenta.Controllers
         public ActionResult DeactivateCourse(Course course)
         {
 
-            if(course.DeactivationReason == null)// or courseid-int is null
+            if (course.DeactivationReason == null)// or courseid-int is null
             {
                 return View("NotFound");
             }
@@ -260,7 +260,7 @@ namespace Proiect_Licenta.Controllers
                 file.SaveAs(path);
                 courseDb.UpdateCourse(course);
             }
-            
+
             return RedirectToAction("GetUserCourses");
         }
 
@@ -293,7 +293,7 @@ namespace Proiect_Licenta.Controllers
         {
             var model = courseDb.GetCourse(courseId);
             var userId = User.Identity.GetUserId();
-            
+
             if (!enrollStudentInCourseDb.IsEnrolledInCourse(userId, courseId))
             {
                 return View("NotEnrolled");
@@ -309,7 +309,7 @@ namespace Proiect_Licenta.Controllers
         {
             var userId = User.Identity.GetUserId();
             var userDataId = userDb.getUserId(userId);
-            
+
             enrollStudentInCourseDb.CancelEnrollment(courseId, userDataId);
             return RedirectToAction("StudentIndex");
 
@@ -321,7 +321,7 @@ namespace Proiect_Licenta.Controllers
 
             var courseStudentData = enrollStudentInCourseDb.getEnrolledStudentInfo(courseId, userId);
 
-            if(courseStudentData == null)// student not enrolled/ no data of student
+            if (courseStudentData == null)// student not enrolled/ no data of student
             {
                 var course = courseDb.GetCourse(courseId);
 
@@ -351,10 +351,31 @@ namespace Proiect_Licenta.Controllers
             var coursesIds = courseDb.GetEnrolledCoursesIds(userId);
 
             var courses = new List<Course>();
-            foreach(var id in coursesIds)
+            foreach (var id in coursesIds)
             {
                 var course = courseDb.GetCourse(id);
-                if (course.Active)
+                var enrollment = enrollStudentInCourseDb.getEnrolledStudentInfo(id, userId);
+                if (course.Active && !enrollment.CompletedCourse)
+                {
+                    courses.Add(course);
+                }
+            }
+
+            ViewData["userId"] = User.Identity.GetUserId();
+            return View(courses);
+        }
+
+        public ActionResult GetStudentFinishedCourses()
+        {
+            var userId = User.Identity.GetUserId();
+            var coursesIds = courseDb.GetEnrolledCoursesIds(userId);
+
+            var courses = new List<Course>();
+            foreach (var id in coursesIds)
+            {
+                var course = courseDb.GetCourse(id);
+                var enrollment = enrollStudentInCourseDb.getEnrolledStudentInfo(id, userId);
+                if (course.Active && enrollment.CompletedCourse)
                 {
                     courses.Add(course);
                 }
@@ -372,7 +393,7 @@ namespace Proiect_Licenta.Controllers
 
             var toReturn = new List<Course>();
 
-            foreach(var course in courses)
+            foreach (var course in courses)
             {
                 if (!enrolledCoursesId.Contains(course.CourseId) && course.Active)
                     toReturn.Add(course);

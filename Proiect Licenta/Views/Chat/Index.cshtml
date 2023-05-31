@@ -1,10 +1,57 @@
 ﻿@model List<ProiectLicenta.Data.Models.Chat>
 
-<h2>Your Chats</h2>
+
+<style>
+    .chat-container {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<h2>Active Chats</h2>
 
 @foreach (var chat in Model)
 {
-    <div>
-        @Html.ActionLink(chat.Topic, "OpenChat", "Chat", new { chatId = chat.ChatId }, null)
-    </div>
+    if (chat.IssueSolved == false)
+    {
+        string helpingStudent = @chat?.HelpingStudent?.Email ?? "NotAssigned";
+        <div class="chat-container">
+            <h4>@chat.Topic</h4>
+            <p>
+                <strong>Course:</strong> @chat.SubChapter.Chapter.Course.CourseName<br />
+                <strong>Chapter:</strong> @chat.SubChapter.Chapter.ChapterTitle<br />
+                <strong>Subchapter:</strong> @chat.SubChapter.SubchapterTitle<br />
+                <strong>Student:</strong> @chat.Student.Email <br>
+
+                <strong>Helper:</strong> @helpingStudent
+            </p>
+            <p>
+                @Html.ActionLink("Open Chat", "OpenChat", "Chat", new { chatId = chat.ChatId }, null)<text>  </text>
+            </p>
+        </div>
+    }
+}
+
+<h2>Archived Chats</h2>
+
+@foreach (var chat in Model)
+{
+    if (chat.IssueSolved == true)
+    {
+        string helpingStudent = @chat?.HelpingStudent?.Email ?? "NotAssigned";
+        <div class="chat-container">
+            <h4>@chat.Topic</h4>
+            <p>
+                <strong>Course:</strong> @chat.SubChapter.Chapter.Course.CourseName<br />
+                <strong>Chapter:</strong> @chat.SubChapter.Chapter.ChapterTitle<br />
+                <strong>Subchapter:</strong> @chat.SubChapter.SubchapterTitle<br />
+                <strong>Student:</strong> @chat.Student.Email <br>
+                <strong>Helper:</strong> @helpingStudent
+            </p>
+            <p>
+                @Html.ActionLink("Open Chat", "OpenChat", "Chat", new { chatId = chat.ChatId }, null)<text>  </text>
+            </p>
+        </div>
+    }
 }
