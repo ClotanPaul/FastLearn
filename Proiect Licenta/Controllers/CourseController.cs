@@ -33,6 +33,9 @@ namespace Proiect_Licenta.Controllers
         // GET: Course
         [AllowAnonymous]
         public ActionResult Index()
+        
+        
+        
         {
             List<Course> courses = courseDb.GetAll();
             ViewData["userId"] = User.Identity.GetUserId();
@@ -209,6 +212,14 @@ namespace Proiect_Licenta.Controllers
             return View(courses);
         }
 
+        public ActionResult GetUserInactiveCourses()
+        {
+            var userId = User.Identity.GetUserId();
+            List<Course> courses = courseDb.GetUserInactiveCourses(userId);
+            ViewData["userId"] = User.Identity.GetUserId();
+            return View(courses);
+        }
+
         public ActionResult GetInactiveCourses()
         {
             List<Course> courses = courseDb.GetInactiveCourses();
@@ -285,7 +296,7 @@ namespace Proiect_Licenta.Controllers
             var userId = User.Identity.GetUserId();
             var userDataId = userDb.getUserId(userId);
             enrollStudentInCourseDb.EnrollInCourse(courseId, userDataId);
-            return RedirectToAction("StudentIndex");
+            return RedirectToAction("GetStudentEnrolledCourses");
 
         }
 
@@ -311,7 +322,7 @@ namespace Proiect_Licenta.Controllers
             var userDataId = userDb.getUserId(userId);
 
             enrollStudentInCourseDb.CancelEnrollment(courseId, userDataId);
-            return RedirectToAction("StudentIndex");
+            return RedirectToAction("GetStudentUnEnrolledCourses");
 
         }
 
@@ -403,7 +414,7 @@ namespace Proiect_Licenta.Controllers
             ViewData["userId"] = User.Identity.GetUserId();
             return View(toReturn);
         }
-
+        [AllowAnonymous]
         public ActionResult CourseSyllabus(int courseId)
         {
             var course = courseDb.GetCourse(courseId);

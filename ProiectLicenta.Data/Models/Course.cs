@@ -15,14 +15,17 @@ namespace ProiectLicenta.Data.Models
         public int CourseId { get; set; }
 
         [Required]
+        [DisplayName("Name")]
         public string CourseName { get; set; }
 
         [Required]
+        [DisplayName("Description")]
         public string CourseDescription { get; set; }
 
         [DefaultValue(false)]
         public bool Active { get; set; }
 
+        [DisplayName("Reason")]
         public string DeactivationReason { get; set; }
 
         public string OwnerId { get; set; }

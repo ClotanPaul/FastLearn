@@ -154,5 +154,12 @@ namespace ProiectLicenta.Data.Services
 
             db.SaveChanges();
         }
+
+        public void DeleteHelpingStudentApplication(int helperApplicationId)
+        {
+            var application = db.HelpingStudentApplications.FirstOrDefault(app => app.HelpingStudentApplicationId == helperApplicationId);
+            db.HelpingStudentApplications.Remove(application);
+            db.SaveChanges();
+        }
     }
 }

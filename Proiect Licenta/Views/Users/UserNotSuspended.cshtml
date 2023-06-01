@@ -5,3 +5,8 @@
 
 <h2>UserNotSuspended</h2>
 
+@if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+{
+    <li>@Html.ActionLink("Go Back to AdminPanel", "UsersDetails", "Users")</li>
+}
+

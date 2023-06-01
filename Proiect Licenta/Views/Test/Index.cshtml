@@ -7,7 +7,7 @@
 
 <div class="container mt-3">
     <h2 class="text-left">Test Index</h2>
-    @if (!User.IsInRole("student"))
+    @if ((string)ViewData["ownerId"] == (string)ViewData["userId"])
     {
         <div class="text-left my-4">
             @Html.ActionLink("Add Test", "Create", new { subChapterId = ViewData["subChapterId"] }, new { @class = "btn btn-primary" })
@@ -37,15 +37,14 @@
                     {
                         @Html.ActionLink("Edit", "Edit", new { subChapterId = ViewData["subChapterId"] }, new { @class = "btn btn-link" }) <text> | </text>
                         @Html.ActionLink("Delete", "Delete", new { subChapterId = ViewData["subChapterId"] }, new { @class = "btn btn-link" }) <text> | </text>
-                        @Html.ActionLink("Questions", "Index", "Question", new { testId = Model.TestId }, new { @class = "btn btn-link" })
                     }
-                    @Html.ActionLink("Back to subChapter", "Index", "SubChapter", new { chapterId = ViewData["chapterId"] }, new { @class = "btn btn-link" }) |
-                    @*
                     @if (Model != null)
                     {
 
-                        @Html.ActionLink("TakeTest", "TakeTest", new { testId = Model.TestId }, new { @class = "btn btn-link" })
+                        @Html.ActionLink("Questions", "Index", "Question", new { testId = Model.TestId }, new { @class = "btn btn-link" })
                     }
+                    @Html.ActionLink("Back to subChapter", "Index", "SubChapter", new { chapterId = ViewData["chapterId"] }, new { @class = "btn btn-link" })
+                    @*
                     *@
                 </dd>
             </dl>

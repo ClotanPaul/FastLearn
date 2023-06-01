@@ -11,14 +11,6 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.UserName)
         </dt>
 
@@ -42,10 +34,17 @@
             @Html.DisplayFor(model => model.Points)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.UserRole)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserRole)
+        </dd>
+
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.UserDataId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit Username", "Edit", new { id = Model.UserDataId }) |
 </p>

@@ -6,9 +6,6 @@
 
 <h2>GetFileList</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -18,15 +15,9 @@
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FilePath)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.UploadedDate)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SubChapterId)
-        </th>
-        <th></th>
+        <th>Actions</th>
     </tr>
 
     @foreach (var item in Model)
@@ -39,31 +30,29 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FilePath)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.UploadedDate)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubChapterId)
-            </td>
 
-
+            @if (User.IsInRole("professor"))
+            {
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.SubChapterFilesId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.SubChapterFilesId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.SubChapterFilesId })
+                @Html.ActionLink("Delete", "DeleteFile", new { fileId = item.SubChapterFilesId })
             </td>
+            }
         </tr>
     }
-    @foreach (var item in Model)
-    {
-        using (Html.BeginForm("DownloadFile", "SubChapter", FormMethod.Get))
-        {
-            @Html.Hidden("fileName", item.FilePath)
-            @Html.Hidden("subChapterId", item.SubChapterId)
-            <button type="submit">@item.Title</button>
-        }
-    }
+
 
 </table>
+@foreach (var item in Model)
+{
+    using (Html.BeginForm("DownloadFile", "SubChapter", FormMethod.Get))
+    {
+        @Html.Hidden("fileName", item.FilePath)
+        @Html.Hidden("subChapterId", item.SubChapterId)
+        <button type="submit">@item.Title</button>
+    }
+}
+<div>
+    @Html.ActionLink("Back to SubChapter List", "Index", new { chapterId = (int)ViewData["chapterId"] })
+</div>

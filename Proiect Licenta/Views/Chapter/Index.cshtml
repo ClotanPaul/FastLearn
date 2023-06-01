@@ -7,11 +7,11 @@
 
 <div class="container mt-3">
     <h2 class="text-left">Chapter Index</h2>
-    @if (User.IsInRole("professor")|| User.IsInRole("admin"))
+    @if ((string)ViewData["ownerId"] == (string)ViewData["userId"])
     {
-    <div class="text-left my-4">
-        @Html.ActionLink("Add a new Chapter", "Create", new { courseId = ViewData["courseId"] }, new { @class = "btn btn-primary" })
-    </div>
+        <div class="text-left my-4">
+            @Html.ActionLink("Add a new Chapter", "Create", new { courseId = ViewData["courseId"] }, new { @class = "btn btn-primary" })
+        </div>
     }
 
     <table class="table table-striped">
@@ -22,9 +22,6 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ChapterDescription)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ChapterNumber)
                 </th>
                 <th>
                     Actions
@@ -42,10 +39,6 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ChapterDescription)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ChapterNumber)
-                    </td>
                     <td>
                         @if (item.Course.OwnerId == (string)ViewData["userId"])
                         {
@@ -53,10 +46,18 @@
                             @Html.ActionLink("Details", "Details", new { id = item.ChapterId }, new { @class = "btn btn-link" }) <text></text>
                             @Html.ActionLink("Delete", "Delete", new { id = item.ChapterId }, new { @class = "btn btn-link" }) <text></text>
                         }
-                        @Html.ActionLink("To Subchapters", "Index", "SubChapter", new { chapterId = item.ChapterId }, new { @class = "btn btn-link" })
+                        @Html.ActionLink("Subchapters", "Index", "SubChapter", new { chapterId = item.ChapterId }, new { @class = "btn btn-link" })
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+    @if (!User.IsInRole("professor"))
+    {
+        @Html.ActionLink("Courses", "Index", "Course", null, new { @class = "btn btn-link" });
+    }
+    else
+    {
+        @Html.ActionLink("Courses", "GetUserCourses", "Course", null, new { @class = "btn btn-link" });
+    }
 </div>

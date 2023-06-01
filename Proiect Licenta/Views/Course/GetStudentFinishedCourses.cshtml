@@ -49,7 +49,7 @@
                     }
                     <div class="card-body">
                         <h5 class="card-title">
-                            @Html.ActionLink(item.CourseName, "ExploreCourse", "Course", new { courseId = item.CourseId }, null)
+                            @Html.DisplayFor(model =>item.CourseName)
                         </h5>
                         <p class="card-text">@Html.DisplayFor(modelItem => item.CourseDescription)</p>
                         <div class="text-center">

@@ -5,45 +5,67 @@
 }
 
 <style>
-
     .card {
         background: #f8f9fa;
-        border-radius: 5px;
+        border-radius: 20px;
         padding: 20px;
         margin-top: 20px;
         margin-bottom: 20px;
-        height: 400px;
+        height: 440px;
         width: auto;
+        border: 1px solid #b4b4b4;
     }
 
     .card-img-top {
         width: 320px;
         height: 200px;
+        border-radius: 15px;
+        border: 2px solid #000000;
     }
 
     .card-title {
         font-weight: bold;
+        font-size: 18px;
+        height: 18px;
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-top: 15px;
+        margin-bottom: 15px;
     }
+
+    .card-text {
+        height: 60px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    #chaptersB {
+        margin-right: 5px;
+    }
+
+    #reviewsB {
+        margin-right: 5px;
+    }
+
+    #ceva {
+        margin-top: 10px;
+    }
+
 </style>
 
-
-
 <h2 class="text-left text-primary">Course List</h2>
-@if (User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("professor")))
+@if (User.Identity.IsAuthenticated && (User.IsInRole("professor")))
 {
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
-
 }
-
-
 
 <div class="container">
     <div class="row">
         @foreach (var item in Model)
         {
-
             <div class="col-md-4 mb-4">
                 <div class="card">
                     @if (item.ImagePath != null)
@@ -52,35 +74,35 @@
                     }
                     else
                     {
-                        <img src="~/Content/images/proiectLicentaPhoto.jpg" class="card-img-top" alt="Course Image"> <text>Image</text>
+                        <img src="~/Content/images/proiectLicentaPhoto.jpg" class="card-img-top" alt="Course Image">
                     }
                     <div class="card-body">
                         <h5 class="card-title">@Html.DisplayFor(modelItem => item.CourseName)</h5>
                         <p class="card-text">@Html.DisplayFor(modelItem => item.CourseDescription)</p>
-                        @if (User.IsInRole("admin") || (item.OwnerId == (string)ViewData["userId"] && item.OwnerId != null))
-                        {
-                            <p class="card-text">Active: @Html.DisplayFor(modelItem => item.Active)</p>
-                        }
                         <div class="text-center">
-                            <text>(</text>
-                            @Html.ActionLink("Chapters", "Index", "Chapter", new { courseId = item.CourseId }, null) <text> | </text>
-                            @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, null) <text> | </text>
-                            @if (User.IsInRole("admin"))
-                            {
-                                @Html.ActionLink("Activate Course", "ActivateCourse", new { id = item.CourseId }) <text> | </text>
-                                @Html.ActionLink("Deactivate Course", "DeactivateCourse", new { id = item.CourseId }) <text> | </text>
-                            }
-                            @if ((User.Identity.IsAuthenticated && item.Active == true && (item.OwnerId == (string)ViewData["userId"])))
-                            {
-                                @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) <text> | </text>
-                                @Html.ActionLink("Details", "Details", new { id = item.CourseId }) <text> | </text>
-                                @Html.ActionLink("Delete", "Delete", new { id = item.CourseId }) <text> ) </text>
-                            }
+                            @Html.ActionLink("Chapters", "Index", "Chapter", new { courseId = item.CourseId }, new { @class = "btn btn-primary", @id = "chaptersB" })
+                            @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, new { @class = "btn btn-primary", @id = "reviewB" })
+                            <div id="ceva">
+                                @if (User.IsInRole("admin"))
+                                {
+                                    @Html.ActionLink("Deactivate Course", "DeactivateCourse", new { id = item.CourseId }, new { @class = "btn btn-primary" })
+                                }
+
+                                @if (!User.Identity.IsAuthenticated)
+                                {
+                                    @Html.ActionLink("Syllabus", "CourseSyllabus", "Course", new { courseId = item.CourseId }, new { @class = "btn btn-primary" })
+                                }
+                                @if ((User.Identity.IsAuthenticated && item.Active == true && (item.OwnerId == (string)ViewData["userId"])))
+                                {
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }, new { @class = "btn btn-primary" })
+                                    @Html.ActionLink("Details", "Details", new { id = item.CourseId }, new { @class = "btn btn-primary" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.CourseId }, new { @class = "btn btn-primary" })
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         }
     </div>
 </div>

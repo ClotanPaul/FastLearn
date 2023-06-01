@@ -46,5 +46,5 @@
 
 <p class="back-link">
     @Html.ActionLink("Edit", "Edit", new { id = Model.CourseReviewId}) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Review List", "Index", "CourseReview", new { courseId = Model.CourseId }, null)
 </p>

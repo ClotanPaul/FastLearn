@@ -42,7 +42,9 @@ namespace ProiectLicenta.Data.Services
 
         public List<Answer> getAnswers(int QuestionId)
         {
-            var Answers = db.Answers.Where(a=>a.QuestionId== QuestionId).ToList();
+            var Answers = db.Answers
+                .Include("Question")
+                .Where(a=>a.QuestionId== QuestionId).ToList();
             return Answers;
         }
 

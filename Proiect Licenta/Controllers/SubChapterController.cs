@@ -8,9 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using static System.Net.WebRequestMethods;
 
 namespace Proiect_Licenta.Controllers
 {
@@ -36,8 +39,11 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Index(int chapterId)
         {
             var model = subChapterDb.GetSubChapters(chapterId);
+            var chapter = chapterDb.GetChapter(chapterId);
             ViewData["chapterId"] = chapterId;
             ViewData["userId"] = User.Identity.GetUserId();
+            ViewData["ownerId"] = chapter.Course.OwnerId;
+            ViewData["courseId"] = chapter.CourseId;
 
             if (model == null)
             {
@@ -52,6 +58,7 @@ namespace Proiect_Licenta.Controllers
             var model = subChapterDb.GetSubChapters(chapterId);
             ViewData["chapterId"] = chapterId;
             ViewData["userId"] = User.Identity.GetUserId();
+ 
 
             if (model == null)
             {
@@ -64,6 +71,7 @@ namespace Proiect_Licenta.Controllers
         [HttpGet]
         public ActionResult Create(int chapterId)
         {
+            ViewData["chapterId"] = chapterId;
             return View();
         }
         [HttpPost]
@@ -86,6 +94,7 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Edit(int id)
         {
             var model = subChapterDb.GetSubChapter(id);
+            ViewData["chapterId"] = model.ChapterId;
 
             if (model == null)
                 return View("NotFound");
@@ -191,6 +200,7 @@ namespace Proiect_Licenta.Controllers
 
             var subchapter = subChapterDb.GetSubChapter(subchapterId);
             ViewData["subChapterId"] = subchapterId;
+            ViewData["chapterId"] = subchapter.ChapterId;
             //set the path to the file
             //string fileFolder = Server.MapPath("~/Content/Videos/Images/Courses");//+subchapter.Chapter.Course.CourseName;
 
@@ -260,6 +270,40 @@ namespace Proiect_Licenta.Controllers
             var studentId = User.Identity.GetUserId();
             var isEnrolled = enrollmentDb.IsEnrolledInCourse(studentId, subChapter.Chapter.CourseId);
 
+            var enrollmentData = enrollmentDb.getEnrolledStudentInfo(subChapter.Chapter.CourseId, studentId);
+            var lastsubchapterId = enrollmentData.LastCompletedSubChapterId;
+
+
+            /////////////////
+
+
+            var files = subchapterFileDb.GetSubChapterFiles(subchapterId);
+
+            var existFiles = new List<SubChapterFiles>();
+
+            foreach (var file in files)
+            {
+                var path = Server.MapPath(file.FilePath);
+
+                if (System.IO.File.Exists(path))
+                {
+                    existFiles.Add(file);
+                }
+            }
+
+            subChapter.SubchapterFiles= existFiles.ToArray();
+            ////////////
+
+            if (subchapterId == lastsubchapterId && !enrollmentData.CompletedCourse)
+            {
+                ViewData["IsCurrentSubchapter"] = "true";
+            }
+            else
+            {
+                ViewData["IsCurrentSubchapter"] = "false";
+            }
+            
+
             if (!isEnrolled)
             {
                 return View("YouAreNotEnrolledInThisCourse");
@@ -274,6 +318,14 @@ namespace Proiect_Licenta.Controllers
         {
             var nextSubChapter = subChapterDb.GetNextSubChapter(currentSubChapterId);
 
+            var currentSubchapter = subChapterDb.GetSubChapter(currentSubChapterId);
+            var userId = User.Identity.GetUserId();
+            var enrollment = enrollmentDb.getEnrolledStudentInfo(currentSubchapter.Chapter.CourseId, userId);
+            if (enrollment != null && enrollment.CompletedCourse && nextSubChapter == null)
+            {
+                return RedirectToAction("GetStudentFinishedCourses","Course");
+            }
+
             if (nextSubChapter == null) // either the course was finished, or an error occured
             {
                 return View("YouPromotedTheCourse");
@@ -281,6 +333,25 @@ namespace Proiect_Licenta.Controllers
 
 
             return RedirectToAction("ViewSubChapter", new { subchapterId = nextSubChapter.SubchapterId });
+        }
+
+        [HttpGet]
+        public ActionResult DeleteFile(int fileId)
+        {
+            var model = subchapterFileDb.getSubChapterFileById(fileId);
+            var subchapterId = model.SubChapterId;
+
+            var fullPath = Server.MapPath(model.FilePath);
+
+
+            if (System.IO.File.Exists(fullPath))
+            {
+
+                System.IO.File.Delete(fullPath);
+
+                subchapterFileDb.DeleteFile(fileId);
+            }
+            return RedirectToAction("GetFileList", new { subchapterId = subchapterId });
         }
 
     }

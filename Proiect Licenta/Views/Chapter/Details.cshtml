@@ -31,5 +31,8 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ChapterId }) |
-    @Html.ActionLink("Back to List", "Index")
 </p>
+
+<div>
+    @Html.ActionLink("Back to ChapterList", "Index", new { courseId = Model.CourseId })
+</div>

@@ -29,14 +29,15 @@ namespace ProiectLicenta.Data.Services
 
         public Course GetCourse(int courseId)
         {
-            return db.Courses.
-                FirstOrDefault(x=> x.CourseId == courseId);
+            return db.Courses
+                .Include("Chapters.Subchapters")
+                .FirstOrDefault(x=> x.CourseId == courseId);
             // to add checks for the user owner.
         }
 
         public List<Course> GetAll()
         {
-            return db.Courses.ToList();
+            return db.Courses.Where(c=>c.Active == true).ToList();
         }
 
         public void AddCourse(Course course)
@@ -87,7 +88,7 @@ namespace ProiectLicenta.Data.Services
 
         public List<Course> GetUserCourses(string ownerId)
         {
-            var courses = db.Courses.Where(c=> c.OwnerId== ownerId).ToList();
+            var courses = db.Courses.Where(c=> c.OwnerId== ownerId && c.Active).ToList();
             return courses;
         }
 
@@ -159,11 +160,7 @@ namespace ProiectLicenta.Data.Services
             foreach (var enrollment in enrolledStudentInCourses)
             {
 
-                var lastCompletedSubChapterId = enrollment.LastCompletedSubChapterId;
-
-                var nextSubChapter = subChapterDb.GetNextSubChapter(lastCompletedSubChapterId);
-
-                if (nextSubChapter == null)
+                if (enrollment.CompletedCourse)
                 {
                     finishedCoursesId.Add(enrollment.CourseId);
                 }
@@ -186,6 +183,26 @@ namespace ProiectLicenta.Data.Services
         public string SerializeFinishedCourses(List<int> finishedCourses)
         {
             return JsonConvert.SerializeObject(finishedCourses);
+        }
+
+        public List<Course> GetEnrolledCoursesByIds(List<int> ids)
+        {
+            List<Course> courses= new List<Course>();
+            if (ids.Count > 0)
+            {
+                foreach(var id in ids)
+                {
+                    var course = GetCourse(id);
+                    courses.Add(course);
+                }
+            }
+            return courses;
+        }
+
+        public List<Course> GetUserInactiveCourses(string ownerId)
+        {
+            var courses = db.Courses.Where(c => c.OwnerId == ownerId && !c.Active).ToList();
+            return courses;
         }
     }
 }

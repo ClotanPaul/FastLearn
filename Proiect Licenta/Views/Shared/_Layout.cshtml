@@ -1,5 +1,23 @@
 ﻿<!DOCTYPE html>
+<style>
+    .active a {
+        background: radial-gradient(circle at center, transparent, #1f1f21);
+        color: blue;
+    }
+
+    body {
+        background: url("https://www.toptal.com/designers/subtlepatterns/uploads/so-white.png");
+        background-repeat: repeat;
+    }
+
+    navbar-brand.active{
+        background: radial-gradient(circle at center, transparent, #1f1f21);
+        color: blue;
+    }
+</style>
 <html>
+
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,54 +36,94 @@
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
                     <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
                 </button>
                 @if (User.IsInRole("professor"))
                 {
-                    @Html.ActionLink("FastLearn", "GetUserCourses", "Course", new { area = "" }, new { @class = "navbar-brand" })
+                    <div class="@(ViewContext.RouteData.Values["Action"].ToString() == "GetUserCourses" ? "active" : "")">
+                        @Html.ActionLink("FastLearn", "GetUserCourses", "Course", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
                 }
                 else
                 {
-                    @Html.ActionLink("FastLearn", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    <div class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
+                        @Html.ActionLink("FastLearn", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
                 }
+
 
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
                     {
-                        <li>@Html.ActionLink("AdminPanel", "UsersDetails", "Users")</li>
-                        <li>@Html.ActionLink("Inactive Courses", "GetInactiveCourses", "Course")</li>
-                        <li>@Html.ActionLink("HelpingStudentRequests", "SeeHelpingStudentApplicationsForAdmin", "Users")</li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "GetInactiveCourses" ? "active" : "")">
+                            @Html.ActionLink("InactiveCourses", "GetInactiveCourses", "Course")
+                        </li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "UsersDetails" ? "active" : "")">
+                            @Html.ActionLink("UserPanel", "UsersDetails", "Users")
+                        </li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "SeeHelpingStudentApplicationsForAdmin" ? "active" : "")">
+                            @Html.ActionLink("HelperRequests", "SeeHelpingStudentApplicationsForAdmin", "Users")
+                        </li>
                     }
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("professor"))
                     {
-                        <li>@Html.ActionLink("MyCourses", "GetUserCourses", "Course")</li>
-                        <li>@Html.ActionLink("HelpingStudentRequests", "SeeHelpingStudentApplicationsForProfessor", "Users")</li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "GetUserInactiveCourses" ? "active" : "")">
+                            @Html.ActionLink("InactiveCourses", "GetUserInactiveCourses", "Course")
+                        </li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "SeeHelpingStudentApplicationsForProfessor" ? "active" : "")">
+                            @Html.ActionLink("HelpingStudentRequests", "SeeHelpingStudentApplicationsForProfessor", "Users")
+                        </li>
 
                     }
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("helping_student"))
                     {
-                        <li>@Html.ActionLink("MyChats", "Index", "Chat")</li>
-                        <li>@Html.ActionLink("Help Students", "GetHelpingStudentChats", "Chat")</li>
-                        <li>@Html.ActionLink("Chat Requests", "GetChatRequests", "Chat")</li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "GetStudentEnrolledCourses" ? "active" : "")">
+                            @Html.ActionLink("MyCourses", "GetStudentEnrolledCourses", "Course")
+                        </li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "GetStudentFinishedCourses" ? "active" : "")">
+                            @Html.ActionLink("Archive", "GetStudentFinishedCourses", "Course")
+                        </li>
+
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
+                            @Html.ActionLink("MyChats", "Index", "Chat")
+                        </li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "GetHelpingStudentChats" ? "active" : "")">
+                            @Html.ActionLink("HelpStudents", "GetHelpingStudentChats", "Chat")
+                        </li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "GetChatRequests" ? "active" : "")">
+                            @Html.ActionLink("ChatRequests", "GetChatRequests", "Chat")
+                        </li>
                     }
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("student"))
                     {
-                        <li>@Html.ActionLink("MyCourses", "GetStudentEnrolledCourses", "Course")</li>
-                        <li>@Html.ActionLink("CourseArchive", "GetStudentFinishedCourses", "Course")</li>
-                        <li>@Html.ActionLink("MyChats", "Index", "Chat")</li>
-                        <li>@Html.ActionLink("HelpingStudentApplication", "YourHelpingStudentApplication", "Users")</li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "GetStudentEnrolledCourses" ? "active" : "")">
+                            @Html.ActionLink("MyCourses", "GetStudentEnrolledCourses", "Course")
+                        </li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "GetStudentFinishedCourses" ? "active" : "")">
+                            @Html.ActionLink("CourseArchive", "GetStudentFinishedCourses", "Course")
+                        </li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" && ViewContext.RouteData.Values["Controller"].ToString() == "Chat" ? "active" : "")">
+                            @Html.ActionLink("MyChats", "Index", "Chat")
+                        </li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "YourHelpingStudentApplication" ? "active" : "")">
+                            @Html.ActionLink("HelpingStudentApplication", "YourHelpingStudentApplication", "Users")
+                        </li>
 
                     }
-                    <li>@Html.ActionLink("MyAccount", "Index", "Users")</li>
+                    <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Users" && ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
+                        @Html.ActionLink("Account", "Index", "Users")
+                    </li>
 
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "About" ? "active" : "")">
+                        @Html.ActionLink("About", "About", "Home")
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Contact" ? "active" : "")">
+                        @Html.ActionLink("Contact", "Contact", "Home")
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

@@ -1,27 +1,21 @@
-﻿@model IEnumerable<ProiectLicenta.Data.Models.HelpingStudentApplication>
+﻿@model IEnumerable<Proiect_Licenta.ViewModels.HelperApplicationViewModel>
 
 @{
     ViewBag.Title = "SeeHelpingStudentApplicationsForProfessor";
 }
 
-<h2>SeeHelpingStudentApplicationsForProfessor</h2>
+<h2>Helper Applications</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FinishedCoursesIds)
+            @Html.DisplayNameFor(model => model.StudentEmail)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StudentId)
+            @Html.DisplayNameFor(model => model.ProfessorEmail)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProfessorId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsApproved)
+            @Html.DisplayNameFor(model => model.FinishedCourses)
         </th>
         <th>Actions</th>
     </tr>
@@ -30,23 +24,33 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FinishedCoursesIds)
+                @Html.DisplayFor(modelItem => item.StudentEmail)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StudentId)
+                @Html.DisplayFor(modelItem => item.ProfessorEmail)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProfessorId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsApproved)
+                @if (item.FinishedCourses != null && item.FinishedCourses.Any())
+                {
+                    foreach (var course in item.FinishedCourses)
+                    {
+                        <p>@course.CourseName</p>
+                    }
+                }
+                else
+                {
+                    <p>No Courses Finished</p>
+                }
             </td>
             <td>
                 @Html.ActionLink("Approve Application", "ApproveHelpingStudentApplication", new { applicationId = item.HelpingStudentApplicationId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.HelpingStudentApplicationId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.HelpingStudentApplicationId })
+                @Html.ActionLink("Delete", "DeleteApplication", new { applicationId = item.HelpingStudentApplicationId })
             </td>
         </tr>
     }
 
 </table>
+
+
+
+

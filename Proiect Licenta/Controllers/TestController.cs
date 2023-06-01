@@ -37,10 +37,10 @@ namespace Proiect_Licenta.Controllers
         {
             var test = testDb.getTest(subChapterId);
             int chapterId;
-
+            var subChapter = subChapterDb.GetSubChapter(subChapterId);
             if (test == null)
             {
-                var subChapter = subChapterDb.GetSubChapter(subChapterId);
+
                 chapterId = subChapter.ChapterId;
             }
             else
@@ -50,6 +50,7 @@ namespace Proiect_Licenta.Controllers
 
             ViewData["subChapterId"] = subChapterId; // when the controller is called from the subchapter controller, there is not subchapterId initially
             ViewData["chapterId"] = chapterId;
+            ViewData["ownerId"] = subChapter.Chapter.Course.OwnerId;
             ViewData["userId"] = User.Identity.GetUserId();
 
             return View(test);
@@ -60,6 +61,7 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Create(int subChapterId)
         {
             var subChapter = subChapterDb.GetSubChapter(subChapterId);
+            ViewData["subchapterId"] = subChapterId;
             if (subChapter.Test != null)
                 return View("AlreadyExistingTest");
             return View();
@@ -82,6 +84,7 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Edit(int subChapterId)
         {
             var subChapter = subChapterDb.GetSubChapter(subChapterId);
+            ViewData["subChapterId"] = subChapterId;
             var test = subChapter.Test;
 
             if (test == null)
@@ -259,6 +262,9 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Results(int userAnswerId)
         {
             var userAnswer = userAnswerDb.getUserAnswer(userAnswerId);
+            var subchapterId = userAnswer.Test.SubChapter.SubchapterId;
+            ViewData["currentSubChapterId"] = subchapterId;
+
             if(userAnswer == null)
             {
                 return View("UserAnswerNotFound");

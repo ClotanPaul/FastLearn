@@ -81,5 +81,7 @@
 
 <p class="back-link">
     @Html.ActionLink("Edit", "Edit", new { id = Model.SubchapterId }, new { @class = "btn btn-default" }) |
-    @Html.ActionLink("Back to List", "Index")
+    <div>
+        @Html.ActionLink("Back to SubChapter List", "Index", new { chapterId = Model.ChapterId })
+    </div>
 </p>

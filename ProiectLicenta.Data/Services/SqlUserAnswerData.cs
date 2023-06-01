@@ -33,6 +33,7 @@ namespace ProiectLicenta.Data.Services
         {
             var userAnswer = db.UserAnswers
                 .Include("Test.Questions.Answers")
+                .Include("Test.SubChapter")
                 .FirstOrDefault(ua => ua.UserAnswerId == userAnswerId);
             userAnswer.chosenAnswersIdList = userAnswer.ChosenAnswersIdListSerialized.Split(',').Select(int.Parse).ToList();
             return userAnswer;

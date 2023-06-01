@@ -27,6 +27,16 @@ namespace Proiect_Licenta.Controllers
             var model = answerDb.getAnswers(questionId);
 
             ViewData["questionId"] = questionId;
+            if (model.Count > 0)
+            {
+                ViewData["testId"] = model.First().Question.TestId;
+            }
+            else
+            {
+                var question = questionDb.getQuestion(questionId);
+                ViewData["testId"] = question.TestId;
+            }
+                ;
             ViewData["userId"] = User.Identity.GetUserId();
 
             return View(model);
@@ -35,6 +45,7 @@ namespace Proiect_Licenta.Controllers
         [HttpGet]
         public ActionResult Create(int questionId)
         {
+            ViewData["questionId"] = questionId;
             var question = questionDb.getQuestion(questionId);
             var answerModel = new Answer();
             var answers = question.Answers.ToList();

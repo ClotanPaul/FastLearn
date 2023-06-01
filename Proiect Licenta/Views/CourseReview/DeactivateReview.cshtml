@@ -52,6 +52,6 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="back-link">
+    @Html.ActionLink("Back to Review List", "Index", "CourseReview", new { courseId = Model.CourseId }, null)
 </div>

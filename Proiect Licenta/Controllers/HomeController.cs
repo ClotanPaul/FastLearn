@@ -17,7 +17,7 @@ namespace Proiect_Licenta.Controllers
                 return RedirectToAction("GetUserCourses", "Course");
             }
 
-            if (User.IsInRole("student"))
+            if (User.IsInRole("student") || User.IsInRole("helping_student"))
             {
                 return RedirectToAction("GetStudentUnEnrolledCourses", "Course");
             }

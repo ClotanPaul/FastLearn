@@ -14,17 +14,17 @@
         margin: auto;
     }
 
-    .form-horizontal h4 {
-        color: #333;
-    }
+        .form-horizontal h4 {
+            color: #333;
+        }
 
     .form-group {
         margin-bottom: 15px;
     }
 
-    .text area{
+    .text area {
         resize: both;
-        overflow-y:auto;
+        overflow-y: auto;
     }
 
     .showInline {
@@ -36,7 +36,7 @@
         padding-top: 7px;
     }
 
-    .container-table{
+    .container-table {
         margin-top: 40px;
     }
 
@@ -45,12 +45,11 @@
         color: #fff;
         border: none;
         transition: background-color 0.2s ease;
-        
     }
 
-    .btn-default:hover {
-        background-color: #0056b3;
-    }
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
 
     .back-link {
         margin-top: 20px;
@@ -105,6 +104,5 @@
     </div>
 }
 
-<div class= "back-link">
-    @Html.ActionLink("Courses", "Index")
-</div>
+
+    @Html.ActionLink("Courses", "GetUserCourses", "Course", null, new { @class = "btn btn-link" });

@@ -1,6 +1,7 @@
 ﻿using ProiectLicenta.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Migrations.Model;
 using System.Linq;
@@ -14,14 +15,16 @@ namespace Proiect_Licenta.Models
         public int UserDataId { get; set; }
 
         [Required]
-        public string UserId { get; set; } 
+        public string UserId { get; set; }
 
+        [DisplayName("Username")]
         public string UserName { get; set; } // special username
 
         public string Email { get; set; } // username from the other database
 
         public int Points { get; set; }
 
+        [DisplayName("Role")]
         public string UserRole { get; set; }
 
         // for now not used

@@ -1,42 +1,42 @@
-﻿@model ProiectLicenta.Data.Models.HelpingStudentApplication
+﻿@model Proiect_Licenta.ViewModels.HelperApplicationViewModel
 
 @{
     ViewBag.Title = "YourHelpingStudentApplication";
 }
 
-<h2>YourHelpingStudentApplication</h2>
+<h2>Your Helping Student Application</h2>
 
 <div>
-    <h4>HelpingStudentApplication</h4>
+    <h4>Helping Student Application</h4>
     <hr />
+
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FinishedCoursesIds)
+            @Html.DisplayNameFor(model => model.FinishedCourses)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.FinishedCoursesIds)
+            @foreach (var course in Model.FinishedCourses)
+            {
+                <p>@course.CourseName</p>
+            }
         </dd>
 
-        @if (Model.ProfessorId != null)
+        <dt>Professor Email</dt>
+        @if (!string.IsNullOrEmpty(Model.ProfessorEmail))
         {
-            <p>A professor is backing your application! It will shortly be reviewed by our admins</p>
+            <dd>@Model.ProfessorEmail. <br />
+            The professor is backing your application! It will shortly be reviewed by our admins.</dd>
         }
         else
         {
-            <p>We are still waiting for a professor to back your application.</p>
+            <dd>No professor supports your application as of now.</dd>
         }
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsApproved)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsApproved)
-        </dd>
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@if (User.IsInRole("student"))
+{
+    <p>
+        @Html.ActionLink("Changed Your Mind?", "DeleteApplication", new { applicationId = Model.HelpingStudentApplicationId })
+    </p>
+}

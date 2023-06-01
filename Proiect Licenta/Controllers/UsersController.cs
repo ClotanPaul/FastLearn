@@ -286,35 +286,81 @@ namespace Proiect_Licenta.Controllers
             var userData = userDb.getUserData(userId);
 
             var application = userDb.getHelpingStudentApplication(userData.UserDataId);
+
             if (application == null)
             {
                 return View("NoApplicationFound");
             }
 
-            return View(application);
+            var helperStudentApplication = new HelperApplicationViewModel()
+            {
+                HelpingStudentApplicationId = application.HelpingStudentApplicationId,
+                FinishedCourses = courseDb.GetEnrolledCoursesByIds(courseDb.FinishedCoursesDeserialization(application.FinishedCoursesIds)),
+                ProfessorEmail = application.ProfessorId != null ? userDb.getUserByUserDataId((int)application.ProfessorId)?.Email : null
+            };
 
-
+            return View(helperStudentApplication);
         }
 
-        
+
+
         public ActionResult SeeHelpingStudentApplicationsForProfessor()
         {
-
+            var applicationsViewModels = new List<HelperApplicationViewModel>();
             var applications = userDb.getHelpingStudentApplicationsForProfessor();
 
+            foreach (var application in applications)
+            {
+                var courses = courseDb.GetEnrolledCoursesByIds(courseDb.FinishedCoursesDeserialization(application.FinishedCoursesIds));
 
-            return View(applications);
+                var helperStudentApplication = new HelperApplicationViewModel();
 
+                helperStudentApplication.HelpingStudentApplicationId = application.HelpingStudentApplicationId;
+                helperStudentApplication.FinishedCourses = courses;
+
+                var student = userDb.getUserByUserDataId(application.StudentId);
+                if (student != null)
+                {
+                    helperStudentApplication.StudentEmail = student.Email;
+                }
+
+                string professor = null;
+
+                if (professor == null)
+                {
+                    helperStudentApplication.ProfessorEmail = null;
+                }
+
+                applicationsViewModels.Add(helperStudentApplication);
+            }
+
+            return View(applicationsViewModels);
         }
+
 
         public ActionResult SeeHelpingStudentApplicationsForAdmin()
         {
-
+            var applicationsViewModels = new List<HelperApplicationViewModel>();
             var applications = userDb.getHelpingStudentApplicationsForAdmin();
+            foreach (var application in applications)
+            {
+                var courses = courseDb.GetEnrolledCoursesByIds(courseDb.FinishedCoursesDeserialization(application.FinishedCoursesIds));
 
+                var helperStudentApplication = new HelperApplicationViewModel();
 
-            return View(applications);
+                helperStudentApplication.FinishedCourses = courses;
+                helperStudentApplication.HelpingStudentApplicationId = application.HelpingStudentApplicationId;
 
+                var student = userDb.getUserByUserDataId(application.StudentId);
+                helperStudentApplication.StudentEmail = student?.Email;
+
+                var professor = userDb.getUserByUserDataId((int)application.ProfessorId);
+                helperStudentApplication.ProfessorEmail = professor?.Email;
+
+                applicationsViewModels.Add(helperStudentApplication);
+            }
+
+            return View(applicationsViewModels);
         }
         [HttpGet]
 
@@ -397,9 +443,19 @@ namespace Proiect_Licenta.Controllers
 
         }
 
+        public ActionResult DeleteApplication(int applicationId)
+        {
 
+            userDb.DeleteHelpingStudentApplication(applicationId);
 
+            if (User.IsInRole("student"))
+            {
+                return RedirectToAction("YourHelpingStudentApplication");
+            }
 
+            return RedirectToAction("SeeHelpingStudentApplicationsForAdmin");
+
+        }
 
 
 

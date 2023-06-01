@@ -1,51 +1,44 @@
-﻿@model IEnumerable<ProiectLicenta.Data.Models.HelpingStudentApplication>
+﻿@model IEnumerable<Proiect_Licenta.ViewModels.HelperApplicationViewModel>
 
 @{
     ViewBag.Title = "SeeHelpingStudentApplicationsForProfessor";
 }
 
-<h2>SeeHelpingStudentApplicationsForProfessor</h2>
+<h2>Helper Applications</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FinishedCoursesIds)
+            @Html.DisplayNameFor(model => model.FinishedCourses)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StudentId)
+            @Html.DisplayNameFor(model => model.StudentEmail)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProfessorId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsApproved)
+            @Html.DisplayNameFor(model => model.ProfessorEmail)
         </th>
         <th>Actions</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FinishedCoursesIds)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StudentId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProfessorId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsApproved)
-        </td>
-        <td>
-            @Html.ActionLink("Support Application", "SupportHelpingStudentApplication", new { applicationId = item.HelpingStudentApplicationId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.HelpingStudentApplicationId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.HelpingStudentApplicationId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @foreach (var course in item.FinishedCourses)
+                {
+                    <p>@course.CourseName</p>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentEmail)
+            </td>
+            <td>
+                No professor supports this application yet.
+            </td>
+            <td>
+                @Html.ActionLink("Support Application", "SupportHelpingStudentApplication", new { applicationId = item.HelpingStudentApplicationId })
+            </td>
+        </tr>
+    }
 
 </table>

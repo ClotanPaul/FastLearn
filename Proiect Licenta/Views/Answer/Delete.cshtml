@@ -27,14 +27,6 @@
             @Html.DisplayFor(model => model.IsCorrect)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.QuestionId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.QuestionId)
-        </dd>
-
     </dl>
 
     @using (Html.BeginForm()) {
@@ -42,7 +34,9 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <div>
+                @Html.ActionLink("Back to List", "Index", "Answer", new { questionId = Model.QuestionId }, null)
+            </div>
         </div>
     }
 </div>

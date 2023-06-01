@@ -272,7 +272,9 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Warnings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\HelperApplicationViewModel.cs" />
     <Compile Include="ViewModels\WarnUserViewModel.cs" />
+    <Content Include="Content\backgr_pattern.png" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
     <Content Include="Scripts\ckeditor\CHANGES.html" />
@@ -1255,6 +1257,9 @@
     <Content Include="Views\Users\NoHelpingStudentAssigned.cshtml" />
     <Content Include="Views\SubChapter\YouAreNotEnrolledInThisCourse.cshtml" />
     <Content Include="Views\Course\GetStudentFinishedCourses.cshtml" />
+    <Content Include="Views\Course\Index - Copy.cshtml" />
+    <Content Include="Views\Course\CourseSyllabus - Copy.cshtml" />
+    <Content Include="Views\Course\GetUserInactiveCourses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

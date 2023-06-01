@@ -20,12 +20,12 @@
 
         @foreach (var file in Model.SubchapterFiles)
         {
-            <dt>
-                @Html.DisplayNameFor(modelItem => file.Title)
-            </dt>
-            <dd>
-                @Html.DisplayFor(modelItem => file.Title)
-            </dd>
+            using (Html.BeginForm("DownloadFile", "SubChapter", FormMethod.Get))
+            {
+                @Html.Hidden("fileName", file.FilePath)
+                @Html.Hidden("subChapterId", file.SubChapterId)
+                <button type="submit">@file.Title</button>
+            }
         }
 
         @if (Model.Test != null)
@@ -33,14 +33,24 @@
             <dt>
                 Test
             </dt>
-            <dd>
-                @Html.ActionLink("Start Test", "TakeTest", "Test", new { testId = Model.Test.TestId }, null)
-            </dd>
+            if ((string)ViewData["IsCurrentSubchapter"] == "true")
+            {
+                <dd>
+                    @Html.ActionLink("Start Test", "TakeTest", "Test", new { testId = Model.Test.TestId }, null)
+                </dd>
+            }
         }
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Open Chat", "Create", "Chat", new { subChapterId = Model.SubchapterId }, null)
+    @if (User.Identity.IsAuthenticated && (string)ViewData["IsCurrentSubchapter"] == "true")
+    {
+        @Html.ActionLink("Open Chat", "Create", "Chat", new { subChapterId = Model.SubchapterId }, null) <text> | </text>
+        @*
+            @Html.ActionLink("See Files", "GetFileList", "SubChapter", new { subChapterId = Model.SubchapterId }, null)
+        *@
+
+    }
     @Html.ActionLink("Next SubChapter", "NextSubChapter", new { currentSubChapterId = Model.SubchapterId })
-    @Html.ActionLink("Back to Course", "ViewCourse", new { courseId = Model.Chapter.CourseId })
+    @Html.ActionLink("Back to Course", "GetStudentEnrolledCourses", "Course")
 </p>

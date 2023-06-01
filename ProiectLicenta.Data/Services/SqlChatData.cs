@@ -45,6 +45,8 @@ namespace ProiectLicenta.Data.Services
         {
             var chatList = new List<Chat>();
             chatList = db.Chats.Include("SubChapter.Chapter.Course")
+                .Include("Student")
+                .Include("HelpingStudent")
                 .Where(chat => chat.StudentId == userDataId).ToList();
             return chatList;
 

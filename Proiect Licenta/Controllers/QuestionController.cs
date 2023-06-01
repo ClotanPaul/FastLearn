@@ -28,9 +28,10 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Index(int testId)
         {
             var questions = questionDb.getQuestions(testId);
-
+            var test = testDb.getTestById(testId);
             ViewData["testId"] = testId;
             ViewData["userId"] = User.Identity.GetUserId();
+            ViewData["subchapterId"] = test.SubChapter.SubchapterId;
 
             return View(questions);
         }
@@ -38,6 +39,7 @@ namespace Proiect_Licenta.Controllers
         [HttpGet]
         public ActionResult Create(int testId)
         {
+            ViewData["testId"] = testId;
             var test = testDb.getTestById(testId);
             if (test == null)
                 return View("NotFound");
@@ -48,6 +50,7 @@ namespace Proiect_Licenta.Controllers
         [HttpPost]
         public ActionResult Create(Question question, int testId)
         {
+            question.questionPointPercentage = 1;
 
             var test = testDb.getTestById(testId);
             if (test == null)

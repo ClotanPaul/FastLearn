@@ -26,8 +26,10 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Index(int courseId)
         {
             var model = chapterDb.getCourseChapters(courseId);
+            var course = courseDb.GetCourse(courseId);
             ViewData["courseId"] = courseId;
             ViewData["userId"] = User.Identity.GetUserId();
+            ViewData["ownerId"] = course.OwnerId;
 
             if (model == null)
             {
@@ -40,7 +42,7 @@ namespace Proiect_Licenta.Controllers
         [HttpGet]
         public ActionResult Create(int courseId)
         {
-            //ViewData["courseId"] = courseId;
+            ViewData["courseId"] = courseId;
             return View();
         }
         [HttpPost]

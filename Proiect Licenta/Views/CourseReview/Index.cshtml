@@ -31,7 +31,8 @@
 <h2 class="text-left text-primary">Index</h2>
 
 <p>
-    @if ((string)ViewData["CanAdd"] == "true" && User.Identity.IsAuthenticated) {
+    @if ((string)ViewData["CanAdd"] == "true" && User.Identity.IsAuthenticated)
+    {
         @Html.ActionLink("Add a new review", "Create", new { courseId = ViewData["courseId"] }, new { @class = "btn btn-primary" })
     }
 
@@ -50,30 +51,56 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReviewText)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stars)
-            </td>
-            <td>
-                @if ((string)ViewData["UserId"] == item.UserId)
-                {
-                    <text> ( </text>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.CourseReviewId }) <text> | </text>
-                    @Html.ActionLink("Details", "Details", new { id = item.CourseReviewId }) <text> | </text>
+        if (item.IsActive || User.IsInRole("admin"))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReviewText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stars)
+                </td>
+                <td>
+                    @if ((string)ViewData["UserId"] == item.UserId)
+                    {
+                        <text> ( </text>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.CourseReviewId }) <text> | </text>
+                        @Html.ActionLink("Details", "Details", new { id = item.CourseReviewId }) <text> | </text>
 
-                    @Html.ActionLink("Delete", "Delete", new { courseReviewId = item.CourseReviewId }) <text> ) </text>
-                }
+                        @Html.ActionLink("Delete", "Delete", new { courseReviewId = item.CourseReviewId }) <text> ) </text>
+                    }
 
-                @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
-                {
-                    <text> ( </text>
-                    @Html.ActionLink("Deactivate Review", "DeactivateReview", new { id = item.CourseReviewId }) <text> | </text>
-                    @Html.ActionLink("Activate Review", "ActivateReview", new { id = item.CourseReviewId }) <text> ) </text>
-                }
-            </td>
-        </tr>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                    {
+
+
+                        <text> ( </text>
+                        if (item.IsActive)
+                        {
+                            @Html.ActionLink("Deactivate Review", "DeactivateReview", new { id = item.CourseReviewId }) <text> | </text>
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Activate Review", "ActivateReview", new { id = item.CourseReviewId }) <text> ) </text>
+                        }
+                    }
+                </td>
+            </tr>
+        }
     }
 </table>
+@if (User.IsInRole("professor"))
+{
+    @Html.ActionLink("Courses", "GetUserCourses", "Course", null, new { @class = "btn btn-link" });
+}
+else
+{
+    if (User.IsInRole("student") || User.IsInRole("helping_student"))
+    {
+        @Html.ActionLink("To Courses", "GetStudentEnrolledCourses", "Course")
+    }
+    else
+    {
+        @Html.ActionLink("To Courses", "Index", "Course")
+    }
+}

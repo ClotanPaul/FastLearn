@@ -4,22 +4,134 @@
     ViewBag.Title = "Course Syllabus";
 }
 
-<h1>@Model.CourseName</h1>
-<h2>Syllabus</h2>
-@foreach (var chapter in Model.Chapters.OrderBy(c => c.ChapterNumber))
-{
-    <div>
-        <h3>@chapter.ChapterTitle</h3>
-        @foreach (var subchapter in chapter.Subchapters.OrderBy(s => s.SubchapterNumber))
-        {
-            <div>
-                <h4>@subchapter.SubchapterTitle</h4>
-                <p>@Html.Raw(subchapter.SubchapterDescription)</p>
+<style>
+
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+
+    h3 {
+        font-size: 1.5em;
+        text-align: center;
+        color: #777;
+        padding: 1em 0;
+    }
+
+    .arrow::before {
+        font-family: 'Glyphicons Halflings';
+        content: "\e080";
+        padding-right: 10px;
+        cursor: pointer;
+    }
+
+    .down::before {
+        content: "\e114";
+    }
+
+    .subchapter-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f0f0f0;
+        margin-top: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 10px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .subchapter-title {
+        text-transform: capitalize;
+        margin-right: 10px;
+    }
+
+    .panel.panel-default {
+        margin-bottom: 20px;
+        background: #f8f9fa;
+    }
+
+    .panel-collapse {
+        border-bottom-width: 20px;
+    }
+
+    .title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        text-transform: capitalize;
+    }
+
+    .btn-sm-custom {
+        font-size: 0.875em;
+        color: #007bff;
+        border-color: #007bff;
+        padding: 7px 12px;
+    }
+
+    .badge {
+        padding: 7px 12px;
+    }
+</style>
+
+<h3>Table of Contents: @Model.CourseName</h3>
+<div class="panel-group" id="accordion">
+    @foreach (var chapter in Model.Chapters)
+    {
+        int subChapterCount = chapter.Subchapters.Count(); // Count subchapters
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="title-row">
+                    <!-- Wrap elements in title-row -->
+                    <h4 class="panel-title">
+                        <span class="arrow" data-toggle="collapse" data-target="#collapseChapter@(chapter.ChapterId)" aria-expanded="false"></span>
+                        @Html.DisplayFor(model => chapter.ChapterTitle)
+                    </h4>
+                    <span class="badge badge-secondary">@subChapterCount Subchapters</span> <!-- This will align at end of row -->
+                </div>
             </div>
-            <hr />
-        }
-    </div>
-    <div style="padding: 20px; text-align: center; background-color: #f0f0f0;">
-        End of Chapter @chapter.ChapterNumber
-    </div> 
+
+            
+
+            <div id="collapseChapter@(chapter.ChapterId)" class="panel-collapse collapse">
+                @foreach (var subchapter in chapter.Subchapters)
+                {
+                    <div class="subchapter-box">
+                        <span class="subchapter-title">@Html.DisplayFor(model => subchapter.SubchapterTitle)</span>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @Html.ActionLink(">> More", "ViewSubchapter", "SubChapter", new { subchapterId = subchapter.SubchapterId }, new { @class = "btn btn-outline-warning btn-sm-custom" })
+                        }    
+                    </div>
+                }
+            </div>
+
+        </div>
+    }
+</div>
+@if (User.IsInRole("student") || User.IsInRole("helping_student"))
+{
+    @Html.ActionLink("To Courses", "GetStudentEnrolledCourses", "Course")
 }
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.arrow').click(function () {
+            // switch arrow up/down on click
+            $(this).toggleClass('down');
+        });
+        // change the arrow direction and highlighting when the collapse action is performed
+        $('.panel-collapse').on('show.bs.collapse', function () {
+            $(this).prev().find('.arrow').addClass('down');
+        }).on('hide.bs.collapse', function () {
+            $(this).prev().find('.arrow').removeClass('down');
+        });
+    });
+</script>

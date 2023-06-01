@@ -89,7 +89,8 @@
                                 <h4>No chat history.</h4>
                             }
                         </div>
-                        @if(Model.IssueSolved == false) {
+                        @if (Model.IssueSolved == false)
+                        {
                             <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
                                 <input type="text" class="form-control form-control-lg flex-grow-1" id="newMessage" name="newMessage" placeholder="Type message">
                                 <input type="hidden" name="chatId" value="@Model.ChatId" />
@@ -102,11 +103,12 @@
         </div>
     </section>
 </form>
-@if (User.Identity.IsAuthenticated && User.IsInRole("student") && Model.IssueSolved == false)
+@if (User.Identity.IsAuthenticated && (string)ViewData["isStudent"] == "true" && Model.IssueSolved == false)
 {
     <p>@Html.ActionLink("IssueSolved", "ProblemSolved", "Users", new { chatId = Model.ChatId }, null)</p>
 }
-    
+@Html.ActionLink("Chats", "Index", "Chat")
+
 
 
 

@@ -96,6 +96,13 @@ namespace Proiect_Licenta.Controllers
 
             chat.ChatMessages.OrderBy(m => m.TimeStamp);
 
+            if(userDataId == chat.StudentId)
+            {
+                ViewData["isStudent"] = "true";
+            }
+            else
+                ViewData["isStudent"] = "false";
+
             if (chat == null)
             {
                 return View("ChatNotFound");

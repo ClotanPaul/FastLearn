@@ -1,0 +1,25 @@
+﻿@model ProiectLicenta.Data.Models.Course
+
+@{
+    ViewBag.Title = "Course Syllabus";
+}
+
+<h1>@Model.CourseName</h1>
+<h2>Syllabus</h2>
+@foreach (var chapter in Model.Chapters.OrderBy(c => c.ChapterNumber))
+{
+    <div>
+        <h3>@chapter.ChapterTitle</h3>
+        @foreach (var subchapter in chapter.Subchapters.OrderBy(s => s.SubchapterNumber))
+        {
+            <div>
+                <h4>@subchapter.SubchapterTitle</h4>
+                <p>@Html.Raw(subchapter.SubchapterDescription)</p>
+            </div>
+            <hr />
+        }
+    </div>
+    <div style="padding: 20px; text-align: center; background-color: #f0f0f0;">
+        End of Chapter @chapter.ChapterNumber
+    </div> 
+}

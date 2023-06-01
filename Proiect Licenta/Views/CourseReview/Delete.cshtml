@@ -25,9 +25,9 @@
         transition: background-color 0.2s ease;
     }
 
-        .btn-default:hover {
-            background-color: #0056b3;
-        }
+    .btn-default:hover {
+        background-color: #0056b3;
+    }
 
     .back-link {
         margin-top: 20px;
@@ -72,5 +72,5 @@
 </div>
 
 <div class="back-link">
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Review List", "Index", "CourseReview", new { courseId = Model.CourseId }, null)
 </div>

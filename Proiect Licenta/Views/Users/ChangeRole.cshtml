@@ -14,9 +14,9 @@
         margin: auto;
     }
 
-    .form-horizontal h4 {
-        color: #333;
-    }
+        .form-horizontal h4 {
+            color: #333;
+        }
 
     .form-group {
         margin-bottom: 15px;
@@ -71,4 +71,8 @@
             </div>
         </div>
     </div>
+}
+@if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+{
+<li>@Html.ActionLink("Go Back to AdminPanel", "UsersDetails", "Users")</li>
 }

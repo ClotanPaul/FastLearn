@@ -13,6 +13,8 @@ namespace ProiectLicenta.Data.Services
 
         List<Course> GetUserCourses(string ownerId);
 
+        List<Course> GetUserInactiveCourses(string ownerId);
+
 
         Course GetCourse(int id);
 
@@ -23,6 +25,7 @@ namespace ProiectLicenta.Data.Services
         void DeleteCourse(int id);
 
         void ActivateCourse(int id);
+        List<int> FinishedCoursesDeserialization(string finishedCourses);
 
         void DeactivateCourse(int id, string deactivationReason);
 
@@ -33,6 +36,8 @@ namespace ProiectLicenta.Data.Services
         void RejectActivation(int id);
 
         List<int> GetEnrolledCoursesIds(string studentId);
+
+        List<Course> GetEnrolledCoursesByIds(List<int> ids);
 
         List<Course> GetFinishedCourses(int userDataId);
 

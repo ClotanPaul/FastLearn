@@ -36,6 +36,8 @@ namespace ProiectLicenta.Data.Services
 
         List<HelpingStudentApplication> getHelpingStudentApplicationsForAdmin();
 
+        void DeleteHelpingStudentApplication(int helperApplicationId);
+
         HelpingStudentApplication getHelpingStudentApplicationById(int id);
 
         void supportHelpingStudentApplication(int applicationId, int professorId);

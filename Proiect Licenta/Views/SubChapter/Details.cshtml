@@ -30,8 +30,11 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.SubchapterId }) |
-    @Html.ActionLink("Back to List", "Index")
 </p>
+
+<div>
+    @Html.ActionLink("Back to SubChapter List", "Index", new { chapterId = Model.ChapterId })
+</div>
 
 @section scripts{
     <script src="~/Scripts/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>

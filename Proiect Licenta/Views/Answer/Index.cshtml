@@ -6,9 +6,12 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Add a new answer", "Create", "Answer", new { questionId = ViewData["questionId"] }, null)
-</p>
+@if (!User.IsInRole("admin"))
+{
+    <p>
+        @Html.ActionLink("Add a new answer", "Create", "Answer", new { questionId = ViewData["questionId"] }, null)
+    </p>
+}
 <table class="table">
     <tr>
         <th>
@@ -23,24 +26,30 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AnswerText)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsCorrect)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.QuestionId)
-        </td>
-        <td>
-            @if(item.Question.test.SubChapter.Chapter.Course.OwnerId == (string)ViewData["userId"]) { 
-            @Html.ActionLink("Edit", "Edit", new { answerId = item.AnswerId }) 
-            @Html.ActionLink("Delete", "Delete", new { answerId = item.AnswerId })
-            }
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnswerText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCorrect)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionId)
+            </td>
+            <td>
+                @if (item.Question.test.SubChapter.Chapter.Course.OwnerId == (string)ViewData["userId"])
+                {
+                    @Html.ActionLink("Edit", "Edit", new { answerId = item.AnswerId })
+                    @Html.ActionLink("Delete", "Delete", new { answerId = item.AnswerId })
+                }
+            </td>
+        </tr>
+    }
 
 </table>
+@if ((int)ViewData["testId"] != -1)
+{
+    @Html.ActionLink("Back to questions", "Index", "Question", new { testId = (int)ViewData["testId"] }, null)
+}

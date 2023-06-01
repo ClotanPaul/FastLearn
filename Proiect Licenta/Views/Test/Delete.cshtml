@@ -34,7 +34,9 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <div>
+                @Html.ActionLink("Back to List", "Index", "Test", new { subChapterId = Model.SubChapter.SubchapterId }, null)
+            </div>
         </div>
     }
 </div>

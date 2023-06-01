@@ -14,5 +14,9 @@ namespace ProiectLicenta.Data.Services
         List<SubChapterFiles> GetSubChapterFiles(int subChapterId);
 
         SubChapterFiles getSubChapterFile(int subChapterId, string fileName);
+
+        SubChapterFiles getSubChapterFileById(int fileId);
+
+        void DeleteFile(int fileId);
     }
 }

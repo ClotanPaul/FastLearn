@@ -15,24 +15,30 @@
     <strong>Result:</strong> @(Model.UserAnswer.Passed ? "Passed" : "Failed")
 </p>
 
-<p>
-    <a href="@Url.Action("Index", "Home")">Return to Home</a>
-</p>
-
+@if (Model.UserAnswer.Passed)
+{
+    <p>
+        @Html.ActionLink("Next Chapter", "NextSubChapter", "SubChapter", new { currentSubChapterId = (int)ViewData["currentSubChapterId"] }, null)
+    </p>
+}
+else
+{
+    @Html.ActionLink("Back To Subchapter", "ViewSubchapter", "SubChapter", new { subchapterId = (int)ViewData["currentSubChapterId"] }, null)
+ }
 
 <h3>Answer Summary</h3>
 
 <ul>
     @foreach (var q in Model.QuestionResponses)
     {
-       <li>
-           <div>@q.Question.QuestionString</div>
-           <div><strong>Your Answer:</strong></div>
-           <div>@q.UserAnswer</div>
+        <li>
+            <div>@q.Question.QuestionString</div>
+            <div><strong>Your Answer:</strong></div>
+            <div>@q.UserAnswer</div>
 
-           <div><strong>Correct Answer:</strong></div>
-           <div>@q.CorrectAnswer</div>
+            <div><strong>Correct Answer:</strong></div>
+            <div>@q.CorrectAnswer</div>
 
-       </li>
-    }          
+        </li>
+    }
 </ul>
