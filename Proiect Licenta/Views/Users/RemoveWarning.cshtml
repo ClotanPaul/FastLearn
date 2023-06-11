@@ -1,84 +1,71 @@
 ﻿@model ProiectLicenta.Data.Models.Warning
 
 @{
-    ViewBag.Title = "RemoveWarning";
+    ViewBag.Title = "Remove Warning";
 }
-
-<h2 class="text-left text-primary">Remove Warning</h2>
 
 <style>
-    .form-horizontal {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 5px;
-        margin: auto;
-    }
-
-        .form-horizontal h4 {
-            color: #333;
-        }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .dl-horizontal dt {
-        width: 120px;
-        float: left;
-        clear: left;
-        text-align: left;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    .dl-horizontal dd {
-        margin-left: 150px;
-    }
-
-    .btn-default {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        transition: background-color 0.2s ease;
-    }
-
-        .btn-default:hover {
-            background-color: #0056b3;
-        }
-
-    .back-link {
-        margin-top: 20px;
+    .dl-horizontal {
         text-align: left;
     }
+
+    .btn {
+        margin-right: 30px;
+    }
+
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    #info-box {
+        background: #f8f9fa; 
+        padding: 20px; 
+        margin-bottom: 25px; 
+        border-radius: 20px; 
+        width: 40%; 
+        text-align: left; 
+        padding-left: 30px; 
+        border: 1px solid #b4b4b4;
+    }
+
 </style>
 
-<h3 class="text-left">Are you sure you want to remove this warninig?</h3>
-<div class="form-horizontal">
+<h3 id="h3">You are about to remove the warning of the following user:</h3>
+<div>
+    <hr />
 
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.WarningReason)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.WarningReason)
-        </dd>
-        @Html.HiddenFor(model => model.UserId)
-    </dl>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-group">
-            <div class="col-md-10 text-left">
-                <input type="submit" value="Remove Warning" class="btn btn-default" /> 
-
+    <center>
+        <div id="info-box">
+            <div>
+                <b> Email of the warned user:</b> 
+                @Html.DisplayFor(model => model.User.Email)
             </div>
+            <div>
+                <b>Warning reason:</b> 
+                @Html.DisplayFor(model => model.WarningReason)
+            </div>
+
         </div>
-    }
+    </center>
+
+    <center>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Remove Warning" class="btn btn-danger" />
+                @Html.ActionLink("Abort", "UserWarnings", "Users", new {userDataId = Model.UserId}, new { @class = "btn btn-primary" })
+            </div>
+        }
+    </center>
 </div>
-@if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
-{
-    <li>@Html.ActionLink("Go Back to AdminPanel", "UsersDetails", "Users")</li>
-}

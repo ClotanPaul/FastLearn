@@ -12,11 +12,13 @@ namespace Proiect_Licenta.ViewModels
     {
         private string professorEmail;
 
+        [DisplayName("Finished Courses")]
         public List<Course> FinishedCourses { get; set; }
 
         [DefaultValue(null)]
+        [DisplayName("Professor Email")]
         public string ProfessorEmail { get; set; }
-
+        [DisplayName("Student Email")]
         public string StudentEmail { get; set; }
 
         public int HelpingStudentApplicationId { get; set; }

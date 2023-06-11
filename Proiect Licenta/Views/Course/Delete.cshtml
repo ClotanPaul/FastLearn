@@ -4,12 +4,16 @@
     .dl-horizontal{
         text-align:left;
     } 
+
+    .btn{
+        margin-right:30px;
+    }
 </style>
 
 @{
     ViewBag.Title = "Delete";
 }
-    <h3 style="margin-top: 40px;text-align: center;">Are you sure you want to delete this?</h3>
+    <h3 style="margin-top: 40px;text-align: center;">Are you sure you want to delete your course?</h3>
     <div>
         <hr />
 
@@ -22,8 +26,16 @@
                 <div>
                     <b>@Html.DisplayNameFor(model => model.CourseDescription):</b> @Html.DisplayFor(model => model.CourseDescription)
                 </div>
+
                 <div>
-                    <b>@Html.DisplayNameFor(model => model.Active):</b> @Html.DisplayFor(model => model.Active)
+                    @if (Model.Active)
+                    {
+                        <b>This course is currently active.</b>
+                    }
+                    else
+                    {
+                        <b>This course is not active.</b>
+                    }
                 </div>
             </div>
 
@@ -36,8 +48,8 @@
                 @Html.AntiForgeryToken()
 
                 <div class="form-actions no-color">
-                    <input type="submit" value="Delete" class="btn btn-danger" /> |
-                    @Html.ActionLink("Courses", "GetUserCourses", "Course", null, new { @class = "btn btn-primary" });
+                    <input type="submit" value="Delete" class="btn btn-danger" /> 
+                    @Html.ActionLink("Abort", "GetUserCourses", "Course", null, new { @class = "btn btn-primary" })
                 </div>
             }
 

@@ -4,27 +4,15 @@
     ViewBag.Title = "WarnUser";
 }
 
-<h2 class="text-left text-primary">Warn User</h2>
-
 <style>
     .form-horizontal {
-        background: #f8f9fa;
         padding: 20px;
         border-radius: 5px;
         margin: auto;
     }
 
-        .form-horizontal h4 {
-            color: #333;
-        }
-
     .form-group {
         margin-bottom: 15px;
-    }
-
-    .control-label {
-        text-align: left;
-        padding-top: 7px;
     }
 
     .btn-default {
@@ -34,46 +22,64 @@
         transition: background-color 0.2s ease;
     }
 
-        .btn-default:hover {
-            background-color: #0056b3;
-        }
-
-    .back-link {
-        margin-top: 20px;
-        text-align: right;
+    .btn-default:hover {
+        background-color: #0056b3;
     }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 20px;
+        width: 55%;
+        text-align: left;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+
+
 </style>
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
-{
-    @Html.AntiForgeryToken()
+<h3 id="h3">You are about to warn the following user:</h3>
+<center>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-
-                <p class="text-left">Do you want to warn @Model.UserName</p>
-
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                        @Html.LabelFor(model => model.Reason, htmlAttributes: new { @class = "control-label" })
-                        @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
-                
-                </div>
-
-                @Html.HiddenFor(model => model.UserDataId)
-
-                <div class="form-group">
-                    <div class="col-md-10 text-left">
-                        <input type="submit" value="Save" class="btn btn-default" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
     {
-        <li>@Html.ActionLink("Go Back to AdminPanel", "UsersDetails", "Users")</li>
+        <div id="info-box">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <b>Email: </b>
+                @Html.DisplayFor(model => model.UserName)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Reason)<b>:</b>
+                @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control reason-text-box" } })
+                @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.HiddenFor(model => model.UserDataId)
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Warn User" class="btn btn-success" />
+            @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+            {
+                @Html.ActionLink("Abort", "UsersDetails", "Users", null , new { @class = "btn btn-danger" })
+            }
+        </div>
+
+        
     }
-}
+
+</center>

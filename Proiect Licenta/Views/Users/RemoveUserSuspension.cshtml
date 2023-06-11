@@ -4,31 +4,17 @@
     ViewBag.Title = "RemoveUserSuspension";
 }
 
-<h2 class="text-left text-primary">Remove User Suspension</h2>
+
 
 <style>
     .form-horizontal {
-        background: #f8f9fa;
         padding: 20px;
         border-radius: 5px;
         margin: auto;
     }
 
-    .form-horizontal h4 {
-        color: #333;
-    }
-
     .form-group {
         margin-bottom: 15px;
-    }
-
-    .showInline {
-        display: inline-block;
-    }
-
-    .control-label {
-        text-align: left;
-        padding-top: 7px;
     }
 
     .btn-default {
@@ -42,78 +28,77 @@
             background-color: #0056b3;
         }
 
-    .back-link {
-        margin-top: 20px;
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 20px;
+        width: 55%;
         text-align: left;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
+    }
+
+    .btn {
+        margin-right: 20px;
     }
 </style>
 
+
+<h3 id="h3">Your are about to remove the suspension of the following user:</h3>
+<center>
 @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.AntiForgeryToken()
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h4 class="text-left">Do you want to unsuspend @Model.Email?</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.UserDataId)
-                @Html.HiddenFor(model => model.UserId)
+        <div id="info-box">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.UserDataId)
+            @Html.HiddenFor(model => model.UserId)
 
-            <table class="table">
-                <tr>
-                    <td>
-                        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label" })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.LabelFor(model => model.SuspendedUntil, htmlAttributes: new { @class = "control-label" })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.SuspendedUntil, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.SuspendedUntil, "", new { @class = "text-danger" })
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.LabelFor(model => model.IsSuspended, htmlAttributes: new { @class = "control-label" })
-                    </td>
-                    <td>
-                        <div class="checkbox">
-                            @Html.DisplayFor(model => model.IsSuspended)
-                            @Html.ValidationMessageFor(model => model.IsSuspended, "", new { @class = "text-danger" })
-                        </div>
-                    </td>
-                </tr>
-            </table>
+            <div>
+                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label" })<b>:</b>
 
-                <div class="form-group">
-                    <div class="col-md-10 text-left">
-                        <input type="submit" value="Remove User Suspension" class="btn btn-default" />
-                    </div>
-                </div>
+                @Html.DisplayFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
             </div>
-        </div>
-        </div>
+            <div>
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })<b>:</b>
 
+                @Html.DisplayFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.UserRole, htmlAttributes: new { @class = "control-label" })<b>:</b>
+
+                @Html.DisplayFor(model => model.UserRole, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserRole, "", new { @class = "text-danger" })
+            </div>
+
+            <div style="margin-top:10px;">
+                @Html.LabelFor(model => model.SuspendedUntil, htmlAttributes: new { @class = "control-label" })<b>:</b>
+
+                @Html.DisplayFor(model => model.SuspendedUntil, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SuspendedUntil, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+    <div class="form-group">
+        <div class="text-center">
+            <input type="submit" value="Remove User Suspension" class="btn btn-success" />
+            @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+            {
+                @Html.ActionLink("Abort", "UsersDetails", "Users", null, new { @class = "btn btn-danger" })
+            }
+        </div>
+    </div>
 }
-@if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
-    {
-        <li>@Html.ActionLink("Go Back to AdminPanel", "UsersDetails", "Users")</li>
-    }
+    </center>
+
 

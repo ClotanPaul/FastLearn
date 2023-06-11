@@ -4,30 +4,16 @@
     ViewBag.Title = "ChangeRole";
 }
 
-<h2 class="text-left text-primary">Change Role</h2>
-
 <style>
     .form-horizontal {
-        background: #f8f9fa;
         padding: 20px;
         border-radius: 5px;
         margin: auto;
     }
 
-        .form-horizontal h4 {
-            color: #333;
-        }
-
     .form-group {
         margin-bottom: 15px;
     }
-
-    .control-label {
-        text-align: left;
-        padding-top: 7px;
-        font-size: 1.5rem;
-    }
-
 
     .btn-default {
         background-color: #007bff;
@@ -39,40 +25,62 @@
         .btn-default:hover {
             background-color: #0056b3;
         }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 20px;
+        width: 55%;
+        text-align: left;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
 </style>
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
-{
-    @Html.AntiForgeryToken()
+<h3 id="h3">You are about to change the role of the following user:</h3>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h4 class="text-left">Change the role for @Model.Email</h4>
-                <h4 class="text-left">Current Role: @Model.currentRole</h4>
-                <h4 class="text-left">Possible Roles: "admin", "student", "professor" or "helping_student"</h4>
-                <hr />
+<center>
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div id="info-box">
+            @Html.AntiForgeryToken()
 
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.LabelFor(model => model.NewRole, htmlAttributes: new { @class = "control-label" })
-                        @Html.HiddenFor(model => model.UserId)
-                        @Html.DropDownListFor(model => model.NewRole, new SelectList(Model.PossibleRoles), "Select a role", new { @class = "form-control" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-12 text-left">
-                        <input type="submit" value="Save" class="btn btn-default" />
-                    </div>
-                </div>
+            <div class="form-group">
+                <b>Email: </b>
+                @Html.DisplayFor(model => model.Email)
             </div>
+
+            <div class="form-group">
+                <b>Current Role: </b>@Model.currentRole<br />
+                <b>Possible Roles: </b>"admin", "student", "professor" or "helping_student"<br /><br />
+                @Html.LabelFor(model => model.NewRole)<b>:</b>
+                @Html.DropDownListFor(model => model.NewRole, new SelectList(Model.PossibleRoles), "Select a role", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NewRole, "", new { @class = "text-danger" })
+            </div>
+
+
         </div>
-    </div>
-}
-@if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
-{
-<li>@Html.ActionLink("Go Back to AdminPanel", "UsersDetails", "Users")</li>
-}
+        <div class="form-group">
+            <input type="submit" value="Change Role" class="btn btn-success" />
+            @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+            {
+                @Html.HiddenFor(model => model.UserId)
+                @Html.HiddenFor(model => model.PossibleRoles)
+                @Html.HiddenFor(model => model.currentRole)
+                @Html.HiddenFor(model => model.Email)
+
+                @Html.ActionLink("Abort", "UsersDetails", "Users", null, new { @class = "btn btn-danger" })
+            }
+        </div>
+    }
+</center>

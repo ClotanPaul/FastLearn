@@ -4,63 +4,142 @@
     ViewBag.Title = "UsersDetails";
 }
 
-<h2>UsersDetails</h2>
+
+
+<h2 id="title">User Panel</h2>
 
 <style>
     body {
         background-color: #f8f9fa;
     }
 
+    #title {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
     .table {
-        background-color: #fff;
+        background-color: #E1E1E1;
+        border-radius: 20px;
+        overflow: hidden;
+        
     }
 
     .table thead th {
-        background-color: #343a40;
+        background-color: #4D4C4C;
         color: #fff;
     }
 
+
     .btn-group .btn {
-        margin: 0 10px;
+        margin: 10px;
     }
+    
 
     .form-button {
         display: inline-block;
         margin-right: 10px;
     }
+
+    .btn{
+        margin-right: 15px;
+    }
+
+    #username {
+        padding-left: 15px;
+    }
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-default:hover {
+        background-color: #0056b3;
+    }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 20px;
+        width: 55%;
+        text-align: left;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
+    }
+
+    .btn {
+        margin-right: 15px;
+    }
+
+    #danger {
+        width: 83.719px;
+    }
 </style>
+
+
 <div class="table-responsive">
     <table class="table table-hover">
         <thead class="thead-dark">
             <tr>
-                <th>@Html.DisplayNameFor(model => model.UserId)</th>
-                <th>@Html.DisplayNameFor(model => model.UserName)</th>
+                <th id="username">@Html.DisplayNameFor(model => model.UserName)</th>
                 <th>@Html.DisplayNameFor(model => model.Email)</th>
                 <th>@Html.DisplayNameFor(model => model.Points)</th>
                 <th>@Html.DisplayNameFor(model => model.UserRole)</th>
                 <th>@Html.DisplayNameFor(model => model.SuspendedUntil)</th>
-                <th>@Html.DisplayNameFor(model => model.IsSuspended)</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.UserId)</td>
-                    <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                <tr style="border-top: 0.2rem groove;">
+                    <td id="username">@Html.DisplayFor(modelItem => item.UserName)</td>
                     <td>@Html.DisplayFor(modelItem => item.Email)</td>
                     <td>@Html.DisplayFor(modelItem => item.Points)</td>
                     <td>@Html.DisplayFor(modelItem => item.UserRole)</td>
-                    <td>@Html.DisplayFor(modelItem => item.SuspendedUntil)</td>
-                    <td>@Html.DisplayFor(modelItem => item.IsSuspended)</td>
                     <td>
-                        <text>(</text>
-                        @Html.ActionLink("ChangeRole", "ChangeRole", new { userId = item.UserId })<text> | </text>
-                        @Html.ActionLink("Warn User", "WarnUser", new { userDataId = item.UserDataId })<text> | </text>
-                        @Html.ActionLink("Warning List", "UserWarnings", new { userDataId = item.UserDataId })<text> | </text>
-                        @Html.ActionLink("Suspend User", "SuspendUser", new { userDataId = item.UserDataId })<text> | </text>
-                        @Html.ActionLink("UnSuspend User", "RemoveUserSuspension", new { userDataId = item.UserDataId })<text>) </text>
+                        @if (item.IsSuspended)
+                        {
+                            @Html.DisplayFor(modelItem => item.SuspendedUntil)
+                        }
+                        else
+                        {
+                            @:Not Suspended.
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Change Role", "ChangeRole", new { userId = item.UserId }, new { @class = "btn btn-primary btn-sm" })
+                        @Html.ActionLink("Warning List", "UserWarnings", new { userDataId = item.UserDataId }, new { @class = "btn btn-warning btn-sm" })
+                        @Html.ActionLink("Warn User", "WarnUser", new { userDataId = item.UserDataId }, new { @class = "btn btn-danger btn-sm" })
+
+                        @if (item.IsSuspended)
+                        {
+                            @Html.ActionLink("Unsuspend", "RemoveUserSuspension", new { userDataId = item.UserDataId }, new { @class = "btn btn-danger btn-sm", @id = "danger" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Suspend", "SuspendUser", new { userDataId = item.UserDataId }, new { @class = "btn btn-danger btn-sm", @id = "danger" })
+                        }
+
                     </td>
                 </tr>
             }

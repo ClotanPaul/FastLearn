@@ -24,7 +24,7 @@ namespace ProiectLicenta.Data.Services
         {
             var course = db.Courses.FirstOrDefault(c => c.CourseId == review.CourseId);
             //course.CourseReviews.Append(review);
-            review.IsActive = true;
+            review.IsActive = false;
             db.CourseReviews.Add(review);
             db.SaveChanges();
         }
@@ -58,7 +58,11 @@ namespace ProiectLicenta.Data.Services
 
         public void UpdateReview(CourseReview review)
         {
-            db.CourseReviews.AddOrUpdate(review);
+            var currentReview = GetReview(review.CourseReviewId);
+            currentReview.DeactivationReason = review.DeactivationReason;
+            currentReview.ReviewText = review.ReviewText;
+            currentReview.Stars= review.Stars;
+            db.CourseReviews.AddOrUpdate(currentReview);
             db.SaveChanges();
         }
 

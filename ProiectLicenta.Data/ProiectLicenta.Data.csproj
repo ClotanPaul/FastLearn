@@ -235,6 +235,14 @@
     <Compile Include="Migrations\202305301728245_CompletedCourseEnrollment.designer.cs">
       <DependentUpon>202305301728245_CompletedCourseEnrollment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202306101600153_WarningReasonLength.cs" />
+    <Compile Include="Migrations\202306101600153_WarningReasonLength.designer.cs">
+      <DependentUpon>202306101600153_WarningReasonLength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202306101711003_WarningReasonLength2.cs" />
+    <Compile Include="Migrations\202306101711003_WarningReasonLength2.designer.cs">
+      <DependentUpon>202306101711003_WarningReasonLength2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Chapter.cs" />
@@ -388,6 +396,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305301728245_CompletedCourseEnrollment.resx">
       <DependentUpon>202305301728245_CompletedCourseEnrollment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306101600153_WarningReasonLength.resx">
+      <DependentUpon>202306101600153_WarningReasonLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306101711003_WarningReasonLength2.resx">
+      <DependentUpon>202306101711003_WarningReasonLength2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

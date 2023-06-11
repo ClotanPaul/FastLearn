@@ -15,6 +15,7 @@ namespace ProiectLicenta.Data.Models
 
         public string UserId { get; set; }
 
+        [DisplayName("Review")]
         public string ReviewText { get; set; }
 
         [IntegerValidator(MinValue = 1, MaxValue = 5)]
@@ -26,7 +27,7 @@ namespace ProiectLicenta.Data.Models
 
         public string DeactivationReason { get; set; }
 
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool IsActive { get; set; }
 
 

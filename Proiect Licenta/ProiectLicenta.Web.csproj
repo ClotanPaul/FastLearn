@@ -1193,14 +1193,10 @@
     <Content Include="Views\Users\UserAlreadySuspended.cshtml" />
     <Content Include="Views\Users\UserNotSuspended.cshtml" />
     <Content Include="Views\Users\RemoveUserSuspension - Copy.cshtml" />
-    <Content Include="Views\Users\SuspendUser - Copy.cshtml" />
-    <Content Include="Views\Users\RemoveWarning - Copy.cshtml" />
     <Content Include="Views\Course\Edit - Copy.cshtml" />
-    <Content Include="Views\Course\DeactivateCourse - Copy.cshtml" />
     <Content Include="Views\Course\ActivateCourse - Copy.cshtml" />
     <Content Include="Views\Course\Create - Copy.cshtml" />
     <Content Include="Views\Course\Details - Copy.cshtml" />
-    <Content Include="Views\CourseReview\Index - Copy.cshtml" />
     <Content Include="Views\CourseReview\Edit - Copy.cshtml" />
     <Content Include="Views\CourseReview\Delete - Copy.cshtml" />
     <Content Include="Views\CourseReview\Details - Copy.cshtml" />
@@ -1260,6 +1256,16 @@
     <Content Include="Views\Course\Index - Copy.cshtml" />
     <Content Include="Views\Course\CourseSyllabus - Copy.cshtml" />
     <Content Include="Views\Course\GetUserInactiveCourses.cshtml" />
+    <Content Include="Views\CourseReview\Index - Copy.cshtml" />
+    <Content Include="Views\Chapter\Index - Copy %282%29.cshtml" />
+    <Content Include="Views\CourseReview\Index - Copy %282%29.cshtml" />
+    <Content Include="Views\Users\UserWarnings - Copy.cshtml" />
+    <Content Include="Views\Users\RemoveWarning - Copy.cshtml" />
+    <Content Include="Views\Users\WarnUser - Copy.cshtml" />
+    <Content Include="Views\Users\ChangeRole - Copy.cshtml" />
+    <Content Include="Views\Users\SuspendUser - Copy.cshtml" />
+    <Content Include="Views\Users\SuspendUser2.cshtml" />
+    <Content Include="Views\Course\DeactivateCourse - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,9 +14,7 @@
     <h4>CourseReview</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.CourseReviewId)
-    @Html.HiddenFor(model => model.UserId)
-    @Html.HiddenFor(model => model.CourseId)
+
 
     <div class="form-group">
         @Html.LabelFor(model => model.ReviewText, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -37,6 +35,9 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
+            @Html.HiddenFor(model => model.CourseReviewId)
+            @Html.HiddenFor(model => model.UserId)
+            @Html.HiddenFor(model => model.CourseId)
             <input type="submit" value="Save" class="btn btn-default" />
         </div>
     </div>

@@ -53,6 +53,7 @@ namespace Proiect_Licenta.Controllers
         {
             newReview.UserId = User.Identity.GetUserId();
             newReview.CourseId = courseId;
+            newReview.IsActive = false;
 
             if (ModelState.IsValid)
             {

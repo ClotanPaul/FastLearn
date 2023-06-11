@@ -4,30 +4,15 @@
     ViewBag.Title = "ActivateCourse";
 }
 
-<h2 class="text-left text-primary">Activate Course</h2>
 <style>
     .form-horizontal {
-        background: #f8f9fa;
         padding: 20px;
         border-radius: 5px;
         margin: auto;
     }
 
-        .form-horizontal h4 {
-            color: #333;
-        }
-
     .form-group {
         margin-bottom: 15px;
-    }
-
-    .showInline {
-        display: inline-block;
-    }
-
-    .control-label {
-        text-align: left;
-        padding-top: 7px;
     }
 
     .btn-default {
@@ -41,51 +26,62 @@
             background-color: #0056b3;
         }
 
-    .back-link {
-        margin-top: 20px;
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 20px;
+        width: 55%;
         text-align: left;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
+    }
+
+    .btn {
+        margin-right: 20px;
     }
 </style>
 
-@Html.HiddenFor(model => model.CourseId)
-@Html.HiddenFor(model => model.OwnerId)
+<h3 id="h3">You are about to activate the following course:</h3>
+<center>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <hr />
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div id="info-box">
+            @Html.AntiForgeryToken()
 
             <div class="form-group">
-                <h4><strong>@Html.DisplayNameFor(model => model.CourseName):</strong></h4>
-                <p>@Html.DisplayFor(model => model.CourseName)</p>
+                <b>Course Name: </b>
+                @Html.DisplayFor(model => model.CourseName)
             </div>
 
             <div class="form-group">
-                <h4><strong>@Html.DisplayNameFor(model => model.CourseDescription):</strong></h4>
-                <p>@Html.DisplayFor(model => model.CourseDescription)</p>
+                <b>Course Description: </b>
+                @Html.DisplayFor(model => model.CourseDescription)
             </div>
 
             <div class="form-group">
-                <h4><strong>@Html.DisplayNameFor(model => model.Active):</strong></h4>
-                <p>@Html.DisplayFor(model => model.Active)</p>
+                <b>Course Owner: </b>
+                @Html.DisplayFor(model => model.Owner.Email)
             </div>
 
             <div class="form-group">
-                <h4><strong>@Html.DisplayNameFor(model => model.DeactivationReason):</strong></h4>
-                <p>@Html.DisplayFor(model => model.DeactivationReason)</p>
+                <b>Deactivation Reason: </b>
+                @Html.DisplayFor(model => model.DeactivationReason)
             </div>
+
+            @Html.HiddenFor(model => model.CourseId)
+            @Html.HiddenFor(model => model.OwnerId)
         </div>
-    </div>
-</div>
+        <div class="form-group">
+            <input type="submit" value="Activate" class="btn btn-success" />
+            @Html.ActionLink("Abort", "Index", null, new { @class = "btn btn-danger" })
+        </div>
+    }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <div class="form-actions no-color">
-        <input type="submit" value="Activate Course" class="btn btn-default" />
-    </div>
-}
-
-<div class="back-link">
-    @Html.ActionLink("Back to List", "Index")
-</div>
+</center>

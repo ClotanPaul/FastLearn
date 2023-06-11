@@ -1,106 +1,121 @@
 ﻿@model IEnumerable<ProiectLicenta.Data.Models.CourseReview>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Reviews";
 }
 
+<h2 id="title">Reviews</h2>
+
 <style>
-    h2 {
-        color: #333;
+    body {
+        background-color: #f8f9fa;
+    }
+
+    #title {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 20px;
     }
 
     .table {
-        border-radius: 5px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        background-color: #E1E1E1;
+        border-radius: 15px;
+        overflow: hidden;
     }
 
-        .table th {
-            background-color: #f8f9fa;
-            color: #333;
+        .table thead th {
+            background-color: #4D4C4C;
+            color: #fff;
         }
 
-        .table td {
-            color: #333;
+        #action{
+            width: 20%;
         }
 
-    a {
-        color: #007bff;
+    .btn-group .btn {
+        margin: 10px 10px;
+    }
+
+    .form-button {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #firstColumn {
+        padding-left: 15px;
     }
 </style>
 
-<h2 class="text-left text-primary">Index</h2>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th id="firstColumn">@Html.DisplayNameFor(model => model.ReviewText)</th>
+                <th>@Html.DisplayNameFor(model => model.Stars)</th>
+                <th id="action">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.IsActive || User.IsInRole("admin"))
+                {
+                    <tr style="border-top: 0.2rem groove;">
+                        <td id="firstColumn">@Html.DisplayFor(modelItem => item.ReviewText)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Stars)</td>
+                        <td id="action">
+                            @if ((string)ViewData["UserId"] == item.UserId)
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.CourseReviewId }, new { @class = "btn btn-primary btn-sm" })
+                                @Html.ActionLink("Delete", "Delete", new { courseReviewId = item.CourseReviewId }, new { @class = "btn btn-danger btn-sm" })
+                            }
+                            else if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                            {
+                                if (item.IsActive)
+                                {
+                                    @Html.ActionLink("Deactivate Review", "DeactivateReview", new { id = item.CourseReviewId }, new { @class = "btn btn-danger btn-sm" })
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Activate Review", "ActivateReview", new { id = item.CourseReviewId }, new { @class = "btn btn-success btn-sm" })
+                                }
+                            }
+                            else
+                            {
+                                @:No Action
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<center>
 
-<p>
     @if ((string)ViewData["CanAdd"] == "true" && User.Identity.IsAuthenticated)
     {
-        @Html.ActionLink("Add a new review", "Create", new { courseId = ViewData["courseId"] }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Add a new review", "Create", new { courseId = ViewData["courseId"] }, new { @class = "btn btn-info btn-sm" })
     }
 
-</p>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ReviewText)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Stars)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
+    @if (User.IsInRole("professor"))
     {
-        if (item.IsActive || User.IsInRole("admin"))
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReviewText)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Stars)
-                </td>
-                <td>
-                    @if ((string)ViewData["UserId"] == item.UserId)
-                    {
-                        <text> ( </text>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.CourseReviewId }) <text> | </text>
-                        @Html.ActionLink("Details", "Details", new { id = item.CourseReviewId }) <text> | </text>
-
-                        @Html.ActionLink("Delete", "Delete", new { courseReviewId = item.CourseReviewId }) <text> ) </text>
-                    }
-
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
-                    {
-
-
-                        <text> ( </text>
-                        if (item.IsActive)
-                        {
-                            @Html.ActionLink("Deactivate Review", "DeactivateReview", new { id = item.CourseReviewId }) <text> | </text>
-                        }
-                        else
-                        {
-                            @Html.ActionLink("Activate Review", "ActivateReview", new { id = item.CourseReviewId }) <text> ) </text>
-                        }
-                    }
-                </td>
-            </tr>
-        }
-    }
-</table>
-@if (User.IsInRole("professor"))
-{
-    @Html.ActionLink("Courses", "GetUserCourses", "Course", null, new { @class = "btn btn-link" });
-}
-else
-{
-    if (User.IsInRole("student") || User.IsInRole("helping_student"))
-    {
-        @Html.ActionLink("To Courses", "GetStudentEnrolledCourses", "Course")
+        @Html.ActionLink("Courses", "GetUserCourses", "Course", null, new { @class = "btn btn-info btn-sm" });
     }
     else
     {
-        @Html.ActionLink("To Courses", "Index", "Course")
+        if (User.IsInRole("student") || User.IsInRole("helping_student"))
+        {
+            @Html.ActionLink("To Courses", "GetStudentEnrolledCourses", "Course", null, new { @class = "btn btn-info btn-sm" });
+        }
+        else
+        {
+            @Html.ActionLink("To Courses", "Index", "Course", null, new { @class = "btn btn-info btn-sm" });
+        }
     }
-}
+
+</center>

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using System.Web.WebPages;
 
 namespace Proiect_Licenta.Controllers
 {
@@ -140,6 +141,8 @@ namespace Proiect_Licenta.Controllers
         public ActionResult ActivateCourse(int id)
         {
             var model = courseDb.GetCourse(id);
+            var userdata = userDb.getUserData(model.OwnerId);
+            model.Owner = userdata;
 
             if (model == null)
                 return View("NotFound");
@@ -190,10 +193,14 @@ namespace Proiect_Licenta.Controllers
         [HttpPost]
         public ActionResult DeactivateCourse(Course course)
         {
-
-            if (course.DeactivationReason == null)// or courseid-int is null
+            if (course.DeactivationReason.IsEmpty())
             {
-                return View("NotFound");
+                ModelState.AddModelError("DeactivationReason", "Can't be empty.");
+            }
+            if (!ModelState.IsValid)// or courseid-int is null
+            {
+                ModelState.AddModelError("DeactivationReason", "Can't be empty.");
+                return View(course);
             }
 
             var courseId = course.CourseId;

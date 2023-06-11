@@ -122,6 +122,19 @@ namespace Proiect_Licenta.Controllers
                 userLoginDb.ChangeRole(model.UserId, model.NewRole);
 
             }
+            else
+            {
+                List<string> possibleRoles = new List<string>
+            {
+                "admin",
+                "student",
+                "professor",
+                "helping_student"
+            };
+                model.PossibleRoles = possibleRoles;
+
+                return View(model);
+            }
             return RedirectToAction("UsersDetails");
         }
 
@@ -151,7 +164,7 @@ namespace Proiect_Licenta.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View("ModelStateNotValid");
+                return View(warningView);
             }
 
             var user = userDb.getUserByUserDataId(warningView.UserDataId);
@@ -221,9 +234,12 @@ namespace Proiect_Licenta.Controllers
         {
             var userDataId = user.UserDataId;
             var until = user.SuspendedUntil;
+            if(user.SuspendedUntil < DateTime.Now)
+                ModelState.AddModelError("SuspendedUntil", "Must be greater than today's date.");
             if (!ModelState.IsValid)
             {
-                return View("ModelStateNotValid");
+
+                return View(user);
             }
 
             warningDb.SuspendUser(userDataId, until);
