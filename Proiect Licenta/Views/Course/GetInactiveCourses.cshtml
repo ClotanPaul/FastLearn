@@ -6,65 +6,53 @@
 
 <style>
 
-    .card {
-        background: #f8f9fa;
-        border-radius: 5px;
-        padding: 20px;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        height: 510px;
-        width: auto;
-        border-radius: 20px;
-        border: 1px solid #b4b4b4;
-    }
-
-    .card-img-top {
-        width: 320px;
-        height: 200px;
-        border-radius: 15px; /* Adjust the px value to get the roundness you want */
-        border: 2px solid #000000; /* Adjust the px value and color to get the border thickness and color you want */
-    }
-
-    .card-title {
-        font-weight: bold;
-        font-size: 18px;
-        height: 18px;
-        max-width: 300px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-
-    #card-desc {
-        height: 60px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    #chaptersB {
-        margin-right: 5px;
-    }
-
-    #reviewsB {
-        margin-right: 5px;
-    }
 
     #ceva {
         margin-bottom: 10px;
+    }
+
+    #chaptersb {
+        margin-bottom: 0px;
+
+    }
+
+    #buttons {
+        margin-bottom: 10px;
+        margin-left: -22px;
+        text-overflow: ellipsis;
+        text-align: justify;
+        border-top: 1px solid #838383;
+        padding-bottom: 20px;
+        margin-bottom: 17px;
+        margin-right: -22px;
     }
 
     #button-space{
         margin-bottom: 25px;
     }
 
-    
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .card-body{
+
+    }
+    #span-style {
+        display:inline-block;
+        width: 330px; 
+        text-overflow: ellipsis;
+        white-space: nowrap; 
+        overflow: hidden;
+    }
+
 
 </style>
 
 
 
-<h2 class="text-left text-primary">Inactive Course List</h2>
+<h1 id="h3">Inactive Course List</h1>
 
 
 
@@ -74,7 +62,10 @@
         {
 
             <div class="col-md-4 mb-4">
-                <div class="card">
+                <div style="height: 570px;" class="card">
+                    <center id="title-line">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.CourseName)</h5>
+                    </center>
                     @if (item.ImagePath != null)
                     {
                         <img src="@Url.Content(item.ImagePath)" class="card-img-top" alt="Course Image">
@@ -84,37 +75,57 @@
                         <img src="~/Content/images/proiectLicentaPhoto.jpg" class="card-img-top" alt="Course Image"> <text>Image</text>
                     }
                     <div class="card-body flex-container">
-                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.CourseName)</h5>
+
                         <p class="card-text" id="card-desc">@Html.DisplayFor(modelItem => item.CourseDescription)</p>
-                        @if (item.IssueResolved)
-                        {
-                            <p class=" card-text"> <strong>The user requests a review of the deactivation.</strong></p>
-                        }
-
-                        @if (User.IsInRole("admin") || (item.OwnerId == (string)ViewData["userId"] && item.OwnerId != null))
-                        {
-                            if (!item.Active)
-                            {
-
-                                <p class="card-text" , id="button-space"><strong>Deactivation Reason:</strong> @Html.DisplayFor(modelItem => item.DeactivationReason)</p>
-
-                            }
-
-                        }
-                        <div class="text-center">
-                            <div id="ceva">
-                                @Html.ActionLink("Chapters", "Index", "Chapter", new { courseId = item.CourseId }, new { @class = "btn btn-primary", @id = "chaptersB" })
-                                @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, new { @class = "btn btn-primary", @id = "reviewsB" })
-                            </div>
-                            @if (User.IsInRole("admin"))
-                            {
-                                @Html.ActionLink("Activate Course", "ActivateCourse", new { id = item.CourseId }, new { @class = "btn btn-primary", @id = "chaptersB" })
-                            }
+                        <p style=" margin-bottom: 10px;" class="card-text">
                             @if (item.IssueResolved)
                             {
-                                @Html.ActionLink("Reject Course Activation", "RejectActivation", new { courseId = item.CourseId }, new { @class = "btn btn-primary", @id = "reviewsB" })
+                                <b style="margin-bottom:4px;">The user requests a review of the deactivation.</b>
                             }
-                        </div>
+                            else
+                            {
+                                <b>No pending deactivation reevaluation.</b>
+                            }
+                            <br>
+                            <span id="span-style"><b>Reason: </b>@Html.DisplayFor(modelItem => item.DeactivationReason)</span>
+                            <div class="text-center">
+                                <div id="ceva">
+
+                                    @if (User.IsInRole("admin"))
+                                    {
+                                        if (item.IssueResolved)
+                                        {
+                                            @Html.ActionLink("Activate Course", "ActivateCourse", new { id = item.CourseId }, new { @class = "btn btn-success", @id = "chaptersB", @style = " margin-bottom:5px " })
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink("Activate Course", "ActivateCourse", new { id = item.CourseId }, new { @class = "btn btn-primary", @id = "chaptersB", @style = " margin-bottom:5px; background-color: #3c4349; border-color: #3f484f;" })
+
+                                        }
+                                    }
+                                    @if (item.IssueResolved)
+                                    {
+                                        @Html.ActionLink("Reject Activation", "RejectActivation", new { courseId = item.CourseId }, new { @class = "btn btn-danger", @id = "chaptersB", @style = " margin-bottom:5px " })
+                                    }
+                                </div>
+                            </div>
+                        </p>
+
+
+
+                        <p style=" margin-bottom: 10px;" class="card-text">
+                            
+                            <div class="text-center">
+                                <div id="buttons">
+                                    <center>
+                                        @Html.ActionLink("Chapters", "Index", "Chapter", new { courseId = item.CourseId }, new { @class = "btn btn-info", @id = "chaptersB", @style = " margin-top:15px " })
+                                        @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, new { @class = "btn btn-info", @id = "chaptersB", @style = " margin-top:15px " })
+                                    </center>
+                                        </div>
+
+                            </div>
+                                
+                        </p>
                     </div>
                 </div>
             </div>

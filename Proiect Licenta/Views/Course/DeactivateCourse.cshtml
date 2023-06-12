@@ -40,10 +40,19 @@
         text-align: left;
         padding-left: 30px;
         border: 1px solid #b4b4b4;
+        padding-bottom: 5px;
     }
 
     .btn {
         margin-right: 20px;
+    }
+
+    #button-line {
+        width: auto;
+        border-bottom: 1px groove #b4b4b4;
+        width: 604px;
+        margin-left: -31px;
+        margin-bottom: 10px;
     }
 </style>
 
@@ -66,21 +75,34 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.DeactivationReason)<b>:</b>
-                @Html.EditorFor(model => model.DeactivationReason, new { htmlAttributes = new { @class = "form-control reason-text-box" } })
-                @Html.ValidationMessageFor(model => model.DeactivationReason, "", new { @class = "text-danger" })
+                <b>Course Owner: </b>
+                @Html.DisplayFor(model => model.Owner.Email)
             </div>
+            <div id="button-line">
+                </div>
+            <div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DeactivationReason)<b>:</b>
+                    @Html.EditorFor(model => model.DeactivationReason, new { htmlAttributes = new { @class = "form-control reason-text-box" } })
+                    @Html.ValidationMessageFor(model => model.DeactivationReason, "", new { @class = "text-danger" })
+                </div>
 
-            @Html.HiddenFor(model => model.CourseId)
-            @Html.HiddenFor(model => model.OwnerId)
-            @Html.HiddenFor(model => model.Active)
-            @Html.HiddenFor(model => model.CourseName)
-            @Html.HiddenFor(model=>model.CourseDescription)
+
+                @Html.HiddenFor(model => model.CourseId)
+                @Html.HiddenFor(model => model.OwnerId)
+                @Html.HiddenFor(model => model.Active)
+                @Html.HiddenFor(model => model.CourseName)
+                @Html.HiddenFor(model => model.CourseDescription)
+                <center>
+                    <div class="form-group">
+                        <input type="submit" value="Deactivate Course" class="btn btn-success" />
+                        @Html.ActionLink("Abort", "Index", null, new { @class = "btn btn-danger" })
+                    </div>
+                </center>
+
+            </div>
         </div>
-        <div class="form-group">
-            <input type="submit" value="Deactivate Course" class="btn btn-success" />
-            @Html.ActionLink("Abort", "Index", null, new { @class = "btn btn-danger" })
-        </div>
+
     }
 
 </center>

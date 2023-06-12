@@ -19,15 +19,14 @@
 
     .table {
         background-color: #E1E1E1;
-        border-radius: 20px;
+        border-radius: 10px;
         overflow: hidden;
-        width: 70%;
     }
 
-    .table th {
-        background-color: #4D4C4C;
-        color: #fff;
-    }
+        .table th {
+            background-color: #4D4C4C;
+            color: #fff;
+        }
 
     .btn-default {
         background-color: #007bff;
@@ -36,44 +35,100 @@
         transition: background-color 0.2s ease;
     }
 
-    .btn-default:hover {
-        background-color: #0056b3;
-    }
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
 
     .back-link {
         margin-top: 20px;
         text-align: center;
     }
+
     #username {
         padding-left: 15px;
     }
+
+
+    #info-box {
+        background: #dedede;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        text-align: left;
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-top: 0px;
+        padding-top: 0px;
+        width: 80%;
+    }
+
+    .btn {
+        margin-right: 15px;
+    }
+
+    #danger {
+        width: 83.719px;
+    }
+
+    #button-line {
+        width: auto;
+        width: 912px;
+        margin-left: 0px;
+        margin-bottom: 20px;
+        border-top: none;
+        border-bottom: 0.1rem groove #b4b4b4;
+    }
 </style>
+@if (Model!= null && Model.ToList().Count > 0)
+{
+    <center>
+        <div id="info-box">
+            <center id="button-line">
+                <div class="table-responsive">
+                    <table class="table table-hover" style="margin-top:0px;margin-bottom: 0px;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th id="username"> @Html.DisplayNameFor(model => model.WarningReason)</th>
+                                <th style="width:30%">@Html.DisplayNameFor(model => model.User.Email)</th>
+                                <th style="width:20%">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr style="border-top: 0.2rem groove;">
+                                    <td id="username">@Html.DisplayFor(modelItem => item.WarningReason)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.User.Email)</td>
+                                    <td>
+                                        @Html.ActionLink("Remove Warning", "RemoveWarning", new { warningId = item.WarningId }, new { @class = "btn btn-danger btn-sm" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </center>
+            <div class="back-link">
+                @Html.ActionLink("To User Panel", "UsersDetails", "Users", null, new { @class = "btn btn-info" })
+            </div>
+        </div>
+    </center>
+}
+else
+{
 
 <center>
-<div class="table-responsive">
-    <table class="table table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th id="username"> @Html.DisplayNameFor(model => model.WarningReason)</th>
-                <th style="width:30%">@Html.DisplayNameFor(model => model.User.Email)</th>
-                <th style="width:20%">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr style="border-top: 0.2rem groove;">
-                    <td id="username">@Html.DisplayFor(modelItem => item.WarningReason)</td>
-                    <td>@Html.DisplayFor(modelItem => item.User.Email)</td>
-                    <td>
-                        @Html.ActionLink("Remove Warning", "RemoveWarning", new { warningId = item.WarningId }, new { @class = "btn btn-danger btn-sm" })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-    </center>
-<div class="back-link">
-    @Html.ActionLink("To User Panel", "UsersDetails", "Users", null, new { @class = "btn btn-info" })
-</div>
+
+    <div id="info-box" style="border: 0.1rem groove #b4b4b4;">
+        <center><h3 style="margin-top: 15px; padding-top: 5px; margin-bottom: 20px;"> This user has no warnings.</h3></center>
+        <center>
+            <div class="back-link">
+                @Html.ActionLink("To User Panel", "UsersDetails", "Users", null, new { @class = "btn btn-info" })
+            </div>
+        </center>
+
+
+    </div>
+</center>
+
+}

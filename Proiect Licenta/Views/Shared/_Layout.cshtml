@@ -1,20 +1,5 @@
 ﻿<!DOCTYPE html>
-<style>
-    .active a {
-        background: radial-gradient(circle at center, transparent, #1f1f21);
-        color: blue;
-    }
 
-    body {
-        background: url("https://www.toptal.com/designers/subtlepatterns/uploads/so-white.png");
-        background-repeat: repeat;
-    }
-
-    navbar-brand.active{
-        background: radial-gradient(circle at center, transparent, #1f1f21);
-        color: blue;
-    }
-</style>
 <html>
 
 
@@ -27,7 +12,22 @@
 
 
     <link rel="stylesheet" href="~/Scripts/ckeditor/plugins/codesnippet/lib/highlight/styles/default.css">
+    <style>
+        .active a {
+            background: radial-gradient(circle at center, transparent, #1f1f21);
+            color: blue;
+        }
 
+        body {
+            background: url("https://static.vecteezy.com/system/resources/previews/001/911/467/large_2x/light-grey-paper-texture-background-free-photo.jpg");
+            background-repeat: repeat;
+        }
+
+        navbar-brand.active {
+            background: radial-gradient(circle at center, transparent, #1f1f21);
+            color: blue;
+        }
+    </style>
 
 </head>
 <body>
@@ -41,7 +41,12 @@
                 {
                     <div class="@(ViewContext.RouteData.Values["Action"].ToString() == "GetUserCourses" ? "active" : "")">
                         @Html.ActionLink("FastLearn", "GetUserCourses", "Course", new { area = "" }, new { @class = "navbar-brand" })
+
                     </div>
+
+
+
+
                 }
                 else
                 {
@@ -52,7 +57,7 @@
 
 
             </div>
-            <div class="navbar-collapse collapse">
+            <li class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
                     {
@@ -72,6 +77,11 @@
                         <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "GetUserInactiveCourses" ? "active" : "")">
                             @Html.ActionLink("InactiveCourses", "GetUserInactiveCourses", "Course")
                         </li>
+
+                        <li class="@(ViewContext.RouteData.Values["Controller"].ToString() =="Course" && ViewContext.RouteData.Values["Action"].ToString()=="Create" ? "active" : "" )">
+                            @Html.ActionLink("New Course", "Create", "Course")
+                        </li>
+
                         <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "SeeHelpingStudentApplicationsForProfessor" ? "active" : "")">
                             @Html.ActionLink("HelpingStudentRequests", "SeeHelpingStudentApplicationsForProfessor", "Users")
                         </li>
@@ -126,7 +136,6 @@
                     </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
-            </div>
         </div>
     </div>
     <div class="container body-content">

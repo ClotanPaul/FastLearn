@@ -4,47 +4,82 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 
-<div>
-    <h4>UserData</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
 
-        <dd>
+<style>
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        padding-bottom: 0px;
+        border-radius: 10px;
+        width: 55%;
+        text-align: left;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #button-line {
+        width: auto;
+        border-top: 1px groove #b4b4b4;
+        width: 626px;
+        margin-left: -31px;
+        border-bottom: none;;
+        margin-bottom: 0px;
+        padding-top: 15px;
+        margin-top: 20px;
+        padding-bottom: 10px
+    }
+    .dl-horizontal{
+        align-items: flex-start;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+</style>
+
+
+<h1 id="h3">Account Details</h1>
+
+<center>
+    <div id="info-box">
+        <div class="form-group">
+            <b>@Html.DisplayNameFor(model => model.UserName): </b>
             @Html.DisplayFor(model => model.UserName)
-        </dd>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
+        <div class="form-group">
+            <b>@Html.DisplayNameFor(model => model.Email): </b>
             @Html.DisplayFor(model => model.Email)
-        </dd>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Points)
-        </dt>
-
-        <dd>
+        <div class="form-group">
+            <b>@Html.DisplayNameFor(model => model.Points): </b>
             @Html.DisplayFor(model => model.Points)
-        </dd>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserRole)
-        </dt>
-
-        <dd>
+        <div class="form-group">
+            <b>@Html.DisplayNameFor(model => model.UserRole): </b>
             @Html.DisplayFor(model => model.UserRole)
-        </dd>
+        </div>
 
+        <center id="button-line">
+            <p>
+                @Html.ActionLink("Edit Username", "Edit", "Users", new { id = Model.UserDataId }, new { @class = "btn btn-primary" })
+            </p>
+        </center>
+    </div>
+    </center>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit Username", "Edit", new { id = Model.UserDataId }) |
-</p>

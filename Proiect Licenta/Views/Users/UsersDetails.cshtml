@@ -5,13 +5,24 @@
 }
 
 
-
-<h2 id="title">User Panel</h2>
-
+<h1 id="h3">User Panel</h1>
 <style>
-    body {
-        background-color: #f8f9fa;
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
     }
+
+    .btn{
+        margin-bottom:0px;
+    }
+
+    #title-line {
+        width: auto;
+        border-bottom: 2px solid #838383;
+        width: 358px;
+        margin-left: -21px
+    }
+
 
     #title {
         margin-top: 40px;
@@ -20,35 +31,35 @@
     }
 
     .table {
-        background-color: #E1E1E1;
+        background-color: #c7c7c7;
         border-radius: 20px;
         overflow: hidden;
-        
+        border: 0.2rem thin;
+        border-color: #b4b4b4;
+        margin-top: 20px;
     }
 
-    .table thead th {
-        background-color: #4D4C4C;
-        color: #fff;
-    }
+        .table thead th {
+            background-color: #4D4C4C;
+            color: #fff;
+        }
 
 
     .btn-group .btn {
         margin: 10px;
     }
-    
+
 
     .form-button {
         display: inline-block;
         margin-right: 10px;
     }
 
-    .btn{
-        margin-right: 15px;
-    }
 
     #username {
         padding-left: 15px;
     }
+
     .form-horizontal {
         padding: 20px;
         border-radius: 5px;
@@ -66,25 +77,10 @@
         transition: background-color 0.2s ease;
     }
 
-    .btn-default:hover {
-        background-color: #0056b3;
-    }
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
 
-    #h3 {
-        margin-top: 40px;
-        text-align: center;
-    }
-
-    #info-box {
-        background: #f8f9fa;
-        padding: 20px;
-        margin-bottom: 25px;
-        border-radius: 20px;
-        width: 55%;
-        text-align: left;
-        padding-left: 30px;
-        border: 1px solid #b4b4b4;
-    }
 
     .btn {
         margin-right: 15px;
@@ -93,8 +89,9 @@
     #danger {
         width: 83.719px;
     }
-</style>
 
+
+</style>
 
 <div class="table-responsive">
     <table class="table table-hover">
@@ -133,7 +130,7 @@
 
                         @if (item.IsSuspended)
                         {
-                            @Html.ActionLink("Unsuspend", "RemoveUserSuspension", new { userDataId = item.UserDataId }, new { @class = "btn btn-danger btn-sm", @id = "danger" })
+                            @Html.ActionLink("Unsuspend", "RemoveUserSuspension", new { userDataId = item.UserDataId }, new { @class = "btn btn-success btn-sm", @id = "danger" })
                         }
                         else
                         {

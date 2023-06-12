@@ -20,6 +20,7 @@ namespace ProiectLicenta.Data.Models
 
         [Required]
         [DisplayName("Description")]
+        [DataType(DataType.MultilineText)]
         public string CourseDescription { get; set; }
 
         [DefaultValue(false)]

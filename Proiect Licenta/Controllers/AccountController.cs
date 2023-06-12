@@ -83,15 +83,11 @@ namespace Proiect_Licenta.Controllers
             }
 
 
-
-            // if the account is suspended, you can't login
-
-            /*
-            if (true)
+            var user = userDataDb.getUserByUserName(model.Email);
+            if (user != null && user.IsSuspended && DateTime.Compare(DateTime.Now, user.SuspendedUntil) < 0) // to remove user!= null
             {
                 return View("AccountSuspended");
             }
-            */
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -99,7 +95,7 @@ namespace Proiect_Licenta.Controllers
 
             if(result == SignInStatus.Success)
             {
-                var user = userDataDb.getUserByUserName(model.Email);
+                user = userDataDb.getUserByUserName(model.Email);
                 if(user != null && user.IsSuspended && DateTime.Compare(DateTime.Now, user.SuspendedUntil) < 0) // to remove user!= null
                 {
                     return View("AccountSuspended");

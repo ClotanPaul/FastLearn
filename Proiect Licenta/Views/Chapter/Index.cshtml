@@ -5,59 +5,204 @@
     ViewBag.Title = "Chapter Index";
 }
 
-<div class="container mt-3">
-    <h2 class="text-left">Chapter Index</h2>
-    @if ((string)ViewData["ownerId"] == (string)ViewData["userId"])
-    {
-        <div class="text-left my-4">
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    #title {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        background-color: #dedede;
+        border-radius: 10px;
+        padding-left: 0px;
+        overflow: hidden;
+        border: 0.2rem thin #b4b4b4;
+        margin-top: 0px;
+    }
+
+        .table thead th {
+            background-color: #4D4C4C;
+            color: #fff;
+        }
+
+
+    .btn-group .btn {
+        margin: 10px;
+    }
+
+    .form-button {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .btn {
+        margin-right: 15px;
+    }
+
+    #chapterTitle {
+        padding-left: 15px;
+    }
+
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    #info-box {
+        background: #dedede;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        text-align: left;
+        padding-left: 0px;
+        padding-right: 0px;
+
+        margin-top: 0px;
+        padding-top: 0px;
+    }
+
+    .btn {
+        margin-right: 15px;
+    }
+
+    #danger {
+        width: 83.719px;
+    }
+
+    #button-line {
+        width: auto;
+        width: 1140px;
+        margin-left: 0px;
+        margin-bottom: 20px;
+        border-top: none;
+        border-bottom: 0.1rem groove #b4b4b4;
+    }
+</style>
+
+<h1 id="h3">@ViewData["courseName"] Chapters</h1>
+
+    @if (Model.ToList().Count > 0) {
+
+    <div id="info-box" style="border: 0.1rem groove #b4b4b4;">
+        <center id="button-line">
+                <div class="table-responsive">
+                    <table class="table table-hover" style="margin-bottom: 0px;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th id="chapterTitle">@Html.DisplayNameFor(model => model.ChapterTitle)</th>
+                                <th>@Html.DisplayNameFor(model => model.ChapterDescription)</th>
+                                <th style="width:20%;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr style="border-top: 0.2rem groove;">
+                                    <td id="chapterTitle">@Html.DisplayFor(modelItem => item.ChapterTitle)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.ChapterDescription)</td>
+
+                                    <td>
+
+                                        @if (item.Course.OwnerId == (string)ViewData["userId"])
+                                        {
+
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.ChapterId }, new { @class = "btn btn-primary btn-sm" })
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.ChapterId }, new { @class = "btn btn-danger btn-sm" })
+                                        }
+                                        else
+                                        {
+                                            if (User.IsInRole("admin"))
+                                            {
+                                                @Html.ActionLink("Subchapters", "Index", "SubChapter", new { chapterId = item.ChapterId }, new { @class = "btn btn-info btn-sm" })
+                                            }
+                                            else
+                                            {
+                                                <b> No actions possible.</b>
+                                            }
+                                        }
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+        </center>
+
+
+
+
+    <center>
+        @if ((string)ViewData["ownerId"] == (string)ViewData["userId"])
+        {
             @Html.ActionLink("Add a new Chapter", "Create", new { courseId = ViewData["courseId"] }, new { @class = "btn btn-primary" })
-        </div>
-    }
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ChapterTitle)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ChapterDescription)
-                </th>
-                <th>
-                    Actions
-                </th>
+        }
+        @if (!User.IsInRole("professor"))
+        {
+            @Html.ActionLink("Courses", "Index", "Course", null, new { @class = "btn btn-info" });
+        }
+        else
+        {
+            @Html.ActionLink("Courses", "GetUserCourses", "Course", null, new { @class = "btn btn-info" });
+        }
+    </center>
+</div>    
+        }
+        else {
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
+<div id="info-box" style="border: 0.1rem groove #b4b4b4;">
+    <center><h3 style = "margin-top: 15px; padding-top: 5px; margin-bottom: 20px;"> This course has no chapters.</h3 ></center>
+    <center>
+        @if ((string)ViewData["CanAdd"] == "true" && User.Identity.IsAuthenticated)
+        {
+            @Html.ActionLink("Add a new review", "Create", new { courseId = ViewData["courseId"] }, new { @class = "btn btn-primary" })
+        }
+
+        @if (User.IsInRole("professor"))
+        {
+            @Html.ActionLink("Courses", "GetUserCourses", "Course", null, new { @class = "btn btn-info" });
+        }
+        else
+        {
+            if (User.IsInRole("student") || User.IsInRole("helping_student"))
             {
-                <tr>
-                    <td>
-                        @Html.HiddenFor(modelItem => item.CourseId)
-                        @Html.DisplayFor(modelItem => item.ChapterTitle)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ChapterDescription)
-                    <td>
-                        @if (item.Course.OwnerId == (string)ViewData["userId"])
-                        {
-                            @Html.ActionLink("Edit", "Edit", new { id = item.ChapterId }, new { @class = "btn btn-link" }) <text></text>
-                            @Html.ActionLink("Details", "Details", new { id = item.ChapterId }, new { @class = "btn btn-link" }) <text></text>
-                            @Html.ActionLink("Delete", "Delete", new { id = item.ChapterId }, new { @class = "btn btn-link" }) <text></text>
-                        }
-                        @Html.ActionLink("Subchapters", "Index", "SubChapter", new { chapterId = item.ChapterId }, new { @class = "btn btn-link" })
-                    </td>
-                </tr>
+                @Html.ActionLink("To Courses", "GetStudentEnrolledCourses", "Course", null, new { @class = "btn btn-info" });
             }
-        </tbody>
-    </table>
-    @if (!User.IsInRole("professor"))
-    {
-        @Html.ActionLink("Courses", "Index", "Course", null, new { @class = "btn btn-link" });
-    }
-    else
-    {
-        @Html.ActionLink("Courses", "GetUserCourses", "Course", null, new { @class = "btn btn-link" });
-    }
+            else
+            {
+                @Html.ActionLink("To Courses", "Index", "Course", null, new { @class = "btn btn-info", @style = "margin-right:0px;" });
+            }
+        }
+    </center>
+
+
 </div>
+    }

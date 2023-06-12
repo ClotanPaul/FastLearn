@@ -34,9 +34,6 @@ namespace Proiect_Licenta.Controllers
         // GET: Course
         [AllowAnonymous]
         public ActionResult Index()
-        
-        
-        
         {
             List<Course> courses = courseDb.GetAll();
             ViewData["userId"] = User.Identity.GetUserId();
@@ -58,8 +55,26 @@ namespace Proiect_Licenta.Controllers
         [HttpPost]
         public ActionResult Create(Course newCourse)
         {
+
+            if (newCourse.CourseDescription.IsEmpty())
+            {
+                ModelState.AddModelError("CourseDescription", "Can't be empty");
+            }
+            else
+            {
+                if (newCourse.CourseDescription.Length < 120 || newCourse.CourseDescription.Length > 150)
+                {
+                    ModelState.AddModelError("CourseDescription", "The description of the course must be between 120 and 150 characters long.");
+                }
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(newCourse);
+            }
+
             newCourse.OwnerId = User.Identity.GetUserId();
             string fileName = "proiectLicentaPhoto";
+            newCourse.DeactivationReason = "Newly created course.";
             string urlPath = Url.Content(Path.Combine("~/Content/Images/Courses", fileName) + ".jpg");
             newCourse.ImagePath = urlPath;
             if (ModelState.IsValid)
@@ -90,6 +105,18 @@ namespace Proiect_Licenta.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Course course)
         {
+
+            if (course.CourseDescription.IsEmpty())
+            {
+                ModelState.AddModelError("CourseDescription", "Can't be empty");
+            }
+            else
+            {
+                if(course.CourseDescription.Length < 120 || course.CourseDescription.Length > 150)
+                {
+                    ModelState.AddModelError("CourseDescription", "The description of the course must be between 120 and 150 characters long.");
+                }
+            }
             if (ModelState.IsValid)
             {
                 courseDb.UpdateCourse(course);
@@ -176,6 +203,8 @@ namespace Proiect_Licenta.Controllers
         public ActionResult DeactivateCourse(int id)
         {
             var model = courseDb.GetCourse(id);
+            var userdata = userDb.getUserData(model.OwnerId);
+            model.Owner = userdata;
 
             if (model == null)
                 return View("NotFound");
@@ -197,8 +226,14 @@ namespace Proiect_Licenta.Controllers
             {
                 ModelState.AddModelError("DeactivationReason", "Can't be empty.");
             }
+            if (!course.DeactivationReason.IsEmpty() && course.DeactivationReason.Length > 35)
+            {
+                ModelState.AddModelError("DeactivationReason", "No more than 35 characters allowed.");
+            }
             if (!ModelState.IsValid)// or courseid-int is null
             {
+                var userdata = userDb.getUserData(course.OwnerId);
+                course.Owner = userdata;
                 ModelState.AddModelError("DeactivationReason", "Can't be empty.");
                 return View(course);
             }

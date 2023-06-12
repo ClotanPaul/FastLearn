@@ -1,0 +1,111 @@
+﻿@model ProiectLicenta.Data.Models.Course
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 class="text-left text-primary">Details</h2>
+
+<style>
+    .form-horizontal {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+        text-align: left;
+    }
+
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    dd {
+        text-align: left;
+        padding-top: 7px;
+    }
+
+    .back-link {
+        margin-top: 20px;
+        text-align: left;
+    }
+
+    dt {
+        text-align: left;
+        font-weight: bold;
+        padding-top: 7px;
+    }
+    .card-img-top {
+        border-radius: 15px;
+        border: 2px solid #000000;
+    }
+</style>
+
+@using (Html.BeginForm("UpdateCoursePhoto", "Course", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <h4>Course</h4>
+    <hr />
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.HiddenFor(model => model.CourseId)
+            @Html.DisplayNameFor(model => model.CourseName):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseDescription):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseDescription)
+        </dd>
+
+
+        <dt>
+            Course Image:
+        </dt>
+
+        <dd>
+            @if (Model.ImagePath != null)
+            {
+                <img src="@Url.Content(Model.ImagePath)" class="card-img-top" alt="Course Image" width="640" height="360">
+            }
+            else
+            {
+                <img src="~/Content/images/proiectLicentaPhoto.jpg" class="card-img-top" alt="Course Image" width="640" height="360">
+            }
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.ImagePath)
+        </dt>
+
+        <dd>
+
+            <div class="form-group">
+
+                <input type="file" name="file" id="file" />
+            </div>
+            <button type="submit" class="btn btn-primary">Upload Image</button>
+
+        </dd>
+
+
+    </dl>
+}
+
+<p class="back-link">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }, new { @class = "btn btn-default" }) |
+    @Html.ActionLink("Back to List", "GetUserCourses","Course")
+</p>

@@ -40,10 +40,19 @@
         text-align: left;
         padding-left: 30px;
         border: 1px solid #b4b4b4;
+        padding-bottom: 0px;
     }
 
     .btn {
         margin-right: 20px;
+    }
+
+    #button-line {
+        width: auto;
+        border-bottom: 1px groove #b4b4b4;
+        width: 604px;
+        margin-left: -16px;
+        margin-bottom: 15px;
     }
 </style>
 
@@ -60,27 +69,33 @@
                 @Html.DisplayFor(model => model.Email)
             </div>
 
+           
             <div class="form-group">
                 <b>Current Role: </b>@Model.currentRole<br />
                 <b>Possible Roles: </b>"admin", "student", "professor" or "helping_student"<br /><br />
+                <div id="button-line"></div>
                 @Html.LabelFor(model => model.NewRole)<b>:</b>
                 @Html.DropDownListFor(model => model.NewRole, new SelectList(Model.PossibleRoles), "Select a role", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.NewRole, "", new { @class = "text-danger" })
             </div>
+                
 
+            <div class="form-group">
+                <center>
+                    <input type="submit" value="Change Role" class="btn btn-success" />
 
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                    {
+                        @Html.HiddenFor(model => model.UserId)
+                        @Html.HiddenFor(model => model.PossibleRoles)
+                        @Html.HiddenFor(model => model.currentRole)
+                        @Html.HiddenFor(model => model.Email)
+
+                        @Html.ActionLink("Abort", "UsersDetails", "Users", null, new { @class = "btn btn-danger", @style=" margin-right:0px;" })
+                    }
+                </center>
+            </div>
         </div>
-        <div class="form-group">
-            <input type="submit" value="Change Role" class="btn btn-success" />
-            @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
-            {
-                @Html.HiddenFor(model => model.UserId)
-                @Html.HiddenFor(model => model.PossibleRoles)
-                @Html.HiddenFor(model => model.currentRole)
-                @Html.HiddenFor(model => model.Email)
-
-                @Html.ActionLink("Abort", "UsersDetails", "Users", null, new { @class = "btn btn-danger" })
-            }
-        </div>
+        
     }
 </center>

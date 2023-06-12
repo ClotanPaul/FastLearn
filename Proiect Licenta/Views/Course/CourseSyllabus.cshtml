@@ -102,7 +102,7 @@
                 {
                     <div class="subchapter-box">
                         <span class="subchapter-title">@Html.DisplayFor(model => subchapter.SubchapterTitle)</span>
-                        @if (User.Identity.IsAuthenticated)
+                        @if (User.Identity.IsAuthenticated && !User.IsInRole("professor"))
                         {
                             @Html.ActionLink(">> More", "ViewSubchapter", "SubChapter", new { subchapterId = subchapter.SubchapterId }, new { @class = "btn btn-outline-warning btn-sm-custom" })
                         }    

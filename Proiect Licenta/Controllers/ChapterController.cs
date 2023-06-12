@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace Proiect_Licenta.Controllers
 {
@@ -27,6 +28,7 @@ namespace Proiect_Licenta.Controllers
         {
             var model = chapterDb.getCourseChapters(courseId);
             var course = courseDb.GetCourse(courseId);
+            ViewData["courseName"] = course.CourseName;
             ViewData["courseId"] = courseId;
             ViewData["userId"] = User.Identity.GetUserId();
             ViewData["ownerId"] = course.OwnerId;
@@ -48,6 +50,22 @@ namespace Proiect_Licenta.Controllers
         [HttpPost]
         public ActionResult Create(Chapter newChapter, int courseId)
         {
+
+            if (newChapter.ChapterDescription.IsEmpty())
+            {
+                ModelState.AddModelError("ChapterDescription", "This field can not be empty.");
+            }
+            else
+            {
+                if (newChapter.ChapterDescription.Length > 36)
+                    ModelState.AddModelError("ChapterDescription", "Maximum 36 characters.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(newChapter);
+
+            }
 
             newChapter.CourseId = courseId;
             if (ModelState.IsValid)
@@ -72,12 +90,25 @@ namespace Proiect_Licenta.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Chapter chapter)
         {
+
+            if (chapter.ChapterDescription.IsEmpty())
+            {
+                ModelState.AddModelError("ChapterDescription", "This field can not be empty.");
+            }
+            else
+            {
+                if(chapter.ChapterDescription.Length > 36)
+                    ModelState.AddModelError("ChapterDescription", "Maximum 36 characters.");
+            }
+
             if (ModelState.IsValid)
             {
                 chapterDb.UpdateChapter(chapter);
                 
             }
-            return RedirectToAction("Details", new { id = chapter.ChapterId });
+            else
+                return View(chapter);
+            return RedirectToAction("Index", new { courseId = chapter.CourseId });
         }
 
 

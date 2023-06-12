@@ -266,6 +266,10 @@
     <Compile Include="Migrations\202304051529415_AddChapters.designer.cs">
       <DependentUpon>202304051529415_AddChapters.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202306111242346_CourseDescription.cs" />
+    <Compile Include="Migrations\202306111242346_CourseDescription.designer.cs">
+      <DependentUpon>202306111242346_CourseDescription.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -275,6 +279,7 @@
     <Compile Include="ViewModels\HelperApplicationViewModel.cs" />
     <Compile Include="ViewModels\WarnUserViewModel.cs" />
     <Content Include="Content\backgr_pattern.png" />
+    <Content Include="Content\styles.css" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
     <Content Include="Scripts\ckeditor\CHANGES.html" />
@@ -1193,9 +1198,7 @@
     <Content Include="Views\Users\UserAlreadySuspended.cshtml" />
     <Content Include="Views\Users\UserNotSuspended.cshtml" />
     <Content Include="Views\Users\RemoveUserSuspension - Copy.cshtml" />
-    <Content Include="Views\Course\Edit - Copy.cshtml" />
     <Content Include="Views\Course\ActivateCourse - Copy.cshtml" />
-    <Content Include="Views\Course\Create - Copy.cshtml" />
     <Content Include="Views\Course\Details - Copy.cshtml" />
     <Content Include="Views\CourseReview\Edit - Copy.cshtml" />
     <Content Include="Views\CourseReview\Delete - Copy.cshtml" />
@@ -1203,7 +1206,6 @@
     <Content Include="Views\CourseReview\Create - Copy.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\CourseReview\DeactivateReview - Copy.cshtml" />
-    <Content Include="Views\Chapter\Index - Copy.cshtml" />
     <Content Include="Views\SubChapter\Index - Copy.cshtml" />
     <Content Include="Views\Test\Index - Copy.cshtml" />
     <Content Include="Views\Question\Index - Copy.cshtml" />
@@ -1257,7 +1259,6 @@
     <Content Include="Views\Course\CourseSyllabus - Copy.cshtml" />
     <Content Include="Views\Course\GetUserInactiveCourses.cshtml" />
     <Content Include="Views\CourseReview\Index - Copy.cshtml" />
-    <Content Include="Views\Chapter\Index - Copy %282%29.cshtml" />
     <Content Include="Views\CourseReview\Index - Copy %282%29.cshtml" />
     <Content Include="Views\Users\UserWarnings - Copy.cshtml" />
     <Content Include="Views\Users\RemoveWarning - Copy.cshtml" />
@@ -1266,6 +1267,18 @@
     <Content Include="Views\Users\SuspendUser - Copy.cshtml" />
     <Content Include="Views\Users\SuspendUser2.cshtml" />
     <Content Include="Views\Course\DeactivateCourse - Copy.cshtml" />
+    <Content Include="Views\Course\GetUserCourses - Copy.cshtml" />
+    <Content Include="Views\Chapter\Index - Copy.cshtml" />
+    <Content Include="Views\Course\Edit - Copy.cshtml" />
+    <Content Include="Views\Course\UpdateCoursePhoto - Copy.cshtml" />
+    <Content Include="Views\Chapter\Edit - Copy.cshtml" />
+    <Content Include="Views\Course\Create - Copy.cshtml" />
+    <Content Include="Views\Chapter\Delete - Copy.cshtml" />
+    <Content Include="Views\Chapter\Create - Copy.cshtml" />
+    <Content Include="Views\Course\GetUserInactiveCourses - Copy.cshtml" />
+    <Content Include="Views\Users\SeeHelpingStudentApplicationsForProfessor - Copy.cshtml" />
+    <Content Include="Views\Users\SupportHelpingStudentApplication - Copy.cshtml" />
+    <Content Include="Views\Course\Index - Copy %283%29.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1293,6 +1306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202304051529415_AddChapters.resx">
       <DependentUpon>202304051529415_AddChapters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306111242346_CourseDescription.resx">
+      <DependentUpon>202306111242346_CourseDescription.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

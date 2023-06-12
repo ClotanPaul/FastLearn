@@ -4,41 +4,93 @@
     ViewBag.Title = "SeeHelpingStudentApplicationsForProfessor";
 }
 
-<h2>Helper Applications</h2>
+<h2 id="title">Helper Applications</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FinishedCourses)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StudentEmail)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProfessorEmail)
-        </th>
-        <th>Actions</th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @foreach (var course in item.FinishedCourses)
-                {
-                    <p>@course.CourseName</p>
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StudentEmail)
-            </td>
-            <td>
-                No professor supports this application yet.
-            </td>
-            <td>
-                @Html.ActionLink("Support Application", "SupportHelpingStudentApplication", new { applicationId = item.HelpingStudentApplicationId })
-            </td>
-        </tr>
+<style>
+    body {
+        background-color: #f8f9fa;
     }
 
-</table>
+    #title {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        background-color: #E1E1E1;
+        border-radius: 20px;
+        overflow: hidden;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top:10px;
+    }
+
+        .table th {
+            background-color: #4D4C4C;
+            color: #fff;
+        }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-default:hover {
+        background-color: #0056b3;
+    }
+
+    .back-link {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    #email, #courses {
+        padding-left: 15px;
+    }
+
+    #actions {
+        width: 20%;
+    }
+</style>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th id="email">@Html.DisplayNameFor(model => model.StudentEmail)</th>
+                <th id="courses">@Html.DisplayNameFor(model => model.FinishedCourses)</th>
+                <th id="actions">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr style="border-top: 0.2rem groove;">
+                    <td id="email">@Html.DisplayFor(modelItem => item.StudentEmail)</td>
+                    <td id="courses">
+                        @if (item.FinishedCourses.Count > 0)
+                        {
+                            foreach (var course in item.FinishedCourses)
+                            {
+                                @course.CourseName<text>.</text>
+                                <br>
+                            }
+                        }
+                        else
+                        {
+                            <b>No finished courses.</b>
+                        }
+                    </td>
+
+                    <td id="actions">
+                        @Html.ActionLink("Support Application", "SupportHelpingStudentApplication", new { applicationId = item.HelpingStudentApplicationId }, new { @class = "btn btn-success" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

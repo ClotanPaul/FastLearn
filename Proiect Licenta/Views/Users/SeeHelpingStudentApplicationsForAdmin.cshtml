@@ -4,7 +4,7 @@
     ViewBag.Title = "SeeHelpingStudentApplicationsForProfessor";
 }
 
-<h2 id="title">Helper Applications</h2>
+<h1 id="h3">Helper Applications</h1>
 
 <style>
     body {
@@ -18,7 +18,7 @@
     }
 
     .table {
-        background-color: #E1E1E1;
+        background-color: #c7c7c7;
         border-radius: 20px;
         overflow: hidden;
         width: 70%;
@@ -50,50 +50,88 @@
     #email, #courses {
         padding-left: 15px;
     }
-    #actions{
-        width:25%;
+
+    #actions {
+        width: 25%;
     }
-    #btn_appr{
-        margin-right:20px;
+
+    #btn_appr {
+        margin-right: 20px;
     }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    #info-box {
+        background: #dedede;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        text-align: left;
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-top: 0px;
+        padding-top: 0px;
+        width: 80%;
+    }
+
 </style>
 
-<div class="table-responsive">
-    <table class="table table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th id="email">@Html.DisplayNameFor(model => model.StudentEmail)</th>
-                <th id="email">@Html.DisplayNameFor(model => model.ProfessorEmail)</th>
-                <th id="courses">@Html.DisplayNameFor(model => model.FinishedCourses)</th>
-                <th id="actions">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr style="border-top: 0.2rem groove;">
-                    <td id="email">@Html.DisplayFor(modelItem => item.StudentEmail)</td>
-                    <td id="email">@Html.DisplayFor(modelItem => item.ProfessorEmail)</td>
-                    <td id="courses">
-                        @if (item.FinishedCourses != null && item.FinishedCourses.Any())
-                        {
-                            foreach (var course in item.FinishedCourses)
-                            {
-                                @course.CourseName<text>.</text>
-                                <br>
-                            }
-                        }
-                        else
-                        {
-                            <p>No Courses Finished</p>
-                        }
-                    </td>
-                    <td id="actions">
-                        @Html.ActionLink("Approve", "ApproveHelpingStudentApplication", new { applicationId = item.HelpingStudentApplicationId }, new { @class = "btn btn-success", @id="btn_appr"})
-                        @Html.ActionLink("Delete", "DeleteApplication", new { applicationId = item.HelpingStudentApplicationId }, new { @class = "btn btn-danger"})
-                    </td>
+@if (Model != null && Model.ToList().Count > 0)
+{
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th id="email">@Html.DisplayNameFor(model => model.StudentEmail)</th>
+                    <th id="email">@Html.DisplayNameFor(model => model.ProfessorEmail)</th>
+                    <th id="courses">@Html.DisplayNameFor(model => model.FinishedCourses)</th>
+                    <th id="actions">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="border-top: 0.2rem groove;">
+                        <td id="email">@Html.DisplayFor(modelItem => item.StudentEmail)</td>
+                        <td id="email">@Html.DisplayFor(modelItem => item.ProfessorEmail)</td>
+                        <td id="courses">
+                            @if (item.FinishedCourses != null && item.FinishedCourses.Any())
+                            {
+                                foreach (var course in item.FinishedCourses)
+                                {
+                                    @course.CourseName<text>.</text>
+                                    <br>
+                                }
+                            }
+                            else
+                            {
+                                <p>No Courses Finished</p>
+                            }
+                        </td>
+                        <td id="actions">
+                            @Html.ActionLink("Approve", "ApproveHelpingStudentApplication", new { applicationId = item.HelpingStudentApplicationId }, new { @class = "btn btn-success", @id = "btn_appr" })
+                            @Html.ActionLink("Delete", "DeleteApplication", new { applicationId = item.HelpingStudentApplicationId }, new { @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+else
+{
+
+    <center>
+
+        <div id="info-box" style="border: 0.1rem groove #b4b4b4;">
+            <center><h3 style="margin-top: 15px; padding-top: 5px; margin-bottom: 10px;"> No requests found at this moment.</h3></center>
+        </div>
+    </center>
+
+}

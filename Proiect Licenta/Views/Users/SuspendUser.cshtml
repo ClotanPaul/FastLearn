@@ -54,6 +54,19 @@
         padding-left: 30px;
         border: 1px solid #b4b4b4;
     }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #button-line {
+        width: auto;
+        width: 603px;
+        margin-left: -30px;
+        margin-bottom: 20px;
+        border-top: 10px;
+        border-bottom: 0.1rem groove #b4b4b4;
+    }
 </style>
 
 <h3 id="h3">You are about to suspend the following user:</h3>
@@ -77,30 +90,33 @@
 
 
 
-            <div>
+            <div style="margin-top: 0px; margin-bottom: 15px;">
                 <b>Email:</b>
                 @Html.DisplayFor(model => model.UserRole, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.UserRole, "", new { @class = "text-danger" })
             </div>
 
+            <div id="button-line"></div>
 
-            <div style="margin-top:10px;">
+            <div style=" margin-bottom: 15px;">
                 <b>Choose the suspension end date.</b>
                 @Html.EditorFor(model => model.SuspendedUntil, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
                 @Html.ValidationMessageFor(model => model.SuspendedUntil, "", new { @class = "text-danger" })
             </div>
 
+            <center>
+                <div class="form-group" style="margin-bottom: 0px;">
+                    <div>
+                        @Html.HiddenFor(Model => Model.Email)
+                        @Html.HiddenFor(Model => Model.UserRole)
+                        <input style="margin-right:20px" type="submit" value="Suspend" class="btn btn-success" />
+                        @Html.ActionLink("Abort", "UsersDetails", "Users", null, new { @class = "btn btn-danger" })
+                    </div>
 
+                </div>
+            </center>
         </div>
-        <div class="form-group">
-            <div>
-                @Html.HiddenFor(Model => Model.Email)
-                @Html.HiddenFor(Model => Model.UserRole)
-                <input style="margin-right:20px" type="submit" value="Suspend" class="btn btn-success" />
-                @Html.ActionLink("Abort", "UsersDetails", "Users", null, new { @class = "btn btn-danger" })
-            </div>
 
-        </div>
     </center>
 }
 

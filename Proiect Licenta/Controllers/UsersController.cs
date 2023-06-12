@@ -13,6 +13,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace Proiect_Licenta.Controllers
 {
@@ -75,9 +76,24 @@ namespace Proiect_Licenta.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(UserData user)
         {
+            if (user.UserName.IsEmpty())
+            {
+                ModelState.AddModelError("UserName", "Can't be empty.");
+            }
+            else
+            {
+                if(user.UserName.Count() > 15)
+                {
+                    ModelState.AddModelError("UserName", "Maximum 15 characters.");
+                }
+            }
             if (ModelState.IsValid)
             {
                 userDb.UpdateUserData(user);   
+            }
+            else
+            {
+                return View(user);
             }
             return RedirectToAction("Index");
         }
@@ -181,13 +197,8 @@ namespace Proiect_Licenta.Controllers
         public ActionResult UserWarnings(int userDataId) // userDataId
         {
             var warnings = warningDb.getUserWarnings(userDataId);
-            if (warnings.Count > 0 && warnings != null)
-            {
-                return View(warnings);
-            }
-            else
-                return View("ThisUserHasNoWarnings");
 
+            return View(warnings);
         }
 
         [HttpGet]
@@ -382,27 +393,29 @@ namespace Proiect_Licenta.Controllers
 
         public ActionResult SupportHelpingStudentApplication(int applicationId)
         {
-
             var application = userDb.getHelpingStudentApplicationById(applicationId);
+            var courses = courseDb.GetEnrolledCoursesByIds(courseDb.FinishedCoursesDeserialization(application.FinishedCoursesIds));
 
+            var viewModel = new HelperApplicationViewModel
+            {
+                HelpingStudentApplicationId = application.HelpingStudentApplicationId,
+                FinishedCourses = courses,
+                StudentEmail = userDb.getUserByUserDataId(application.StudentId)?.Email,
+                ProfessorEmail = null
+            };
 
-            return View(application);
-
+            return View(viewModel);
         }
+
         [HttpPost]
         public ActionResult SupportHelpingStudentApplication(int applicationId, FormCollection form)
         {
-
-            var application = userDb.getHelpingStudentApplicationById(applicationId);
-
             var userId = User.Identity.GetUserId();
             var userDataId = userDb.getUserId(userId);
 
             userDb.supportHelpingStudentApplication(applicationId, userDataId);
 
-
             return RedirectToAction("SeeHelpingStudentApplicationsForProfessor");
-
         }
 
         //For Admin

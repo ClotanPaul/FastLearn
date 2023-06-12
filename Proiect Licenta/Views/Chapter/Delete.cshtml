@@ -1,43 +1,43 @@
 ﻿@model ProiectLicenta.Data.Models.Chapter
 
+<style>
+    .dl-horizontal {
+        text-align: left;
+    }
+
+    .btn {
+        margin-right: 30px;
+    }
+</style>
+
 @{
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3 style="margin-top: 40px;text-align: center;">Are you sure you want to delete this chapter?</h3>
 <div>
-    <h4>Chapter</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ChapterTitle)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ChapterTitle)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ChapterDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ChapterDescription)
-        </dd>
-
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+    <center>
+        <div style="background: #f8f9fa; padding: 20px; margin-bottom: 25px; border-radius: 20px; width: 40%; text-align: left; padding-left: 30px; border: 1px solid #b4b4b4; ">
+            <div>
+                <b>@Html.DisplayNameFor(model => model.ChapterTitle):</b> @Html.DisplayFor(model => model.ChapterTitle)
+            </div>
+            <div>
+                <b>@Html.DisplayNameFor(model => model.ChapterDescription):</b> @Html.DisplayFor(model => model.ChapterDescription)
+            </div>
         </div>
-    }
-</div>
-<div>
-    @Html.ActionLink("Back to ChapterList", "Index", new { courseId = Model.CourseId })
+    </center>
+
+    <center>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                @Html.ActionLink("Abort", "Index", new { courseId = Model.CourseId }, new { @class = "btn btn-primary" })
+            </div>
+        }
+    </center>
 </div>
