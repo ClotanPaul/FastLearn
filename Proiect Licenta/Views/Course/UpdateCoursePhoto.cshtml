@@ -13,8 +13,7 @@
 
     .form-group {
         margin-bottom: 15px;
-        padding-left: 23px;
-        padding-right: 23px;
+        padding-right: 0px;
     }
 
     .btn-default {
@@ -33,15 +32,28 @@
         text-align: center;
     }
 
+    .card {
+        background: #f8f9fa;
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        height: 500px;
+        width: auto;
+        border-radius: 10px;
+        border: 2px solid #838383;
+        padding-top: 15px;
+    }
+
     #info-box {
         background: #f8f9fa;
         padding: 20px;
         margin-bottom: 25px;
-        border-radius: 20px;
-        width: 55%;
+        border-radius: 10px;
+        width: 380px;
         text-align: left;
-        padding-left: 30px;
-        border: 1px solid #b4b4b4;
+        padding-left: 20px;
+        border: 2px solid #838383;
     }
 
     .btn {
@@ -55,18 +67,40 @@
         margin-top: 15px;
         margin-top: 5px;
     }
+    #title-line {
+        border-bottom: 2px solid #838383;
+        width: 379px;
+        margin-left: -21px;
+    }
+
+    #card-desc{
+        border:none;
+    }
+
+    #button-line {
+        width: 378px;
+        border-top: 1px groove #b4b4b4;
+        border-bottom: none;
+        margin-bottom: 0px;
+    }
 </style>
 
 
-<h3 id="h3">You are about to update the photo for the following course:</h3>
+<h3 id="h3">Change Course Photo:</h3>
 <center>
 
     @using (Html.BeginForm("UpdateCoursePhoto", "Course", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
     {
+
+        
+
         <div id="info-box">
             @Html.AntiForgeryToken()
+            <center id="title-line">
+                <h5 class="card-title">@Html.DisplayFor(modelItem => Model.CourseName)</h5>
+            </center>
             <center>
-                <div class="form-group">
+                <div class="form-group" style="margin-top: 15px;margin-right: 0px;margin-right:0px;margin-left: 0px;padding-left: 0px;">
 
                     @if (Model.ImagePath != null)
                     {
@@ -81,29 +115,29 @@
                 </div>
             </center>
 
-            <div class="form-group">
-                <b>Choose the new image: </b>
-                <input type="file" name="file" id="file" />
+            <div class="card-body flex-container">
+                <p class="card-text" id="card-desc">@Html.DisplayFor(modelItem => Model.CourseDescription)</p>
             </div>
 
-            <div class="form-group">
+            <div id="button-line">
+                <div class="form-group" style=" margin-left: 15px;margin-right: 0px; padding-left: 5px; margin-top: 20px">
+                    <b>Choose a new image: </b>
+                    <input type="file" name="file" id="file" />
+                </div>
 
-                <b>Course Name: </b>
-                @Html.DisplayFor(model => model.CourseName)
+                <center>
+                    <div class="form-group">
+                        <input type="submit" value="Upload Image" class="btn btn-success" />
+                        @Html.ActionLink("Abort", "GetUserCourses", null, new { @class = "btn btn-danger", @style = "margin-right: 0px;" })
+                    </div>
+                </center>
             </div>
-
-            <div class="form-group">
-                <b>Course Description: </b>
-                @Html.DisplayFor(model => model.CourseDescription)
-            </div>
+        </div>
 
             @Html.HiddenFor(model => model.CourseId)
 
-
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Upload Image" class="btn btn-success" />
-            @Html.ActionLink("Abort", "GetUserCourses", null, new { @class = "btn btn-danger" })
-        </div>
+       
     }
 </center>
+
+

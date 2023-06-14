@@ -12,44 +12,101 @@
     .control-label {
         font-weight: bold;
     }
+
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 20px;
+        width: 55%;
+        text-align: left;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
+        padding-bottom: 0px;
+    }
+
+    .form-control.text-area {
+        width: 300px;
+        height: 50px;
+        max-height: 70px;
+        max-width: 300px;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #button-line {
+        width: auto;
+        width: 604px;
+        margin-left: -30px;
+        margin-bottom: 20px;
+        border-top: none;
+        border-bottom: 0.1rem groove #b4b4b4;
+        margin-top: 0px;
+        padding-top: 10px;
+        margin-bottom: 15px;
+    }
 </style>
 
-<section style="background-color: #eee;">
-    <div class="container py-5">
-        <div class="row d-flex justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-6">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center p-3">
-                        <h5 class="mb-0">Edit Message</h5>
-                    </div>
-                    <div class="card-body">
-                        @using (Html.BeginForm())
-                        {
-                            @Html.AntiForgeryToken()
+<h2 id="h3">Edit Message</h2>
 
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            @Html.HiddenFor(model => model.MessageId)
-                            @Html.HiddenFor(model => model.UserId)
-                            @Html.HiddenFor(model => model.TimeStamp)
-                            @Html.HiddenFor(model => model.ChatId)
+<center>
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div id="info-box">
+            @Html.AntiForgeryToken()
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.MessageContent, htmlAttributes: new { @class = "control-label" })
-                                @Html.EditorFor(model => model.MessageContent, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.MessageContent, "", new { @class = "text-danger" })
-                            </div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.MessageId)
+            @Html.HiddenFor(model => model.UserId)
+            @Html.HiddenFor(model => model.TimeStamp)
+            @Html.HiddenFor(model => model.ChatId)
 
-                            <div class="form-group">
-                                <input type="submit" value="Save" class="btn btn-primary" />
-                            </div>
-                        }
-                    </div>
-                </div>
+            <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
+                <b>Message Content: </b>
+                @Html.EditorFor(model => model.MessageContent, new { htmlAttributes = new { @class = "form-control text-area" } })
+                @Html.ValidationMessageFor(model => model.MessageContent, "", new { @class = "text-danger" })
             </div>
-        </div>
-    </div>
-</section>
 
-<div class="container py-3">
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
-</div>
+            <div id="button-line"></div>
+
+            <center>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                    @Html.ActionLink("Abort", "OpenChat","Chat", new { chatId = Model.ChatId }, new { @class = "btn btn-danger" })
+                </div>
+            </center>
+
+        </div>
+
+    }
+</center>

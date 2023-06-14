@@ -53,7 +53,7 @@ namespace ProiectLicenta.Data.Services
         {
             var userData = userDataDb.getUserByUserDataId(UserDataId);
 
-            var studentEnroll = userData.EnrolledStudentsInCourse.FirstOrDefault(esc=>esc.UserDataId== UserDataId);
+            var studentEnroll = userData.EnrolledStudentsInCourse.FirstOrDefault(esc=>esc.UserDataId== UserDataId && esc.CourseId == courseId);
 
             db.EnrolledStudentsInCourses.Remove(studentEnroll);
             db.SaveChanges();

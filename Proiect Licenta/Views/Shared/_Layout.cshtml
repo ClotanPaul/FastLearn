@@ -124,9 +124,12 @@
                         </li>
 
                     }
+                    @if (User.Identity.IsAuthenticated)
+                    {
                     <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Users" && ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
                         @Html.ActionLink("Account", "Index", "Users")
                     </li>
+                    }
 
                     <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "About" ? "active" : "")">
                         @Html.ActionLink("About", "About", "Home")

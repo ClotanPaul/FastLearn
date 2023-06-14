@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace Proiect_Licenta.Controllers
 {
@@ -32,11 +33,6 @@ namespace Proiect_Licenta.Controllers
 
             var chats = chatDb.getAllChats(userDataId);
 
-            if (chats.Count == 0)
-            {
-                return View("NoChatsFound");
-            }
-
             return View(chats);
 
         }
@@ -60,6 +56,15 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Create(int subChapterId)
         {
             ViewData["subChapterId"] = subChapterId;
+            var subchapter = subChapterDb.GetSubChapter(subChapterId);
+
+            ViewData["courseId"] = subchapter.Chapter.CourseId;
+            ViewData["courseName"] = subchapter.Chapter.Course.CourseName;
+            ViewData["subchapterName"] = subchapter.SubchapterTitle;
+            ViewData["chapterName"] = subchapter.Chapter.ChapterTitle;
+
+            var courseId = subchapter.Chapter.CourseId;
+            ViewData["courseId"] = courseId;
             return View();
         }
 
@@ -71,6 +76,12 @@ namespace Proiect_Licenta.Controllers
             var userId = User.Identity.GetUserId();
             var userData = userDataDb.getUserData(userId);
             var subchapter = subChapterDb.GetSubChapter(subChapterId);
+            ViewData["courseId"] = subchapter.Chapter.CourseId;
+            ViewData["courseName"] = subchapter.Chapter.Course.CourseName;
+            ViewData["subchapterName"] = subchapter.SubchapterTitle;
+            ViewData["chapterName"] = subchapter.Chapter.ChapterTitle;
+
+
             var newChat = new Chat
             {
                 Student = userData,
@@ -79,6 +90,21 @@ namespace Proiect_Licenta.Controllers
                 IssueSolved= false,
                 Topic = topic
             };
+
+            if (newChat?.Topic!=null && newChat.Topic.IsEmpty())
+            {
+                ModelState.AddModelError("Topic", "Can't be empty!");
+            }
+
+            if(newChat.Topic.Count() > 30)
+            {
+                ModelState.AddModelError("Topic", "Maximum 30 characters");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(newChat);
+            }
 
             chatDb.addChat(newChat);
 

@@ -4,41 +4,194 @@
     ViewBag.Title = "Result";
 }
 
-<h2>Test Result</h2>
 
-<p>
-    <strong>Score:</strong> @Model.UserAnswer.Score %
-</p><p>
-    <strong>Minimum Score:</strong> @Model.ScorePercentage %
-</p>
-<p>
-    <strong>Result:</strong> @(Model.UserAnswer.Passed ? "Passed" : "Failed")
-</p>
-
-@if (Model.UserAnswer.Passed)
-{
-    <p>
-        @Html.ActionLink("Next Chapter", "NextSubChapter", "SubChapter", new { currentSubChapterId = (int)ViewData["currentSubChapterId"] }, null)
-    </p>
-}
-else
-{
-    @Html.ActionLink("Back To Subchapter", "ViewSubchapter", "SubChapter", new { subchapterId = (int)ViewData["currentSubChapterId"] }, null)
- }
-
-<h3>Answer Summary</h3>
-
-<ul>
-    @foreach (var q in Model.QuestionResponses)
-    {
-        <li>
-            <div>@q.Question.QuestionString</div>
-            <div><strong>Your Answer:</strong></div>
-            <div>@q.UserAnswer</div>
-
-            <div><strong>Correct Answer:</strong></div>
-            <div>@q.CorrectAnswer</div>
-
-        </li>
+<style>
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
     }
-</ul>
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        width: 90%;
+        text-align: left;
+        padding-left: 30px;
+        border: 1.5px solid #696767;
+        padding-bottom: 0px;
+        padding-top: 20px;
+        padding-right: 30px;
+        padding-bottom: 15px;
+    }
+
+    .form-control.text-area {
+        width: 300px;
+        height: 50px;
+        max-height: 70px;
+        max-width: 300px;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #button-line {
+        width: 1026px;
+        margin-left: -31px;
+        margin-bottom: 20px;
+        border-top: none;
+        border-bottom: 0.1rem groove #696767;
+        margin-top: 0px;
+        padding-top: 10px;
+        margin-bottom: 15px;
+        padding-top: 0px;
+    }
+
+    #button-line-answer {
+        width: 943px;
+        border-top: none;
+        border-bottom: 0.1rem groove #696767;
+        padding-top: 10px;
+        padding-top: 0px;
+        margin-top: 10px;
+    }
+
+    .btn-right {
+        margin-left: 160px;
+        margin-right: 0px;
+    }
+
+    .btn-left {
+        margin-right: 160px;
+    }
+
+    .btn-right2 {
+        margin-left: 300px;
+        margin-right: 0px;
+    }
+
+    .btn-left2 {
+        margin-right: 300px;
+    }
+
+    .question-container {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border: 1.5px solid #696767;
+    }
+
+    .answer-container {
+        background: #f8f9fa;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border: 1.5px solid #696767;
+        margin-left: 20px;
+        color: #000000;
+    }
+
+    .correct-answer {
+        background-color: #90ee90;
+        padding: 20px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .incorrect-answer {
+        background-color: #f08080;
+        padding: 20px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+</style>
+
+<h2 id="h3">Test Results</h2>
+<center>
+    <div id="info-box">
+        <div style="display: flex;flex-direction: row-reverse;justify-content: space-between;flex-wrap: wrap;align-content: space-around;">
+
+            <p>
+                <strong>Minimum Score:</strong> @Model.ScorePercentage %
+            </p>
+
+
+
+            <p>
+                <strong>Result:</strong> @(Model.UserAnswer.Passed ? "Passed" : "Failed")
+            </p>
+
+            <p>
+                <strong>Score:</strong> @Model.UserAnswer.Score %
+            </p>
+
+
+
+        </div>
+        <div id="button-line"></div>
+
+        <h3 style="margin-top:20px" id="h3">Test Summary</h3>
+
+        @foreach (var q in Model.QuestionResponses)
+        {
+            var isCorrect = q.UserAnswer == q.CorrectAnswer;
+            <div class="answer-container">
+                <div style="margin: 20px;"><b>Q:</b> @q.Question.QuestionString</div>
+                <div id="button-line-answer"></div>
+                <div class=@(isCorrect ? "correct-answer" : "incorrect-answer")>
+                    <div>
+                        <strong>Your Answer:</strong>
+                        @q.UserAnswer
+                    </div>
+
+                    <div>
+                        <strong>Correct Answer:</strong>
+                        @q.CorrectAnswer
+                    </div>
+
+                </div>
+            </div>
+
+        }
+
+        <div id="button-line"></div>
+        <center>
+            @if (Model.UserAnswer.Passed)
+            {
+                <p>
+                    @Html.ActionLink("Next Chapter", "NextSubChapter", "SubChapter", new { currentSubChapterId = (int)ViewData["currentSubChapterId"] }, new { @class = "btn btn-primary" })
+                </p>
+            }
+            else
+            {
+                @Html.ActionLink("Back To Subchapter", "ViewSubchapter", "SubChapter", new { subchapterId = (int)ViewData["currentSubChapterId"] }, new { @class = "btn btn-primary" })
+            }
+        </center>
+    </div>
+</center>

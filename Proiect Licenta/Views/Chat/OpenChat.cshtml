@@ -23,6 +23,12 @@
         max-width: 70%;
         padding: 10px;
         border-radius: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis
+    }
+
+    .card{
+        border-width:1px;
     }
 
     .message-left .message-content {
@@ -38,19 +44,133 @@
         max-height: 400px;
         overflow-y: auto;
     }
+
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        width: 818px;
+        text-align: left;
+        padding-left: 30px;
+        border: 1.5px solid #696767;
+        padding-bottom: 0px;
+        padding-top: 20px;
+        padding-right: 30px;
+        padding-bottom: 15px;
+    }
+
+    .form-control.text-area {
+        width: 300px;
+        height: 50px;
+        max-height: 70px;
+        max-width: 300px;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        text-overflow: ellipsis ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #button-line {
+        width: 1026px;
+        margin-left: -31px;
+        margin-bottom: 20px;
+        border-top: none;
+        border-bottom: 0.1rem groove #696767;
+        margin-top: 0px;
+        padding-top: 10px;
+        margin-bottom: 15px;
+        padding-top: 0px;
+    }
+
+    .btn-right {
+        margin-left: 160px;
+        margin-right: 0px;
+    }
+
+    .btn-left {
+        margin-right: 160px;
+    }
+
+    .btn-right2 {
+        margin-left: 300px;
+        margin-right: 0px;
+    }
+
+    .btn-left2 {
+        margin-right: 300px;
+    }
+
+    .question-container {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border: 1.5px solid #696767;
+    }
+
+    .card-footer {
+        display: flex;
+    }
+
+    #newMessage {
+        width: 655px;
+        max-width: 1000px;
+    }
+
+    .answer-container {
+        margin-left: 20px;
+        color: #000000;
+    }
+
+    .row {
+        display: none;
+    }
 </style>
+<h3 id="h3">
+    Chat<br>
+    Topic:@Model.Topic
+</h3>
+<center>
+    <div id="info-box">
+        <form method="post" action="@Url.Action("AddMessage", "Message")">
+            @Html.AntiForgeryToken()
 
-<form method="post" action="@Url.Action("AddMessage", "Message")">
-    @Html.AntiForgeryToken()
-
-    <section style="background-color: #eee;">
-        <div class="container py-5">
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-6">
+            <div style="display: flex;justify-content: center;" class="row d-flex justify-content-center">
+                <div style=" width: 100%;" class="col-md-10 col-xl-6">
                     <div class="card" id="chat2">
-                        <div class="card-header d-flex justify-content-between align-items-center p-3">
-                            <h5 class="mb-0">@Model.Topic</h5>
-                        </div>
                         <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
                             @if (Model.ChatMessages != null && Model.ChatMessages.Count > 0)
                             {
@@ -62,7 +182,7 @@
                                     string senderEmail = (message.UserId == Model.StudentId) ? Model.Student.Email : Model?.HelpingStudent?.Email ?? "NotDefined";
                                     bool showSenderInfo = (previousSender != senderEmail);
 
-                                    <div class="message-container @(message.UserId == Model.StudentId ? "message-left" : "message-right")">
+                                    <div style="display: flex;justify-content: @(message.UserId == Model.StudentId ? "flex-start" : "flex-end");" class="message-container @(message.UserId == Model.StudentId ? "message-left" : "message-right")">
                                         @if (showSenderInfo)
                                         {
                                             <div class="message-sender-info">
@@ -91,23 +211,28 @@
                         </div>
                         @if (Model.IssueSolved == false)
                         {
-                            <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
-                                <input type="text" class="form-control form-control-lg flex-grow-1" id="newMessage" name="newMessage" placeholder="Type message">
+                            <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3" style="margin-top: 3px;">
+                                <input type="text" class="form-control" id="newMessage" name="newMessage" placeholder="Type message">
                                 <input type="hidden" name="chatId" value="@Model.ChatId" />
-                                <button type="submit" class="btn btn-primary ms-auto">Send</button>
+                                <button type="submit" style="margin-right: 0px; margin-left: 5px;" class="btn btn-primary ms-auto">Send</button>
                             </div>
                         }
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-</form>
-@if (User.Identity.IsAuthenticated && (string)ViewData["isStudent"] == "true" && Model.IssueSolved == false)
-{
-    <p>@Html.ActionLink("IssueSolved", "ProblemSolved", "Users", new { chatId = Model.ChatId }, null)</p>
-}
-@Html.ActionLink("Chats", "Index", "Chat")
+
+        </form>
+        <center>
+            @if (User.Identity.IsAuthenticated && (string)ViewData["isStudent"] == "true" && Model.IssueSolved == false)
+            {
+                @Html.ActionLink("IssueSolved", "ProblemSolved", "Users", new { chatId = Model.ChatId }, new { @class = "btn btn-primary" })
+                
+            }
+            @Html.ActionLink("Chats", "Index", "Chat", null, new { @class = "btn btn-primary" })
+        </center>
+    </div>
+    </center>
+
 
 
 

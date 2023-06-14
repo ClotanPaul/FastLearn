@@ -77,8 +77,11 @@
 
         <center id="button-line">
             <p>
+
                 @Html.ActionLink("Edit Username", "Edit", "Users", new { id = Model.UserDataId }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Change your password", "ChangePassword","Manage", null, new { @class = "btn btn-primary" })
             </p>
+
         </center>
     </div>
     </center>

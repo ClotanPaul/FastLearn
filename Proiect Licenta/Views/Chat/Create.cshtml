@@ -1,36 +1,119 @@
 ﻿@model ProiectLicenta.Data.Models.Chat
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Chat";
 }
 
-<h2>Create</h2>
+<style>
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
 
-@using (Html.BeginForm()) 
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-control.text-area {
+        width: 300px;
+        height: 100px;
+        max-height: 120px;
+        max-width: 300px;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 20px;
+        width: 55%;
+        text-align: left;
+        padding-left: 30px;
+        border: 1px solid #838383;
+        padding-bottom: 0px;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #button-line {
+        border-top: 1px groove #838383;
+        width: 625px;
+        margin-left: -30px;
+        border-bottom: none;
+    }
+
+    .btn-danger {
+        margin-right: 0px;
+    }
+</style>
+
+<h2 id="h3">Create a new chat</h2>
+<center>
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Chat</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Topic, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Topic, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Topic, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
+<div id="info-box">
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+    <div class="form-group">
+        <b>Course: </b>@ViewData["courseName"]
+        @Html.DisplayFor(model => model.SubChapter.Chapter.Course.CourseName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.SubChapter.Chapter.Course.CourseName, "", new { @class = "text-danger" })
     </div>
+
+    <div class="form-group">
+        <b>Chapter: </b>@ViewData["chapterName"]
+        @Html.ValidationMessageFor(model => model.SubChapter.Chapter.ChapterTitle, "", new { @class = "text-danger" })
+    </div>
+
+
+    <div class="form-group">
+        <b>SubChapter: </b>@ViewData["subchapterName"]
+        @Html.ValidationMessageFor(model => model.SubChapter.SubchapterTitle, "", new { @class = "text-danger" })
+    </div>
+
+
+    <div class="form-group">
+        <b>@Html.LabelFor(model => model.Topic): </b>
+        @Html.EditorFor(model => model.Topic, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Topic, "", new { @class = "text-danger" })
+    </div>
+
+    <center id="button-line">
+        <div class="form-group" style="margin-top: 15px;">
+            <input type="submit" value="Create" class="btn btn-success" />
+            @Html.ActionLink("Abort", "Index", "Chat", new { courseId = (int)ViewData["courseId"] }, new { @class = "btn btn-danger" })
+        </div>
+    </center>
+</div>
+}
+</center>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", new { courseId = (int)ViewData["courseId"] })
 </div>

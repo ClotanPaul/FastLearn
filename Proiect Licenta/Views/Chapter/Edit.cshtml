@@ -40,6 +40,7 @@
         text-align: left;
         padding-left: 30px;
         border: 1px solid #b4b4b4;
+        padding-bottom: 0px;
     }
 
     .form-control.text-area {
@@ -54,6 +55,18 @@
     .btn {
         margin-right: 20px;
     }
+    #button-line {
+        width: auto;
+        width: 604px;
+        margin-left: -30px;
+        margin-bottom: 20px;
+        border-top: none;
+        border-bottom: 0.1rem groove #b4b4b4;
+        margin-top: 0px;
+        padding-top: 10px;
+        margin-bottom: 15px;
+    }
+
 </style>
 
 <h2 id="h3">Edit Chapter</h2>
@@ -66,28 +79,34 @@
             @Html.HiddenFor(model => model.ChapterId)
             @Html.HiddenFor(model => model.CourseId)
 
-            <div class="form-group">
+            <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
                 <b>Chapter Title: </b>
                 @Html.EditorFor(model => model.ChapterTitle, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ChapterTitle, "", new { @class = "text-danger" })
             </div>
 
-            <div class="form-group">
+            <div class="form-group"  style="margin-left: 0px;margin-right: 0px;">
                 <b>Chapter Number: </b>
                 @Html.EditorFor(model => model.ChapterNumber, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ChapterNumber, "", new { @class = "text-danger" })
             </div>
 
-            <div class="form-group">
+            <div class="form-group"  style="margin-left: 0px;margin-right: 0px;">
                 <b>Chapter Description: </b>
                 @Html.EditorFor(model => model.ChapterDescription, new { htmlAttributes = new { @class = "form-control text-area" } })
                 @Html.ValidationMessageFor(model => model.ChapterDescription, "", new { @class = "text-danger" })
             </div>
 
+            <div id="button-line"></div>
+
+            <center>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                    @Html.ActionLink("Abort", "Index", new { courseId = Model.CourseId }, new { @class = "btn btn-danger" })
+                </div>
+            </center>
+
         </div>
-        <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-success" />
-            @Html.ActionLink("Abort", "Index", new { courseId = Model.CourseId }, new { @class = "btn btn-danger" })
-        </div>
+        
     }
 </center>

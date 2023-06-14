@@ -10,14 +10,23 @@
         font-family: Arial, sans-serif;
     }
 
-
-    h3 {
-        font-size: 1.5em;
-        text-align: center;
-        color: #777;
-        padding: 1em 0;
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        text-align: left;
+        width: 900px;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
+        padding-bottom: 20px;
     }
 
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom:30px
+    }
     .arrow::before {
         font-family: 'Glyphicons Halflings';
         content: "\e080";
@@ -50,11 +59,24 @@
 
     .panel.panel-default {
         margin-bottom: 20px;
-        background: #f8f9fa;
+        border-color: #b6aaaa;
+        margin-right: 20px;
+        margin-left: 20px;
+        border-radius: 10px;
+    }
+    .panel-heading {
+        border-bottom: 1px groove #b6aaaa;
     }
 
     .panel-collapse {
         border-bottom-width: 20px;
+    }
+
+    .panel-default > .panel-heading {
+        color: #333333;
+        background-color: #f5f5f5;
+        border-bottom: 1px groove #b6aaaa;
+        border-radius:10px;
     }
 
     .title-row {
@@ -76,47 +98,59 @@
         padding: 7px 12px;
     }
 </style>
+<center>
+<h2 id="h3">@Model.CourseName</h2>
+</center>
 
-<h3>Table of Contents: @Model.CourseName</h3>
-<div class="panel-group" id="accordion">
-    @foreach (var chapter in Model.Chapters)
-    {
-        int subChapterCount = chapter.Subchapters.Count(); // Count subchapters
+<center>
+    <div id="info-box">
+        <center>
+            <h3 style="margin-top:15px;margin-bottom: 30px;" id="h3">Table of Contents</h3>
+        </center>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="title-row">
-                    <!-- Wrap elements in title-row -->
-                    <h4 class="panel-title">
-                        <span class="arrow" data-toggle="collapse" data-target="#collapseChapter@(chapter.ChapterId)" aria-expanded="false"></span>
-                        @Html.DisplayFor(model => chapter.ChapterTitle)
-                    </h4>
-                    <span class="badge badge-secondary">@subChapterCount Subchapters</span> <!-- This will align at end of row -->
-                </div>
-            </div>
+        <div class="panel-group" id="accordion">
+            @foreach (var chapter in Model.Chapters)
+            {
+                int subChapterCount = chapter.Subchapters.Count();
 
-            
-
-            <div id="collapseChapter@(chapter.ChapterId)" class="panel-collapse collapse">
-                @foreach (var subchapter in chapter.Subchapters)
-                {
-                    <div class="subchapter-box">
-                        <span class="subchapter-title">@Html.DisplayFor(model => subchapter.SubchapterTitle)</span>
-                        @if (User.Identity.IsAuthenticated && !User.IsInRole("professor"))
-                        {
-                            @Html.ActionLink(">> More", "ViewSubchapter", "SubChapter", new { subchapterId = subchapter.SubchapterId }, new { @class = "btn btn-outline-warning btn-sm-custom" })
-                        }    
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="title-row">
+                            <h4 class="panel-title">
+                                <span class="arrow" data-toggle="collapse" data-target="#collapseChapter@(chapter.ChapterId)" aria-expanded="false"></span>
+                                @Html.DisplayFor(model => chapter.ChapterTitle)
+                            </h4>
+                            <span class="badge badge-secondary">@subChapterCount Subchapters</span>
+                        </div>
                     </div>
-                }
-            </div>
 
+
+
+                    <div id="collapseChapter@(chapter.ChapterId)" class="panel-collapse collapse">
+                        @foreach (var subchapter in chapter.Subchapters)
+                        {
+                            <div class="subchapter-box">
+                                <span class="subchapter-title">@Html.DisplayFor(model => subchapter.SubchapterTitle)</span>
+                                @if (User.Identity.IsAuthenticated && !User.IsInRole("professor"))
+                                {
+                                    @Html.ActionLink(">> More", "ViewSubchapter", "SubChapter", new { subchapterId = subchapter.SubchapterId }, new { @class = "btn btn-info btn-sm" })
+                                }
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            }
         </div>
-    }
-</div>
-@if (User.IsInRole("student") || User.IsInRole("helping_student"))
-{
-    @Html.ActionLink("To Courses", "GetStudentEnrolledCourses", "Course")
-}
+
+        <center>
+        @if (User.IsInRole("student") || User.IsInRole("helping_student"))
+        {
+            @Html.ActionLink("To Courses", "GetStudentEnrolledCourses", "Course", new {@class="btn btn-primary"})
+        }
+        </center>
+    </div>
+    </center>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

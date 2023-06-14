@@ -13,6 +13,8 @@
 
     .form-group {
         margin-bottom: 15px;
+        margin-left:0px;
+        margin-right:0px;
     }
 
     .form-control.text-area {
@@ -43,16 +45,23 @@
     #info-box {
         background: #f8f9fa;
         padding: 20px;
+        padding-bottom: 0px;
         margin-bottom: 25px;
-        border-radius: 20px;
+        border-radius: 10px;
         width: 55%;
         text-align: left;
         padding-left: 30px;
-        border: 1px solid #b4b4b4;
+        border: 2px solid #838383;
     }
 
     .btn {
         margin-right: 20px;
+    }
+
+    #button-line {
+        border-bottom: 1px groove #838383;
+        width: 603px;
+        margin-left: -30px;
     }
 </style>
 
@@ -63,23 +72,28 @@
         <div id="info-box">
             @Html.AntiForgeryToken()
 
-            <div class="form-group">
+            <div class="form-group" style="margin-left: 0px; margin-right: 0px;">
                 <b>Course Name: </b>
                 @Html.EditorFor(model => model.CourseName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.CourseName, "", new { @class = "text-danger" })
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="margin-left: 0px; margin-right: 0px; ">
                 <b>Course Description: </b>
                 @Html.EditorFor(model => model.CourseDescription, new { htmlAttributes = new { @class = "form-control text-area" } })
                 @Html.ValidationMessageFor(model => model.CourseDescription, "", new { @class = "text-danger" })
             </div>
+            <div id="button-line"></div>
+            <center>
+                <div class="form-group" style=" margin-top: 15px; ">
+                    <input type="submit" value="Create" class="btn btn-success" />
+                    @Html.ActionLink("Abort", "GetUserCourses", null, new { @class = "btn btn-danger" ,@style="margin-right: 0px;"})
+                </div>
+                
+            </center>
+</div>
 
-        </div>
-
-        <div class="form-group">
-            <input type="submit" value="Create" class="btn btn-success" />
-        </div>
+        
     }
 </center>
 

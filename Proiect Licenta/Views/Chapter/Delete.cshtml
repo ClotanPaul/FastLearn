@@ -8,6 +8,30 @@
     .btn {
         margin-right: 30px;
     }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 20px;
+        width: 55%;
+        text-align: left;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
+        padding-bottom: 15px;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #button-line {
+        width: auto;
+        border-bottom: 1px groove #b4b4b4;
+        width: 626px;
+        margin-left: -31px;
+        margin-bottom: 10px;
+    }
 </style>
 
 @{
@@ -19,25 +43,41 @@
     <hr />
 
     <center>
-        <div style="background: #f8f9fa; padding: 20px; margin-bottom: 25px; border-radius: 20px; width: 40%; text-align: left; padding-left: 30px; border: 1px solid #b4b4b4; ">
+        <div id="info-box">
             <div>
+                <div style="margin-bottom: 5px;">
                 <b>@Html.DisplayNameFor(model => model.ChapterTitle):</b> @Html.DisplayFor(model => model.ChapterTitle)
-            </div>
+                    </div>
+                <div style="margin-bottom: 5px;">
+                    <b>@Html.DisplayNameFor(model => model.ChapterDescription):</b> @Html.DisplayFor(model => model.ChapterDescription)
+                </div>
+                @if (Model?.Subchapters != null && Model.Subchapters.ToList().Count > 0)
+                {
+                <div>
+                    <b>This chapter has @Html.DisplayFor(model => model.Subchapters.ToList().Count) subchapters at the moment.</b>
+                </div>
+                }
+            else
+            {
             <div>
-                <b>@Html.DisplayNameFor(model => model.ChapterDescription):</b> @Html.DisplayFor(model => model.ChapterDescription)
+                <b>This chapter has 0 subchapters at the moment.</b>
             </div>
+            }
+            </div>
+
+            <div id="button-line" style="padding-top: 15px; margin-bottom: 15px;"></div>
+
+            <center>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                        @Html.ActionLink("Abort", "Index", new { courseId = Model.CourseId }, new { @class = "btn btn-danger" })
+                    </div>
+                }
+            </center>
         </div>
-    </center>
-
-    <center>
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-danger" />
-                @Html.ActionLink("Abort", "Index", new { courseId = Model.CourseId }, new { @class = "btn btn-primary" })
-            </div>
-        }
     </center>
 </div>

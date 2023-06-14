@@ -4,53 +4,162 @@
     ViewBag.Title = "View SubChapter";
 }
 
-<h2>@Model.SubchapterTitle</h2>
 
-<div>
-    <h4>Subchapter</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.SubchapterDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SubchapterDescription)
-        </dd>
-
-        @foreach (var file in Model.SubchapterFiles)
-        {
-            using (Html.BeginForm("DownloadFile", "SubChapter", FormMethod.Get))
-            {
-                @Html.Hidden("fileName", file.FilePath)
-                @Html.Hidden("subChapterId", file.SubChapterId)
-                <button type="submit">@file.Title</button>
-            }
-        }
-
-        @if (Model.Test != null)
-        {
-            <dt>
-                Test
-            </dt>
-            if ((string)ViewData["IsCurrentSubchapter"] == "true")
-            {
-                <dd>
-                    @Html.ActionLink("Start Test", "TakeTest", "Test", new { testId = Model.Test.TestId }, null)
-                </dd>
-            }
-        }
-    </dl>
-</div>
-<p>
-    @if (User.Identity.IsAuthenticated && (string)ViewData["IsCurrentSubchapter"] == "true")
-    {
-        @Html.ActionLink("Open Chat", "Create", "Chat", new { subChapterId = Model.SubchapterId }, null) <text> | </text>
-        @*
-            @Html.ActionLink("See Files", "GetFileList", "SubChapter", new { subChapterId = Model.SubchapterId }, null)
-        *@
-
+<style>
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
     }
-    @Html.ActionLink("Next SubChapter", "NextSubChapter", new { currentSubChapterId = Model.SubchapterId })
-    @Html.ActionLink("Back to Course", "GetStudentEnrolledCourses", "Course")
-</p>
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        width: 90%;
+        text-align: left;
+        padding-left: 30px;
+        border: 1.5px solid #696767;
+        padding-bottom: 0px;
+        padding-top: 20px;
+        padding-right: 30px;
+    }
+
+    .form-control.text-area {
+        width: 300px;
+        height: 50px;
+        max-height: 70px;
+        max-width: 300px;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #button-line {
+        width: 1026px;
+        margin-left: -31px;
+        margin-bottom: 20px;
+        border-top: none;
+        border-bottom: 0.1rem groove #696767;
+        margin-top: 0px;
+        padding-top: 10px;
+        margin-bottom: 15px;
+    }
+
+    .btn-right {
+        margin-left: 160px;
+        margin-right:0px;
+    }
+
+    .btn-left {
+        margin-right: 160px;
+    }
+
+    .btn-right2 {
+        margin-left: 300px;
+        margin-right: 0px;
+    }
+
+    .btn-left2 {
+        margin-right: 300px;
+    }
+</style>
+
+
+<h2 id="h3">
+    <center>Chapter @Model.Chapter.ChapterNumber </center>
+</h2>
+
+<center>
+    <div id="info-box">
+
+        <center>
+            <h3 style="margin-top:5px;margin-bottom: 20px;" id="h3">Subchapter @Model.SubchapterNumber: @Model.SubchapterTitle</h3>
+        </center>
+
+        <div style="margin-bottom:20px;" id="button-line"></div>
+
+        @Html.DisplayFor(model => model.SubchapterDescription)
+
+        <div style="margin-top: 25px;" id="button-line"></div>
+        <div>
+
+            <p>
+                <center>
+                    @if ((string)(string)ViewData["IsCurrentSubchapter"] == "true")
+                    {
+
+                        @Html.ActionLink("Courses", "GetStudentEnrolledCourses", "Course", null, new { @class = "btn btn-primary btn-left" })
+
+                        if (User.Identity.IsAuthenticated && (string)ViewData["IsCurrentSubchapter"] == "true")
+                        {
+                            @Html.ActionLink("Create a new Chat", "Create", "Chat", new { subChapterId = Model.SubchapterId }, new { @class = "btn btn-success" })
+                        }
+                        if (Model.Test != null)
+                        {
+                            if ((string)ViewData["IsCurrentSubchapter"] == "true")
+                            {
+
+                                @Html.ActionLink("Start Test", "TakeTest", "Test", new { testId = Model.Test.TestId }, new { @class = "btn btn-success" })
+                            }
+                        }
+
+                        @Html.ActionLink("See Files", "GetFileList", "SubChapter", new { subChapterId = Model.SubchapterId }, new { @class = "btn btn-primary" })
+
+
+                        if ((string)ViewData["lastSubch"] == "false")
+                        {
+                            @Html.ActionLink(">> SubChapter", "NextSubChapter", "SubChapter", new { currentSubChapterId = Model.SubchapterId }, new { @class = "btn btn-primary btn-right" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Finished Courses", "GetStudentFinishedCourses", "Course", null, new { @class = "btn btn-primary btn-right2" })
+                        }
+
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Courses", "GetStudentEnrolledCourses", "Course", null, new { @class = "btn btn-primary btn-left2" })
+
+                        @Html.ActionLink("See Files", "GetFileList", "SubChapter", new { subChapterId = Model.SubchapterId }, new { @class = "btn btn-primary" })
+
+                        if ((string)ViewData["lastSubch"] == "false")
+                        {
+                            @Html.ActionLink(">> SubChapter", "NextSubChapter", "SubChapter", new { currentSubChapterId = Model.SubchapterId }, new { @class = "btn btn-primary btn-right2" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Finished Courses", "GetStudentFinishedCourses", "Course", null, new { @class = "btn btn-primary btn-right2" })
+                        }
+
+                    }
+                </center>
+            </p>
+        </div>
+
+</center>

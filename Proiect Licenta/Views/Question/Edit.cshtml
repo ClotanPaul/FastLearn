@@ -1,40 +1,130 @@
 ﻿@model ProiectLicenta.Data.Models.Question
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Question";
 }
 
-<h2>Edit</h2>
+<style>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>Question</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.QuestionId)
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.QuestionString, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 20px;
+        width: 55%;
+        text-align: left;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
+        padding-bottom: 0px;
+    }
+
+    .form-control.text-area {
+        width: 300px;
+        height: 50px;
+        max-height: 70px;
+        max-width: 300px;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #button-line {
+        width: auto;
+        width: 604px;
+        margin-left: -30px;
+        margin-bottom: 20px;
+        border-top: none;
+        border-bottom: 0.1rem groove #b4b4b4;
+        margin-top: 0px;
+        padding-top: 10px;
+        margin-bottom: 15px;
+    }
+</style>
+
+<h2 id="h3">Edit Question</h2>
+
+<center>
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div id="info-box">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.QuestionId)
+            @Html.HiddenFor(model => model.TestId)
+
+
+
+            <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
+                <b>Course name: </b>
+                @Html.DisplayFor(model => model.test.SubChapter.Chapter.Course.CourseName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.test.SubChapter.Chapter.Course.CourseName, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
+                <b>Chapter: </b>
+                @Html.DisplayFor(model => @Model.test.SubChapter.Chapter.ChapterTitle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => @Model.test.SubChapter.Chapter.ChapterTitle, "", new { @class = "text-danger" })
+            </div>
+        <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
+            <b>Subchapter: </b>
+            @Html.DisplayFor(model => model.test.SubChapter.SubchapterTitle, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.test.SubChapter.SubchapterTitle, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
+            <b>Chapter: </b>
+            @Html.DisplayFor(model => @Model.test.SubChapter.Chapter.ChapterTitle, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => @Model.test.SubChapter.Chapter.ChapterTitle, "", new { @class = "text-danger" })
+        </div>
+
+
+
+        <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
+            <b>Question String: </b>
             @Html.EditorFor(model => model.QuestionString, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.QuestionString, "", new { @class = "text-danger" })
         </div>
-    </div>
-    @Html.HiddenFor(model => model.questionPointPercentage)
-    @Html.HiddenFor(model => model.TestId)
 
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+
+        <div id="button-line"></div>
+
+        <center>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success" />
+                @Html.ActionLink("Abort", "Index", new { testId = Model.TestId }, new { @class = "btn btn-danger" })
+            </div>
+        </center>
+
         </div>
-    </div>
-</div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index", "Question", new { testId = Model.TestId}, null)
-</div>
+    }
+</center>

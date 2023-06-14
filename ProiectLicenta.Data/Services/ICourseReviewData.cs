@@ -12,6 +12,7 @@ namespace ProiectLicenta.Data.Services
 
         List<CourseReview> getReviews(int courseId);
 
+
         void AddReview(CourseReview review);
 
         CourseReview GetReview(int courseReview);

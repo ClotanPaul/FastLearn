@@ -38,6 +38,7 @@
     #h3 {
         margin-top: 40px;
         text-align: center;
+        margin-bottom: 30px;
     }
 
     #info-box {
@@ -48,15 +49,27 @@
         width: 55%;
         text-align: left;
         padding-left: 30px;
-        border: 1px solid #b4b4b4;
+        border: 1px solid #838383;
+        padding-bottom: 0px;
     }
 
     .btn {
         margin-right: 20px;
     }
+
+    #button-line {
+        border-top: 1px groove #838383;
+        width: 625px;
+        margin-left: -30px;
+        border-bottom: none;
+    }
+
+    .btn-danger{
+        margin-right:0px;
+    }
 </style>
 
-<h2 id="h3">Create a new chapter.</h2>
+<h2 id="h3">Create a chapter</h2>
 
 <center>
     @using (Html.BeginForm())
@@ -64,24 +77,28 @@
         @Html.AntiForgeryToken()
         @Html.HiddenFor(model => model.CourseId)
 
-        <div id="info-box">
-            <div class="form-group">
-                <b>@Html.LabelFor(model => model.ChapterTitle): </b>
-                @Html.EditorFor(model => model.ChapterTitle, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ChapterTitle, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="form-group">
-                <b>@Html.LabelFor(model => model.ChapterDescription): </b>
-                @Html.EditorFor(model => model.ChapterDescription, new { htmlAttributes = new { @class = "form-control text-area" } })
-                @Html.ValidationMessageFor(model => model.ChapterDescription, "", new { @class = "text-danger" })
-            </div>
+    <div id="info-box">
+        <div class="form-group">
+            <b>@Html.LabelFor(model => model.ChapterTitle): </b>
+            @Html.EditorFor(model => model.ChapterTitle, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ChapterTitle, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            <input type="submit" value="Create" class="btn btn-success" />
-            @Html.ActionLink("Abort", "Index", "Chapter", new { courseId = (int)ViewData["courseId"] }, new { @class = "btn btn-danger" })
+            <b>@Html.LabelFor(model => model.ChapterDescription): </b>
+            @Html.EditorFor(model => model.ChapterDescription, new { htmlAttributes = new { @class = "form-control text-area" } })
+            @Html.ValidationMessageFor(model => model.ChapterDescription, "", new { @class = "text-danger" })
         </div>
+
+        <center id="button-line">
+            <div class="form-group" style="margin-top: 15px;">
+                <input type="submit" value="Create" class="btn btn-success" />
+                @Html.ActionLink("Abort", "Index", "Chapter", new { courseId = (int)ViewData["courseId"] }, new { @class = "btn btn-danger" })
+            </div>
+        </center>
+    </div>
+
+        
     }
 </center>
 

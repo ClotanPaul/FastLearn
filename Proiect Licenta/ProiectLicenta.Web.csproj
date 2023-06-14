@@ -1279,6 +1279,20 @@
     <Content Include="Views\Users\SeeHelpingStudentApplicationsForProfessor - Copy.cshtml" />
     <Content Include="Views\Users\SupportHelpingStudentApplication - Copy.cshtml" />
     <Content Include="Views\Course\Index - Copy %283%29.cshtml" />
+    <Content Include="Views\SubChapter\FilesForStudent.cshtml" />
+    <Content Include="Views\SubChapter\Create - Copy.cshtml" />
+    <Content Include="Views\Question\Create - Copy.cshtml" />
+    <Content Include="Views\Course\EnrollInCourse - Copy.cshtml" />
+    <Content Include="Views\SubChapter\GetFileList - Copy %282%29.cshtml" />
+    <Content Include="Views\Test\TakeTest - Copy.cshtml" />
+    <Content Include="Views\Course\GetInactiveCourses - Copy.cshtml" />
+    <Content Include="Views\Chat\GetHelpingStudentChats - Copy.cshtml" />
+    <Content Include="Views\Chat\LeaveChat - Copy.cshtml" />
+    <Content Include="Views\Account\Register - Copy.cshtml" />
+    <Content Include="Views\Account\Login - Copy.cshtml" />
+    <Content Include="Views\Account\ForgotPassword - Copy.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation - Copy.cshtml" />
+    <Content Include="Views\Manage\ChangePassword - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,10 +1,8 @@
 ﻿@model ProiectLicenta.Data.Models.SubChapter
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create SubChapter";
 }
-
-<h2>Create</h2>
 
 @section scripts{
     <script src="~/Scripts/ckeditor/ckeditor.js"></script>
@@ -28,40 +26,105 @@
     </script>
 }
 
+<style>
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+    .form-group {
+        margin-bottom: 15px;
+    }
 
-    <div class="form-horizontal">
-        <h4>SubChapter</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ChapterId)
-        <div class="form-group">
-            @Html.LabelFor(model => model.SubchapterTitle, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SubchapterTitle, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SubchapterTitle, "", new { @class = "text-danger" })
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        width: 90%;
+        text-align: left;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
+        padding-bottom: 0px;
+    }
+
+    .form-control.text-area {
+        width: 300px;
+        height: 50px;
+        max-height: 70px;
+        max-width: 300px;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #button-line {
+        width: 1026px;
+        margin-left: -51px;
+        margin-bottom: 20px;
+        border-top: none;
+        border-bottom: 0.1rem groove #b4b4b4;
+        margin-top: 0px;
+        padding-top: 10px;
+        margin-bottom: 15px;
+    }
+</style>
+
+<h2 id="h3">Create Subchapter</h2>
+
+<center>
+    <div id="info-box">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal" style="padding-bottom: 0px;">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ChapterId)
+
+                <div class="form-group">
+                    <b>Title: </b>
+                    @Html.EditorFor(model => model.SubchapterTitle, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SubchapterTitle, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group" style="padding-bottom: 0px;">
+                    <b>Description: </b>
+                    @Html.TextAreaFor(model => model.SubchapterDescription, new { htmlAttributes = new { @class = "ckeditor form-control" } })
+                    @Html.ValidationMessageFor(model => model.SubchapterDescription, "", new { @class = "text-danger" })
+                </div>
+
+                <div id="button-line"></div>
+
+                <center class="form-group">
+                    <input type="submit" value="Create" class="btn btn-success" />
+                    @Html.ActionLink("Abort", "Index", new { chapterId = ViewData["chapterId"] }, new { @class = "btn btn-danger" })
+                </center>
             </div>
-        </div>
+            <div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SubchapterDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.SubchapterDescription, new { htmlAttributes = new { @class = "ckeditor" } })
-                @Html.ValidationMessageFor(model => model.SubchapterDescription, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+        }
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index", "SubChapter", new {chapterId = (int)ViewData["chapterId"] },null)
-</div>
+</center>

@@ -4,39 +4,127 @@
     ViewBag.Title = "YourHelpingStudentApplication";
 }
 
-<h2>Your Helping Student Application</h2>
+<style>
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
 
-<div>
-    <h4>Helping Student Application</h4>
-    <hr />
+    .form-group {
+        margin-left: 20px;
+    }
 
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FinishedCourses)
-        </dt>
-        <dd>
-            @foreach (var course in Model.FinishedCourses)
-            {
-                <p>@course.CourseName</p>
-            }
-        </dd>
+    .form-group {
+        margin-bottom: 15px;
+    }
 
-        <dt>Professor Email</dt>
-        @if (!string.IsNullOrEmpty(Model.ProfessorEmail))
-        {
-            <dd>@Model.ProfessorEmail. <br />
-            The professor is backing your application! It will shortly be reviewed by our admins.</dd>
-        }
-        else
-        {
-            <dd>No professor supports your application as of now.</dd>
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
         }
 
-    </dl>
-</div>
-@if (User.IsInRole("student"))
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    #info-box {
+        background: #dedede;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        text-align: left;
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-top: 0px;
+        padding-top: 0px;
+        width: 600px;
+        padding-bottom: 0px;
+    }
+
+    #course-list {
+        padding-left: 15px;
+    }
+
+    .back-link {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    #button-line {
+        border-top: 1px groove #838383;
+        width: 599px;
+        margin-left: -1px;
+        border-bottom: none;
+    }
+</style>
+
+<h2 id="h3">Your Helping Student Application</h2>
+
+@if (Model != null)
 {
-    <p>
-        @Html.ActionLink("Changed Your Mind?", "DeleteApplication", new { applicationId = Model.HelpingStudentApplicationId })
-    </p>
+    <center>
+        <div id="info-box">
+
+            <dl class="dl-horizontal">
+
+
+                <div style="margin-top:20px;" class="form-group">
+                    <b>Your email: </b> @Model.StudentEmail
+
+                </div>
+
+                <div class="form-group">
+                    <b>Professor: </b>
+                    @if (!string.IsNullOrEmpty(Model.ProfessorEmail))
+                    {
+                        @Model.ProfessorEmail
+                        <p>The professor is backing your application! It will shortly be reviewed by our admins.</p>
+                    }
+                    else
+                    {
+                        <p>No professor supports your application as of now.</p>
+                    }
+                </div>
+
+                <div class="form-group">
+                    <b>Finished Courses: </b>
+                    @foreach (var course in Model.FinishedCourses)
+                    {
+                        <p>@course.CourseName</p>
+                    }
+                </div>
+
+                <div id="button-line"></div>
+                <center style="margin-top: 20px;">
+                    @Html.ActionLink("Changed Your Mind?", "DeleteApplication", new { applicationId = Model.HelpingStudentApplicationId }, new { @class = "btn btn-danger" })
+                </center>
+            </dl>
+        </div>
+    </center>
+}
+else
+{
+
+    <center>
+        <div id="info-box" style="border: 0.1rem groove #b4b4b4; ">
+            <center><h3 style="margin-top: 15px; padding-top: 5px; margin-bottom: 20px;">No Application.</h3></center>
+            <center>
+
+
+                @Html.ActionLink("Apply", "ApplyForHelpingStudent", "Users", new { @class = "btn btn-primary" ,@style="margin-bottom: 20px;"})
+
+
+            </center>
+
+        </div>
+    </center>
 }

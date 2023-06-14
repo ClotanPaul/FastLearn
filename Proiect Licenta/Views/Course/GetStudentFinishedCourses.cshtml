@@ -12,7 +12,7 @@
         padding: 20px;
         margin-top: 20px;
         margin-bottom: 20px;
-        height: 400px;
+        height: 460px;
         width: auto;
     }
 
@@ -28,7 +28,7 @@
 
 
 
-<h2 class="text-left text-primary">Course List</h2>
+<h1 id="h3">Archive</h1>
 
 
 
@@ -37,25 +37,28 @@
         @foreach (var item in Model)
         {
 
+
             <div class="col-md-4 mb-4">
                 <div class="card">
+                    <center id="title-line">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.CourseName)</h5>
+                    </center>
                     @if (item.ImagePath != null)
                     {
                         <img src="@Url.Content(item.ImagePath)" class="card-img-top" alt="Course Image">
                     }
                     else
                     {
-                        <img src="~/Content/images/proiectLicentaPhoto.jpg" class="card-img-top" alt="Course Image">
+                        <img src="~/Content/images/proiectLicentaPhoto.jpg" class="card-img-top" alt="Course Image"> <text>Image</text>
                     }
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            @Html.DisplayFor(model =>item.CourseName)
-                        </h5>
-                        <p class="card-text">@Html.DisplayFor(modelItem => item.CourseDescription)</p>
+                    <div class="card-body flex-container">
+                        <p class="card-text" id="card-desc">@Html.DisplayFor(modelItem => item.CourseDescription)</p>
+
                         <div class="text-center">
-                            <text>(</text>
-                            @Html.ActionLink("Syllabus", "CourseSyllabus", "Course", new { courseId = item.CourseId }, null) <text> | </text>
-                            @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, null) <text> ) </text>
+                            <div id="ceva">
+                                @Html.ActionLink("Syllabus", "CourseSyllabus", "Course", new { courseId = item.CourseId }, new { @class = "btn btn-info" })
+                                @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, new { @class = "btn btn-info" })
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -6,29 +6,54 @@
 
 <style>
 
+
+    #ceva {
+        margin-bottom: 10px;
+    }
+
+    #chaptersb {
+        margin-bottom: 0px;
+    }
+
+    #buttons {
+        margin-bottom: 10px;
+        margin-left: -22px;
+        text-overflow: ellipsis;
+        text-align: justify;
+        border-top: 1px solid #838383;
+        padding-bottom: 20px;
+        margin-bottom: 17px;
+        margin-right: -22px;
+    }
+
+    #button-space {
+        margin-bottom: 25px;
+    }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .card-body {
+    }
+
     .card {
-        background: #f8f9fa;
-        border-radius: 5px;
-        padding: 20px;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        height: 400px;
-        width: auto;
+        height:460px;
     }
 
-    .card-img-top {
-        width: 320px;
-        height: 200px;
-    }
-
-    .card-title {
-        font-weight: bold;
+    #span-style {
+        display: inline-block;
+        width: 330px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 </style>
 
 
 
-<h2 class="text-left text-primary">Course List</h2>
+<h1 id="h3">Course List</h1>
 
 
 
@@ -36,32 +61,40 @@
     <div class="row">
         @foreach (var item in Model)
         {
-
             <div class="col-md-4 mb-4">
                 <div class="card">
+                    <center id="title-line">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.CourseName)</h5>
+                    </center>
                     @if (item.ImagePath != null)
                     {
                         <img src="@Url.Content(item.ImagePath)" class="card-img-top" alt="Course Image">
                     }
                     else
                     {
-                        <img src="~/Content/images/proiectLicentaPhoto.jpg" class="card-img-top" alt="Course Image">
+                        <img src="~/Content/images/proiectLicentaPhoto.jpg" class="card-img-top" alt="Course Image"> <text>Image</text>
                     }
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            @Html.ActionLink(item.CourseName, "ExploreCourse", "Course", new { courseId = item.CourseId }, null)
-                        </h5>
-                        <p class="card-text">@Html.DisplayFor(modelItem => item.CourseDescription)</p>
+                    <div class="card-body flex-container">
+                        <p class="card-text" id="card-desc">@Html.DisplayFor(modelItem => item.CourseDescription)</p>
+
                         <div class="text-center">
-                            <text>(</text>
-                            @Html.ActionLink("Syllabus", "CourseSyllabus", "Course", new { courseId = item.CourseId }, null) <text> | </text>
-                            @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, null) <text> ) </text>
-                            @Html.ActionLink("Enroll", "EnrollInCourse", "Course", new { courseId = item.CourseId }, null) <text> ) </text>
+                            <div id="ceva">
+                                @Html.ActionLink("Enroll", "EnrollInCourse", "Course", new { courseId = item.CourseId }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Syllabus", "CourseSyllabus", "Course", new { courseId = item.CourseId }, new { @class = "btn btn-info" })
+                                @Html.ActionLink("Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, new { @class = "btn btn-info" })
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+
+
         }
+
+
+
+
     </div>
 </div>

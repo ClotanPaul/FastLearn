@@ -4,52 +4,173 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-@if (!User.IsInRole("admin"))
-{
-    <p>
-        @Html.ActionLink("Add a new answer", "Create", "Answer", new { questionId = ViewData["questionId"] }, null)
-    </p>
-}
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.AnswerText)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsCorrect)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QuestionId)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AnswerText)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsCorrect)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuestionId)
-            </td>
-            <td>
-                @if (item.Question.test.SubChapter.Chapter.Course.OwnerId == (string)ViewData["userId"])
-                {
-                    @Html.ActionLink("Edit", "Edit", new { answerId = item.AnswerId })
-                    @Html.ActionLink("Delete", "Delete", new { answerId = item.AnswerId })
-                }
-            </td>
-        </tr>
+<style>
+    body {
+        background-color: #f8f9fa;
     }
 
-</table>
-@if ((int)ViewData["testId"] != -1)
+    #title {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        background-color: #dedede;
+        border-radius: 10px;
+        padding-left: 0px;
+        overflow: hidden;
+        border: 0.2rem thin #b4b4b4;
+        margin-top: 0px;
+    }
+
+        .table thead th {
+            background-color: #4D4C4C;
+            color: #fff;
+        }
+
+    .btn-group .btn {
+        margin: 10px;
+    }
+
+    .form-button {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .btn {
+        margin-right: 15px;
+    }
+
+    #chapterTitle {
+        padding-left: 15px;
+    }
+
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    #info-box {
+        background: #dedede;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        text-align: left;
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-top: 0px;
+        padding-top: 0px;
+        width: 900px;
+    }
+
+    .btn {
+        margin-right: 15px;
+    }
+
+    #danger {
+        width: 83.719px;
+    }
+
+    #button-line {
+        width: auto;
+        width: 899px;
+        margin-left: 0px;
+        margin-bottom: 20px;
+        border-top: none;
+        border-bottom: 0.1rem groove #b4b4b4;
+    }
+</style>
+
+<h1 id="h3" style="margin-bottom:30px">Answers</h1>
+
+@if (Model != null && Model.ToList().Count > 0)
 {
-    @Html.ActionLink("Back to questions", "Index", "Question", new { testId = (int)ViewData["testId"] }, null)
+    <center>
+        <div id="info-box" style="border: 0.1rem groove #b4b4b4;">
+            <center>
+                <div class="table-responsive">
+                    <table class="table table-hover" style="margin-bottom: 0px;">
+                        <thead class="thead-dark">
+                            <tr id="username">
+                                <th style="padding-left:20px;" id="answerText">@Html.DisplayNameFor(model => model.AnswerText)</th>
+                                <th style="width:20%"><b>Correct?</b></th>
+                                <th style="width:20%;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr style="border-top: 0.2rem groove;" id="username">
+                                    <td style="padding-left:20px;" id="answerText">@Html.DisplayFor(modelItem => item.AnswerText)</td>
+                                    <td>
+                                        @if (item.IsCorrect)
+                                        {
+                                            <text>Correct</text>
+                                        }
+                                        else
+                                        {
+                                            <text>Incorrect</text>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.Question.test.SubChapter.Chapter.Course.OwnerId == (string)ViewData["userId"])
+                                        {
+                                            @Html.ActionLink("Edit", "Edit", new { answerId = item.AnswerId }, new { @class = "btn btn-primary" })
+                                            @Html.ActionLink("Delete", "Delete", new { answerId = item.AnswerId }, new { @class = "btn btn-danger" })
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </center>
+            <div id="button-line"></div>
+            <center>
+                @if ((int)ViewData["testId"] != -1)
+                {
+                    @Html.ActionLink("Add a new answer", "Create", "Answer", new { questionId = ViewData["questionId"] }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Back to questions", "Index", "Question", new { testId = (int)ViewData["testId"] }, new { @class = "btn btn-info" })
+                }
+            </center>
+        </div>
+    </center>
+}
+else
+{
+    <center>
+        <div id="info-box" style="border: 0.1rem groove #b4b4b4;padding-top: 0px;">
+            <center><h3 style="margin-top: 15px; padding-top: 5px; margin-bottom: 20px;">No answers.</h3></center>
+            <center>
+                @if ((int)ViewData["testId"] != -1)
+                {
+                    @Html.ActionLink("Add a new answer", "Create", "Answer", new { questionId = ViewData["questionId"] }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Back to questions", "Index", "Question", new { testId = (int)ViewData["testId"] }, new { @class = "btn btn-info" })
+                }
+            </center>
+        </div>
+    </center>
 }

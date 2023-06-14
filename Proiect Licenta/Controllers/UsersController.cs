@@ -314,16 +314,17 @@ namespace Proiect_Licenta.Controllers
 
             var application = userDb.getHelpingStudentApplication(userData.UserDataId);
 
-            if (application == null)
+            if(application == null)
             {
-                return View("NoApplicationFound");
+                return View((HelperApplicationViewModel)null);
             }
 
             var helperStudentApplication = new HelperApplicationViewModel()
             {
                 HelpingStudentApplicationId = application.HelpingStudentApplicationId,
                 FinishedCourses = courseDb.GetEnrolledCoursesByIds(courseDb.FinishedCoursesDeserialization(application.FinishedCoursesIds)),
-                ProfessorEmail = application.ProfessorId != null ? userDb.getUserByUserDataId((int)application.ProfessorId)?.Email : null
+                ProfessorEmail = application.ProfessorId != null ? userDb.getUserByUserDataId((int)application.ProfessorId)?.Email : null,
+                StudentEmail = userData.Email,
             };
 
             return View(helperStudentApplication);

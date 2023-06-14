@@ -5,37 +5,16 @@
 }
 
 <style>
-    .dl-horizontal {
-        text-align: left;
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
     }
 
-    .btn {
-        margin-right: 30px;
+    .form-group {
+        margin-bottom: 15px;
+        margin-top: 15px;
     }
-
-    body {
-        background-color: #f8f9fa;
-    }
-
-    #title {
-        margin-top: 40px;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .table {
-        background-color: #E1E1E1;
-        border-radius: 20px;
-        overflow: hidden;
-        width: 70%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-        .table th {
-            background-color: #4D4C4C;
-            color: #fff;
-        }
 
     .btn-default {
         background-color: #007bff;
@@ -48,78 +27,72 @@
             background-color: #0056b3;
         }
 
-    .back-link {
-        margin-top: 20px;
+    #h3 {
+        margin-top: 40px;
         text-align: center;
     }
 
-    .info-box {
-        padding: 15px;
-        border: 1px solid #007bff;
-        border-radius: 5px;
-        background-color: #f0f8ff;
-        margin-bottom: 20px;
-    }
-
-    .course-table {
-        background-color: #f1f1f1;
-        width: 100%;
-        border-radius: 20px;
-    }
-
-    .course-table th, .course-table td {
-        border-bottom: 1px solid #d1d1d1;
-        padding: 10px;
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        padding-bottom: 0px;
+        border-radius: 10px;
+        width: 55%;
         text-align: left;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
     }
 
-    .course-table tbody tr:nth-child(even) {
-        background-color: #e7e7e7;
+    .btn {
+        margin-right: 20px;
     }
 
+    #button-line {
+        width: auto;
+        border-top: 1px groove #b4b4b4;
+        width: 604px;
+        margin-left: -31px;
+        border-bottom: none;
+        margin-bottom: 0px;
+    }
 </style>
 
-<h3 style="margin-top: 40px;text-align: center;">Are you sure you want to support this application?</h3>
+<h3 id="h3">Are you sure you want to support this application?</h3>
 
-<div>
-    <hr />
+<center>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-    <center>
-
-        <div style="background: #f8f9fa; padding: 20px; margin-bottom: 25px; border-radius: 20px; width: 40%; text-align: left; padding-left: 30px; border: 1px solid #b4b4b4; ">
-
-            <div style="margin-bottom:10px;">
+        <div id="info-box">
+            <div class="form-group">
                 <b>No professor backs up this student. Do you know him?</b>
             </div>
 
-            <div style="margin-bottom:5px;">
-                <b>@Html.DisplayNameFor(model => model.StudentEmail):</b> @Html.DisplayFor(model => model.StudentEmail)
+            <div class="form-group">
+                <b>@Html.DisplayNameFor(model => model.StudentEmail): </b>
+                @Html.DisplayFor(model => model.StudentEmail)
             </div>
 
-            <div>
+            <div class="form-group">
                 <b>Finished Courses:</b>
                 <ul>
                     @foreach (var course in Model.FinishedCourses)
                     {
                         <li>
-                            
                             @Html.ActionLink(@course.CourseName, "CourseSyllabus", "Course", new { courseId = course.CourseId }, new { @class = "btn btn-link" })
                         </li>
                     }
                 </ul>
             </div>
+
+            <center id="button-line">
+                <div class="form-group">
+                    <input type="submit" value="Support this student" class="btn btn-success" />
+                    @Html.ActionLink("Abort", "SeeHelpingStudentApplicationsForProfessor", null, new { @class = "btn btn-danger" })
+                </div>
+            </center>
         </div>
-    </center>
-
-    <center>
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="form-actions no-color">
-                <input type="submit" value="Support this student" class="btn btn-success" />
-                @Html.ActionLink("Abort", "SeeHelpingStudentApplicationsForProfessor", null, new { @class = "btn btn-danger" })
-            </div>
-        }
-    </center>
-</div>
+    }
+</center>

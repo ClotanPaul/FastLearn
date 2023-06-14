@@ -4,47 +4,104 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Question</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.QuestionString)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.QuestionString)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.questionPointPercentage)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.questionPointPercentage)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TestId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TestId)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-        </div>
+<style>
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
     }
-</div>
-<div>
-    @Html.ActionLink("Back to List", "Index", "Question", new { testId = Model.TestId }, null)
-</div>
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        width: 529px;
+        text-align: left;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
+    }
+
+    .form-control.text-area {
+        width: 300px;
+        height: 50px;
+        max-height: 70px;
+        max-width: 300px;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #button-line {
+        width: 528px;
+        margin-left: -31px;
+        margin-bottom: 20px;
+        border-top: none;
+        border-bottom: 0.1rem groove #b4b4b4;
+        margin-top: 0px;
+        padding-top: 10px;
+        margin-bottom: 15px;
+    }
+</style>
+
+<h2 id="h3">You are about to delete the following question:</h2>
+
+<center>
+    <div id="info-box">
+        <dl class="dl-horizontal">
+
+            <div style="margin-bottom: 5px;">
+                <b>Course: </b> @Html.DisplayFor(model => model.test.SubChapter.Chapter.Course.CourseName)
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <b>Chapter: </b> @Html.DisplayFor(model => model.test.SubChapter.Chapter.ChapterTitle)
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <b>SubChapter: </b> @Html.DisplayFor(model => model.test.SubChapter.SubchapterTitle)
+            </div>
+
+            <div style="margin-bottom: 5px; margin-top:15px;">
+                <b>Question: </b> @Html.DisplayFor(model => model.QuestionString)
+            </div>
+
+            <div id="button-line"></div>
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <center>
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                @Html.ActionLink("Abort", "Index", "Question", new { testId = Model.TestId }, new {@class="btn btn-danger"})
+            </div>
+                </center>
+        }
+    </div>
+</center>

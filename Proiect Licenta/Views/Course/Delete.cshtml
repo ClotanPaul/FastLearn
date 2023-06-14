@@ -11,25 +11,31 @@
         padding: 20px;
         margin-top: 20px;
         margin-bottom: 20px;
-        height: 480px;
-        width: 436px;
-        border-radius: 20px;
+        height: 460px;
+        width: 400px;
+        border-radius: 10px;
         border: 2px solid #838383;
     }
 
     .card-text {
         margin-bottom: 18px;
     }
+    .card-desc{
+        border:none;
+    }
+
+
 
     .card-img-top {
         width: 320px;
         height: 200px;
-        border-radius: 15px;
+        border-radius: 10px;
         border: 2px solid #000000;
         object-fit: cover;
         margin-bottom: 8px;
         object-fit: cover;
         margin-bottom: 23px;
+        margin-top: 25px;
     }
 
     .card-title {
@@ -42,7 +48,8 @@
         margin-bottom: 15px;
         font-size: x-large;
     }
-    .btn-danger{
+
+    .btn-danger {
         margin-right: 30px;
     }
 
@@ -51,6 +58,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         text-align: justify;
+        border:none;
     }
 
     #chaptersB {
@@ -59,7 +67,6 @@
 
     #reviewsB {
         margin-right: 10px;
-
     }
 
     #ceva {
@@ -78,90 +85,81 @@
     .btn {
         margin-bottom: 10px
     }
+
     #currentActive {
         margin-bottom: 15px;
+    }
+
+    #button-line {
+        width: auto;
+        border-top: 1px groove #838383;
+        width: 398px;
+        margin-left: -21px;
+        border-bottom: none;
+        margin-bottom: 0px;
+    }
+
+    #title-line {
+        width: 398px;
     }
 </style>
 
 @{
     ViewBag.Title = "Delete";
 }
-<h3 style="margin-top: 40px;text-align: center;">Are you sure you want to delete your course?</h3>
+
 <div>
-    <hr />
+    <center>
+        <h2 id="h3">You are about to delete the following course:</h2>
+    </center>
+    <div class="container">
+        <div class="row">
 
+            <center>
 
-            <div class="container">
-                <div class="row">
+                <div class="card">
+                    <center id="title-line">
+                        <h5 class="card-title">@Html.DisplayFor(modelModel => Model.CourseName)</h5>
+                    </center>
+                    @if (Model.ImagePath != null)
+                    {
+                        <img src="@Url.Content(Model.ImagePath)" class="card-img-top" alt="Course Image">
+                    }
+                    else
+                    {
+                        <img src="~/Content/images/proiectLicentaPhoto.jpg" class="card-img-top" alt="Course Image"> <text>Image</text>
+                    }
+                    <div class="card-body flex-container">
+                        <p class="card-text" id="card-desc" style="padding-left: 26px;padding-right: 15px;">@Html.DisplayFor(modelModel => Model.CourseDescription)</p>
 
+                        <div class="text-center">
+
+                            <div id="button-line"></div>
+                            <div id="ceva">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="form-actions no-color" style="margin-top: 15px;">
+                                        <input type="submit" value="Delete" class="btn btn-danger" />
+                                        @Html.ActionLink("Abort", "GetUserCourses", "Course", null, new { @class = "btn btn-primary" })
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
                     <center>
 
-                            <div class="card">
-                                <center>
-                                    <h5 class="card-title">@Html.DisplayFor(modelModel => Model.CourseName)</h5>
-                                </center>
-                                @if (Model.ImagePath != null)
-                                {
-                                    <img src="@Url.Content(Model.ImagePath)" class="card-img-top" alt="Course Image">
-                                }
-                                else
-                                {
-                                    <img src="~/Content/images/proiectLicentaPhoto.jpg" class="card-img-top" alt="Course Image"> <text>Image</text>
-                                }
-                                <div class="card-body flex-container">
-                                    <p class="card-text" id="card-desc">@Html.DisplayFor(modelModel => Model.CourseDescription)</p>
-
-                                    <div class="text-center">
-                                        <div id="currentActive">
-                                            @if (Model.Active)
-                                            {
-                                                <b>This course is currently active.</b>
-                                            }
-                                            else
-                                            {
-                                                <b>This course is not active.</b>
-                                            }
-                                        </div>
-                                        <div id="ceva">
-                                            @Html.ActionLink("Chapters", "Index", "Chapter", new { courseId = Model.CourseId }, new { @class = "btn btn-info", @id = "chaptersB" })
-                                            @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = Model.CourseId }, new { @class = "btn btn-info", @id = "reviewsB" })
-                                            @if (User.IsInRole("admin"))
-                                            {
-                                                @Html.ActionLink("Activate Course", "ActivateCourse", new { id = Model.CourseId }, new { @class = "btn btn-success", @id = "chaptersB" })
-                                                @Html.ActionLink("Deactivate Course", "DeactivateCourse", new { id = Model.CourseId }, new { @class = "btn btn-danger", @id = "reviewsB" })
-                                            }
-                                            @if (User.Identity.IsAuthenticated && Model.Active == true && (Model.OwnerId == (string)ViewData["userId"]))
-                                            {
-                                                <br>
-                                                @Html.ActionLink("Update Photo", "UpdateCoursePhoto", new { courseId = Model.CourseId }, new { @class = "btn btn-primary", @id = "reviewsB" })
-                                                @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }, new { @class = "btn btn-primary", @id = "chaptersB" })
-                                                @Html.ActionLink("Delete", "Delete", new { id = Model.CourseId }, new { @class = "btn btn-danger", @id = "reviewsB" })
 
 
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </center>
+                    </center>
                 </div>
-            </div>
-
+            </center>
         </div>
+    </div>
+
 </div>
 
 
-<center>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" />
-            @Html.ActionLink("Abort", "GetUserCourses", "Course", null, new { @class = "btn btn-primary" })
-        </div>
-    }
-
-</center>
-    </div>

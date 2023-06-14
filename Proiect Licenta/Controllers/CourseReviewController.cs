@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace Proiect_Licenta.Controllers
 {
@@ -30,6 +31,7 @@ namespace Proiect_Licenta.Controllers
             ViewData["UserId"] = User.Identity.GetUserId();
             var course = courseDb.GetCourse(courseId);
 
+
             // determine if the user can add a new review or not
             if (!User.IsInRole("admin") && !User.IsInRole("professor"))
             {
@@ -43,8 +45,9 @@ namespace Proiect_Licenta.Controllers
         }
 
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult Create(int courseId)
         {
+            ViewData["courseId"] = courseId;
             return View();
         }
 
@@ -54,11 +57,31 @@ namespace Proiect_Licenta.Controllers
             newReview.UserId = User.Identity.GetUserId();
             newReview.CourseId = courseId;
             newReview.IsActive = false;
+            ViewData["courseId"] = courseId;
+
+
+            if (newReview.ReviewText.IsEmpty())
+            {
+                ModelState.AddModelError("ReviewText", "Can't be empty");
+            }
+            else
+            {
+                if(newReview.ReviewText.Count() > 40)
+                {
+                    ModelState.AddModelError("ReviewText", "Maximum 40 charaters!");
+                }
+            }
+                if(newReview.Stars <1 || newReview.Stars > 5)
+                {
+                    ModelState.AddModelError("Stars", "The value must be between 1 and 5");
+                }
 
             if (ModelState.IsValid)
             {
                 courseReviewDb.AddReview(newReview);
             }
+            else
+                return View(newReview);
 
             return RedirectToAction("Index", new { courseId = newReview.CourseId});
         }
@@ -77,13 +100,35 @@ namespace Proiect_Licenta.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CourseReview courseReview)
         {
+
+            if (courseReview.ReviewText.IsEmpty())
+            {
+                ModelState.AddModelError("ReviewText", "Can't be empty");
+            }
+            else
+            {
+                if (courseReview.ReviewText.Count() > 40)
+                {
+                    ModelState.AddModelError("ReviewText", "Maximum 40 charaters!");
+                }
+            }
+            if (courseReview.Stars < 1 || courseReview.Stars > 5)
+            {
+                ModelState.AddModelError("Stars", "The value must be between 1 and 5");
+            }
+
+
             if (ModelState.IsValid)
             {
                 courseReviewDb.UpdateReview(courseReview);
 
             }
             else
-                return View("ModelStateNotValid");
+            {
+                var course = courseDb.GetCourse(courseReview.CourseId);
+                courseReview.Course = course;
+                return View(courseReview);
+            }
             return RedirectToAction("Details", new { id = courseReview.CourseReviewId });
         }
 
@@ -93,6 +138,7 @@ namespace Proiect_Licenta.Controllers
         {
 
             var courseReview = courseReviewDb.GetReview(courseReviewId);
+            ViewData["courseName"] = courseReview.Course.CourseName;
 
             if (courseReview == null)
                 return View("NotFound");
@@ -184,6 +230,21 @@ namespace Proiect_Licenta.Controllers
         public ActionResult DeactivateReview(CourseReview review)
         {
             var deactivationReason = review.DeactivationReason;
+
+            if(deactivationReason == null)
+            {
+                deactivationReason = "Not provided";
+            }
+
+            if (deactivationReason.Count() > 40)
+            {
+                ModelState.AddModelError("DeactivationReason", "Maximum 40 characters");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(review);
+            }
             var courseReviewId = review.CourseReviewId;
             courseReviewDb.DeactivateReview(courseReviewId, deactivationReason);
 

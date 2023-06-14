@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace ProiectLicenta.Data.Models
         public int SubchapterNumber { get; set; }
 
         [Required]
+        [DisplayName("Subchapter")]
         public string SubchapterTitle { get; set; }
 
         [Required]

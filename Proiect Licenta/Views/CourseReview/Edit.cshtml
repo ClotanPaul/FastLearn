@@ -1,21 +1,18 @@
 ﻿@model ProiectLicenta.Data.Models.CourseReview
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Review";
 }
-
-<h2 class="text-left text-primary">Edit</h2>
 
 <style>
     .form-horizontal {
-        background: #f8f9fa;
         padding: 20px;
         border-radius: 5px;
         margin: auto;
     }
 
-    .form-horizontal h4 {
-        color: #333;
+    .form-group {
+        margin-bottom: 15px;
     }
 
     .btn-default {
@@ -25,47 +22,86 @@
         transition: background-color 0.2s ease;
     }
 
-    .btn-default:hover {
-        background-color: #0056b3;
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 30px;
     }
 
-    .back-link {
-        margin-top: 20px;
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 20px;
+        width: 55%;
         text-align: left;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
+        padding-bottom: 0px;
+    }
+
+    .form-control.text-area {
+        width: 300px;
+        height: 50px;
+        max-height: 70px;
+        max-width: 300px;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #button-line {
+        width: auto;
+        width: 604px;
+        margin-left: -30px;
+        margin-bottom: 20px;
+        border-top: none;
+        border-bottom: 0.1rem groove #b4b4b4;
+        margin-top: 0px;
+        padding-top: 10px;
+        margin-bottom: 15px;
     }
 </style>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<h2 id="h3">Edit Review for "@Html.DisplayFor(model => model.Course.CourseName)"</h2>
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.CourseReviewId)
-        @Html.HiddenFor(model => model.UserId)
-        @Html.HiddenFor(model => model.CourseId)
+<center>
+    @using (Html.BeginForm())
+    {
+        <div id="info-box">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.CourseReviewId)
+            @Html.HiddenFor(model => model.UserId)
+            @Html.HiddenFor(model => model.CourseId)
 
-        <div class="form-group">
-            <h4><strong>@Html.DisplayNameFor(model => model.ReviewText):</strong></h4>
-            @Html.EditorFor(model => model.ReviewText, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ReviewText, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            <h4><strong>@Html.DisplayNameFor(model => model.Stars):</strong></h4>
-            @Html.EditorFor(model => model.Stars, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Stars, "", new { @class = "text-danger" })
-        </div>
-
-
-        <div class="form-group">
-            <div class="col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
+                <b>Review Text: </b>
+                @Html.EditorFor(model => model.ReviewText, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ReviewText, "", new { @class = "text-danger" })
             </div>
-        </div>
-    </div>
-}
 
-<div class="back-link">
-    @Html.ActionLink("Back to Review List", "Index", "CourseReview", new { courseId = Model.CourseId}, null)
-</div>
+            <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
+                <b>Stars: </b>
+                @Html.EditorFor(model => model.Stars, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Stars, "", new { @class = "text-danger" })
+            </div>
+
+            <div id="button-line"></div>
+
+            <center>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                    @Html.ActionLink("Abort", "Index", new { courseId = Model.CourseId }, new { @class = "btn btn-danger" })
+                </div>
+            </center>
+
+        </div>
+    }
+</center>

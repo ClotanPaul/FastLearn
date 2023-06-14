@@ -19,6 +19,7 @@ namespace Proiect_Licenta.Controllers
         private readonly IUserAnswerData userAnswerDb;
         private readonly IUserData userDataDb;
         private readonly IEnrolledSudentInCourse enrollmentDb;
+        private static int minScore = -1;
 
         public TestController(ITestData testDb, ISubChapterData subChapterDb, IQuestionData questionDb, IAnswerData answerDb, IUserAnswerData userAnswerDb, IUserData userDataDb, IEnrolledSudentInCourse enrollmentDb)
         {
@@ -72,11 +73,32 @@ namespace Proiect_Licenta.Controllers
 
             var testSubChapter = subChapterDb.GetSubChapter(subChapterId);
             newTest.SubChapter = testSubChapter;
+            ViewData["subchapterId"] = subChapterId;
+
+            if (newTest.MinimumScore > 100)
+            {
+                ModelState.AddModelError("MinimumScore", "Score must be smaller than 100 points.");
+
+            }
+            else
+            {
+                if (newTest.TestDescription.Count() > 30)
+                {
+                    ModelState.AddModelError("TestDescription", "Maximum 30 characters!");
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 testDb.AddTest(newTest, subChapterId);
 
             }
+
+            else
+            {
+                return View(newTest);
+            }
+
             return RedirectToAction("Index", new { subChapterId = newTest.SubChapter.SubchapterId });
         }
 
@@ -96,10 +118,31 @@ namespace Proiect_Licenta.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Test Test, int subChapterId)
         {
+
+            if (Test.MinimumScore > 100)
+            {
+                ModelState.AddModelError("MinimumScore", "Score must be smaller than 100 points.");
+
+            }
+            else
+            {
+                if(Test.TestDescription.Count() > 30)
+                {
+                    ModelState.AddModelError("TestDescription", "Maximum 30 characters!");
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 testDb.UpdateTest(Test, subChapterId);
 
+            }
+            else
+            {
+                var subChapter = subChapterDb.GetSubChapter(subChapterId);
+                ViewData["subChapterId"] = subChapterId;
+                Test = subChapter.Test;
+                return View(Test);
             }
             return RedirectToAction("Index", new { subChapterId = subChapterId });
         }
@@ -149,6 +192,7 @@ namespace Proiect_Licenta.Controllers
             // Fetch questions and choices from the database
             var test = testDb.getTestById(testId);
             var questions = questionDb.getQuestions(test.TestId);
+            ViewData["subchapterId"] = test.SubChapter.SubchapterId;
 
             if (test == null)
                 return View("TestNotFound");
@@ -185,6 +229,11 @@ namespace Proiect_Licenta.Controllers
                 return View("TakeTest", testViewModel.TestId);
             }
 
+            if (!ModelState.IsValid)
+            {
+                RedirectToAction("TakeTest", testViewModel);
+            }
+
             //computing the score
             int correctAnswerNumber = 0;
             foreach (var question in testViewModel.Questions)
@@ -215,6 +264,11 @@ namespace Proiect_Licenta.Controllers
                         minimumScore = 50;
                     }
                 }
+                minScore = minimumScore;
+            }
+            else
+            {
+                minScore = -1;
             }
                 
             
@@ -255,7 +309,6 @@ namespace Proiect_Licenta.Controllers
 
             }
 
-            // show the results of the test:
             return RedirectToAction("Results", new { userAnswerId = userAnswer.UserAnswerId });
         }
 
@@ -280,11 +333,20 @@ namespace Proiect_Licenta.Controllers
             }
             ).ToList();
 
+            int scorePercent;
+            if(minScore != -1)
+            {
+                scorePercent = minScore;
+            }
+            else
+            {
+                scorePercent = userAnswer.Test.MinimumScore;
+            }
 
             var resultsViewModel = new ResultsViewModel
             {
                 UserAnswer = userAnswer,
-                ScorePercentage = userAnswer.Test.MinimumScore,
+                ScorePercentage = scorePercent,
                 QuestionResponses = questionsResponses,
             };
 

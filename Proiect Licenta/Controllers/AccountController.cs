@@ -182,6 +182,7 @@ namespace Proiect_Licenta.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user.Id, "student");
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
 

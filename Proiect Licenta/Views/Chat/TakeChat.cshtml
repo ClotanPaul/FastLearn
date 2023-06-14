@@ -4,40 +4,107 @@
     ViewBag.Title = "Chat Details";
 }
 
-<h2>Chat Details</h2>
+<style>
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
 
-<div>
-    <h4>@Model.Topic</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Topic:</dt>
-        <dd>@Model.Topic</dd>
-        <dt>Student:</dt>
-        <dd>@Model.Student.Email</dd>
-        <dt>Helping Student:</dt>
-        @if (Model.HelpingStudent != null)
-        {
-            <dd>@Model.HelpingStudent.Email</dd>
+    .form-group {
+        margin-bottom: 15px;
+        margin-top: 15px;
+    }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
         }
-        else
-        {
-            <dd>No Student Found</dd>
-        }
-    </dl>
-</div>
 
-@using (Html.BeginForm("TakeChat", "Chat", FormMethod.Post))
-{
-    @Html.HiddenFor(model => model.ChatId)
-    @Html.HiddenFor(model => model.Student)
-    @Html.HiddenFor(model => model.HelpingStudent)
-    @Html.HiddenFor(model => model.Topic)
-    @Html.HiddenFor(model => model.SubChapter)
-    <p>
-        Do you wish to help this student?
-    </p>
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+    }
 
-    <div class="form-group">
-        <input type="submit" value="Submit" class="btn btn-primary" />
-    </div>
-}
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        padding-bottom: 0px;
+        border-radius: 10px;
+        width: 55%;
+        text-align: left;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #button-line {
+        width: auto;
+        border-top: 1px groove #b4b4b4;
+        width: 604px;
+        margin-left: -31px;
+        border-bottom: none;
+        margin-bottom: 0px;
+    }
+</style>
+
+<h2 id="h3">Join the chat</h2>
+<center>
+
+    @using (Html.BeginForm("TakeChat", "Chat", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div id="info-box">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <b>Topic: </b>
+                @Html.DisplayFor(model => model.Topic)
+            </div>
+
+            <div class="form-group">
+                <b>Student: </b>
+                @Html.DisplayFor(model => model.Student.Email)
+            </div>
+
+            <div class="form-group">
+                <b>Helping Student: </b>
+                @if (Model.HelpingStudent != null)
+                {
+                    <div>@Model.HelpingStudent.Email</div>
+                }
+                else
+                {
+                    <div>No Student Found</div>
+                }
+            </div>
+
+            @Html.HiddenFor(model => model.ChatId)
+            @Html.HiddenFor(model => model.Student)
+            @Html.HiddenFor(model => model.HelpingStudent)
+            @Html.HiddenFor(model => model.Topic)
+            @Html.HiddenFor(model => model.SubChapter)
+
+            <div class="form-group">
+                <b>Do you wish to help this student?</b>
+            </div>
+
+            <center id="button-line">
+                <div class="form-group">
+                    <input type="submit" value="Join" class="btn btn-success" />
+                    @Html.ActionLink("Abort", "GetChatRequests", "Chat", null, new { @class = "btn btn-danger" })
+                </div>
+            </center>
+        </div>
+    }
+
+</center>

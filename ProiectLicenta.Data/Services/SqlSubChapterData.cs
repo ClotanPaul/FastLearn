@@ -20,6 +20,7 @@ namespace ProiectLicenta.Data.Services
         public SubChapter getSubChapter(int subchapterId)
         {
             return db.SubChapterList.Include("Chapter.Subchapters")
+                .Include("Chapter.Course")
                 .Include("SubchapterFiles")
                 .Include("Test")
                 .FirstOrDefault(sch=>sch.SubchapterId== subchapterId);
@@ -52,15 +53,18 @@ namespace ProiectLicenta.Data.Services
 
             var subchapter = getSubChapter(id);
             var chapterNumber = subchapter.Chapter.Subchapters.FirstOrDefault(ch => ch.SubchapterId == id).SubchapterNumber;
-            var maxSubChapter = subchapter.Chapter.Subchapters.Where(ch => ch.SubchapterId != subchapter.SubchapterId).Max(ch => ch.SubchapterNumber);
-
-            if (maxSubChapter > chapterNumber)
+            if (subchapter.Chapter.Subchapters.ToList().Count > 1)
             {
+                var maxSubChapter = subchapter.Chapter.Subchapters.Where(ch => ch.SubchapterId != subchapter.SubchapterId).Max(ch => ch.SubchapterNumber);
 
-                var subchapters = subchapter.Chapter.Subchapters.Where(ch => ch.SubchapterNumber > subchapter.SubchapterNumber).ToList();
-                foreach (var ch in subchapters)
+                if (maxSubChapter > chapterNumber)
                 {
-                    ch.SubchapterNumber = ch.SubchapterNumber - 1;
+
+                    var subchapters = subchapter.Chapter.Subchapters.Where(ch => ch.SubchapterNumber > subchapter.SubchapterNumber).ToList();
+                    foreach (var ch in subchapters)
+                    {
+                        ch.SubchapterNumber = ch.SubchapterNumber - 1;
+                    }
                 }
             }
 

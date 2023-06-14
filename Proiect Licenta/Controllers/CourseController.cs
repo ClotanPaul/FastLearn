@@ -169,6 +169,7 @@ namespace Proiect_Licenta.Controllers
         {
             var model = courseDb.GetCourse(id);
             var userdata = userDb.getUserData(model.OwnerId);
+            ViewData["ownerEmail"] = userdata.Email;
             model.Owner = userdata;
 
             if (model == null)
@@ -204,6 +205,7 @@ namespace Proiect_Licenta.Controllers
         {
             var model = courseDb.GetCourse(id);
             var userdata = userDb.getUserData(model.OwnerId);
+
             model.Owner = userdata;
 
             if (model == null)
@@ -322,6 +324,8 @@ namespace Proiect_Licenta.Controllers
         {
             var model = courseDb.GetCourse(courseId);
             var userId = User.Identity.GetUserId();
+            var userdata = userDb.getUserData(model.OwnerId);
+            ViewData["ownerEmail"] = userdata.Email;
             if (enrollStudentInCourseDb.IsEnrolledInCourse(userId, courseId))
             {
                 return View("AlreadyEnrolledInCourse");
@@ -346,6 +350,8 @@ namespace Proiect_Licenta.Controllers
         {
             var model = courseDb.GetCourse(courseId);
             var userId = User.Identity.GetUserId();
+            var userdata = userDb.getUserData(model.OwnerId);
+            ViewData["ownerEmail"] = userdata.Email;
 
             if (!enrollStudentInCourseDb.IsEnrolledInCourse(userId, courseId))
             {

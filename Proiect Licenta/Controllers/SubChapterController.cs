@@ -40,6 +40,7 @@ namespace Proiect_Licenta.Controllers
         {
             var model = subChapterDb.GetSubChapters(chapterId);
             var chapter = chapterDb.GetChapter(chapterId);
+            ViewData["chapterName"] = chapter.ChapterTitle;
             ViewData["chapterId"] = chapterId;
             ViewData["userId"] = User.Identity.GetUserId();
             ViewData["ownerId"] = chapter.Course.OwnerId;
@@ -56,6 +57,8 @@ namespace Proiect_Licenta.Controllers
         public ActionResult UserIndex(int chapterId)
         {
             var model = subChapterDb.GetSubChapters(chapterId);
+            var chapter = chapterDb.GetChapter(chapterId);
+            ViewData["chapterName"] = chapter.ChapterTitle;
             ViewData["chapterId"] = chapterId;
             ViewData["userId"] = User.Identity.GetUserId();
  
@@ -201,8 +204,7 @@ namespace Proiect_Licenta.Controllers
             var subchapter = subChapterDb.GetSubChapter(subchapterId);
             ViewData["subChapterId"] = subchapterId;
             ViewData["chapterId"] = subchapter.ChapterId;
-            //set the path to the file
-            //string fileFolder = Server.MapPath("~/Content/Videos/Images/Courses");//+subchapter.Chapter.Course.CourseName;
+            ViewData["subchapterName"] = subchapter.SubchapterTitle;
 
             // get file list from database and check if they exist.
 
@@ -218,6 +220,11 @@ namespace Proiect_Licenta.Controllers
                 {
                     existFiles.Add(file);
                 }
+            }
+
+            if(User.IsInRole("student")|| User.IsInRole("helping_student"))
+            {
+                return View("FilesForStudent", existFiles);
             }
 
             //return the files to the view:
@@ -266,6 +273,25 @@ namespace Proiect_Licenta.Controllers
                 return View("NoSuchSubchapterFound");
             }
 
+            if (User.IsInRole("professor"))
+            {
+                var filess = subchapterFileDb.GetSubChapterFiles(subchapterId);
+
+                var existFiless = new List<SubChapterFiles>();
+
+                foreach (var file in filess)
+                {
+                    var path = Server.MapPath(file.FilePath);
+
+                    if (System.IO.File.Exists(path))
+                    {
+                        existFiless.Add(file);
+                    }
+                }
+                subChapter.SubchapterFiles = existFiless.ToArray();
+                return View(subChapter);
+            }
+
             //user should be enrolled in course in order to be able to access this.
             var studentId = User.Identity.GetUserId();
             var isEnrolled = enrollmentDb.IsEnrolledInCourse(studentId, subChapter.Chapter.CourseId);
@@ -291,6 +317,7 @@ namespace Proiect_Licenta.Controllers
                 }
             }
 
+
             subChapter.SubchapterFiles= existFiles.ToArray();
             ////////////
 
@@ -309,7 +336,13 @@ namespace Proiect_Licenta.Controllers
                 return View("YouAreNotEnrolledInThisCourse");
             }
 
-            
+            var lastsubch = subChapterDb.GetNextSubChapter(subchapterId);
+            if(lastsubch != null)
+            {
+                ViewData["lastSubch"] = "false";
+            }
+
+
 
             return View(subChapter);
         }

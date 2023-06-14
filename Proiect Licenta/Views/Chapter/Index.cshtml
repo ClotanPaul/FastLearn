@@ -83,9 +83,9 @@
         text-align: left;
         padding-left: 0px;
         padding-right: 0px;
-
         margin-top: 0px;
         padding-top: 0px;
+        width: 900px;
     }
 
     .btn {
@@ -98,7 +98,7 @@
 
     #button-line {
         width: auto;
-        width: 1140px;
+        width: 899px;
         margin-left: 0px;
         margin-bottom: 20px;
         border-top: none;
@@ -108,17 +108,18 @@
 
 <h1 id="h3">@ViewData["courseName"] Chapters</h1>
 
-    @if (Model.ToList().Count > 0) {
-
-    <div id="info-box" style="border: 0.1rem groove #b4b4b4;">
-        <center id="button-line">
+@if (Model!= null && Model.ToList().Count > 0)
+{
+    <center>
+        <div id="info-box" style="border: 0.1rem groove #b4b4b4;">
+            <center>
                 <div class="table-responsive">
                     <table class="table table-hover" style="margin-bottom: 0px;">
                         <thead class="thead-dark">
                             <tr>
                                 <th id="chapterTitle">@Html.DisplayNameFor(model => model.ChapterTitle)</th>
                                 <th>@Html.DisplayNameFor(model => model.ChapterDescription)</th>
-                                <th style="width:20%;">Actions</th>
+                                <th style="width:30%;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -132,21 +133,27 @@
 
                                         @if (item.Course.OwnerId == (string)ViewData["userId"])
                                         {
-
-                                            @Html.ActionLink("Edit", "Edit", new { id = item.ChapterId }, new { @class = "btn btn-primary btn-sm" })
-                                            @Html.ActionLink("Delete", "Delete", new { id = item.ChapterId }, new { @class = "btn btn-danger btn-sm" })
-                                        }
-                                        else
-                                        {
-                                            if (User.IsInRole("admin"))
+                                            if (User.IsInRole("admin") || User.IsInRole("professor"))
                                             {
                                                 @Html.ActionLink("Subchapters", "Index", "SubChapter", new { chapterId = item.ChapterId }, new { @class = "btn btn-info btn-sm" })
                                             }
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.ChapterId }, new { @class = "btn btn-primary btn-sm" })
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.ChapterId }, new { @class = "btn btn-danger btn-sm" })
+
+                                        }
+                                        else
+                                        {
+                                            if (User.IsInRole("admin") || User.IsInRole("professor"))
+                                            {
+                                                @Html.ActionLink("Subchapters", "Index", "SubChapter", new { chapterId = item.ChapterId }, new { @class = "btn btn-info btn-sm" })
+                                            }
+
                                             else
                                             {
-                                                <b> No actions possible.</b>
+                                                < b > No actions possible.</ b >
                                             }
                                         }
+
 
                                     </td>
                                 </tr>
@@ -154,55 +161,56 @@
                         </tbody>
                     </table>
                 </div>
-        </center>
+            </center>
+            <div id="button-line"></div>
+            <center>
+                @if ((string)ViewData["ownerId"] == (string)ViewData["userId"])
+                {
+                    @Html.ActionLink("Add a new Chapter", "Create", new { courseId = ViewData["courseId"] }, new { @class = "btn btn-primary" })
 
-
-
-
-    <center>
-        @if ((string)ViewData["ownerId"] == (string)ViewData["userId"])
-        {
-            @Html.ActionLink("Add a new Chapter", "Create", new { courseId = ViewData["courseId"] }, new { @class = "btn btn-primary" })
-
-        }
-        @if (!User.IsInRole("professor"))
-        {
-            @Html.ActionLink("Courses", "Index", "Course", null, new { @class = "btn btn-info" });
-        }
-        else
-        {
-            @Html.ActionLink("Courses", "GetUserCourses", "Course", null, new { @class = "btn btn-info" });
-        }
+                }
+                @if (!User.IsInRole("professor"))
+                {
+                    @Html.ActionLink("Courses", "Index", "Course", null, new { @class = "btn btn-info" });
+                }
+                else
+                {
+                    @Html.ActionLink("Courses", "GetUserCourses", "Course", null, new { @class = "btn btn-info" });
+                }
+            </center>
+        </div>
     </center>
-</div>    
-        }
-        else {
-
-<div id="info-box" style="border: 0.1rem groove #b4b4b4;">
-    <center><h3 style = "margin-top: 15px; padding-top: 5px; margin-bottom: 20px;"> This course has no chapters.</h3 ></center>
-    <center>
-        @if ((string)ViewData["CanAdd"] == "true" && User.Identity.IsAuthenticated)
-        {
-            @Html.ActionLink("Add a new review", "Create", new { courseId = ViewData["courseId"] }, new { @class = "btn btn-primary" })
-        }
-
-        @if (User.IsInRole("professor"))
-        {
-            @Html.ActionLink("Courses", "GetUserCourses", "Course", null, new { @class = "btn btn-info" });
-        }
-        else
-        {
-            if (User.IsInRole("student") || User.IsInRole("helping_student"))
+}
+else
+{
+<center>
+    <div id="info-box" style="border: 0.1rem groove #b4b4b4;">
+        <center><h3 style="margin-top: 15px; padding-top: 5px; margin-bottom: 20px;"> This course has no chapters.</h3></center>
+        <center>
+            @if ((string)ViewData["ownerId"] == (string)ViewData["userId"])
             {
-                @Html.ActionLink("To Courses", "GetStudentEnrolledCourses", "Course", null, new { @class = "btn btn-info" });
+                @Html.ActionLink("Add a new Chapter", "Create", new { courseId = ViewData["courseId"] }, new { @class = "btn btn-primary" })
+
+            }
+
+            @if (User.IsInRole("professor"))
+            {
+                @Html.ActionLink("Courses", "GetUserCourses", "Course", null, new { @class = "btn btn-info" });
             }
             else
             {
-                @Html.ActionLink("To Courses", "Index", "Course", null, new { @class = "btn btn-info", @style = "margin-right:0px;" });
+                if (User.IsInRole("student") || User.IsInRole("helping_student"))
+                {
+                    @Html.ActionLink("To Courses", "GetStudentEnrolledCourses", "Course", null, new { @class = "btn btn-info" });
+                }
+                else
+                {
+                    @Html.ActionLink("To Courses", "Index", "Course", null, new { @class = "btn btn-info", @style = "margin-right:0px;" });
+                }
             }
-        }
-    </center>
+        </center>
 
 
-</div>
-    }
+    </div>
+</center>
+}

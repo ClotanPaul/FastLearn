@@ -21,6 +21,7 @@
         padding-right: 0px;
         margin-top: 0px;
         border: 0.1rem groove #b4b4b4;
+        
     }
 
 
@@ -66,7 +67,7 @@
 
     #button-line {
         width: auto;
-        width: 1140px;
+        width: 800px;
         margin-left: 0px;
         margin-bottom: 20px;
         border-top: none;
@@ -79,10 +80,10 @@
 
 
 
-@if ((Model.Where(p => p.IsActive == true).ToList().Count() > 0) || Model.ToList().Count() > 0)
-{
-    <div id="info-box" style="border:none">
-        <center id="button-line">
+@if ((Model.Where(p => p.IsActive == true).ToList().Count > 0) || (User.IsInRole("admin") && Model.ToList().Count > 0))
+{<center>
+    <div id="info-box" style="border:none; width: 800px;">
+        <center>
             <div class="table-responsive">
                 <table class="table table-hover" style="margin-top: 0px; border:none; margin-bottom: 0px;">
                     <thead class="thead-dark">
@@ -129,6 +130,7 @@
                 </table>
             </div>
         </center>
+        <div id="button-line"></div>
         <center>
             @if ((string)ViewData["CanAdd"] == "true" && User.Identity.IsAuthenticated)
             {
@@ -152,9 +154,12 @@
             }
         </center>
     </div>
+
+    </center>
 }
 else
 {
+    <center>
 <div id="info-box" style="border: 0.1rem groove #b4b4b4; ">
     <center><h3 style="margin-top: 15px; padding-top: 5px; margin-bottom: 20px;">No reviews.</h3></center>
     <center>
@@ -181,6 +186,7 @@ else
     </center>
     
 </div>
+        </center>
 }
 
 

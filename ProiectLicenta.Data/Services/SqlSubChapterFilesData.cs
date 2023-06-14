@@ -24,6 +24,7 @@ namespace ProiectLicenta.Data.Services
         {
             var file = db.SubChapterFiles.FirstOrDefault(f => f.SubChapterFilesId == fileId);
             db.SubChapterFiles.Remove(file);
+            db.SaveChanges();
         }
 
         public SubChapterFiles getSubChapterFile(int subChapterId, string fileName)

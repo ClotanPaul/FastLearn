@@ -41,7 +41,9 @@ namespace ProiectLicenta.Data.Services
 
         public CourseReview GetReview(int courseReviewId)
         {
-            var review = db.CourseReviews.FirstOrDefault(cr => cr.CourseReviewId == courseReviewId);
+            var review = db.CourseReviews
+                .Include("Course")
+                .FirstOrDefault(cr => cr.CourseReviewId == courseReviewId);
             return review;
         }
 
