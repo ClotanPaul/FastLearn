@@ -21,6 +21,7 @@ namespace ProiectLicenta.Data.Models
         [Required]
         [DisplayName("Description")]
         [DataType(DataType.MultilineText)]
+        [MinLength(120,ErrorMessage ="Minimum 120 characters.")]
         public string CourseDescription { get; set; }
 
         [DefaultValue(false)]

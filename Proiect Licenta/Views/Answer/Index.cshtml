@@ -104,7 +104,7 @@
     }
 </style>
 
-<h1 id="h3" style="margin-bottom:30px">Answers</h1>
+<h2 id="h3" style="margin-bottom:30px">Answers</h2>
 
 @if (Model != null && Model.ToList().Count > 0)
 {
@@ -141,6 +141,10 @@
                                             @Html.ActionLink("Edit", "Edit", new { answerId = item.AnswerId }, new { @class = "btn btn-primary" })
                                             @Html.ActionLink("Delete", "Delete", new { answerId = item.AnswerId }, new { @class = "btn btn-danger" })
                                         }
+                                        else
+                                        {
+                                            <b>No actions possible.</b>
+                                        }
                                     </td>
                                 </tr>
                             }
@@ -152,7 +156,10 @@
             <center>
                 @if ((int)ViewData["testId"] != -1)
                 {
-                    @Html.ActionLink("Add a new answer", "Create", "Answer", new { questionId = ViewData["questionId"] }, new { @class = "btn btn-primary" })
+                    if (User.IsInRole("professor"))
+                    {
+                        @Html.ActionLink("Add a new answer", "Create", "Answer", new { questionId = ViewData["questionId"] }, new { @class = "btn btn-primary" })
+                    }
                     @Html.ActionLink("Back to questions", "Index", "Question", new { testId = (int)ViewData["testId"] }, new { @class = "btn btn-info" })
                 }
             </center>

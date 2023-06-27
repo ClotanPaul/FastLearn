@@ -113,21 +113,24 @@
                                 </td>
 
                                 <td>
-                                    @if (User.IsInRole("professor"))
-                                    {
-                                        <div class="form-group">
 
-                                            @using (Html.BeginForm("DownloadFile", "SubChapter", FormMethod.Get))
+                                    
+                                    <div class="form-group">
+
+                                        @using (Html.BeginForm("DownloadFile", "SubChapter", FormMethod.Get))
+                                        {
+
+                                            @Html.Hidden("fileName", item.FilePath)
+                                            @Html.Hidden("subChapterId", item.SubChapterId)
+                                            <button type="submit" class="btn btn-default">Download</button>
+                                            if (User.IsInRole("professor"))
                                             {
-
-                                                @Html.Hidden("fileName", item.FilePath)
-                                                @Html.Hidden("subChapterId", item.SubChapterId)
-                                                <button type="submit" class="btn btn-default">Download</button>
                                                 @Html.ActionLink("Delete", "DeleteFile", new { fileId = item.SubChapterFilesId }, new { @class = "btn btn-danger btn-sm" })
                                             }
+                                        }
 
-                                        </div>
-                                    }
+                                    </div>
+                                    
                                 </td>
                             </tr>
                         }
@@ -138,7 +141,10 @@
             <div id="button-line"></div>
 
             <div class="back-link">
-                @Html.ActionLink("Add a file", "UploadFile", new { subchapterid = ViewData["subChapterId"] }, new { @class = "btn btn-primary" })
+                @if (!User.IsInRole("admin"))
+                {
+                    @Html.ActionLink("Add a file", "UploadFile", new { subchapterid = ViewData["subChapterId"] }, new { @class = "btn btn-primary" })
+                }
                 @Html.ActionLink("Back to SubChapter List", "Index", new { chapterId = (int)ViewData["chapterId"] }, new { @class = "btn btn-info" })
             </div>
         </div>
@@ -155,7 +161,10 @@ else
             <center>
                 <div class="back-link">
                     <div>
-                        @Html.ActionLink("Add a file", "UploadFile", new { subchapterid = ViewData["subChapterId"] }, new { @class = "btn btn-primary" })
+                        @if (!User.IsInRole("admin"))
+                        {
+                            @Html.ActionLink("Add a file", "UploadFile", new { subchapterid = ViewData["subChapterId"] }, new { @class = "btn btn-primary" })
+                        }
                         @Html.ActionLink("SubChapter List", "Index", new { chapterId = (int)ViewData["chapterId"] }, new { @class = "btn btn-info" })
                     </div>
                 </div>

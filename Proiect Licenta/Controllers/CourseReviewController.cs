@@ -248,7 +248,7 @@ namespace Proiect_Licenta.Controllers
             var courseReviewId = review.CourseReviewId;
             courseReviewDb.DeactivateReview(courseReviewId, deactivationReason);
 
-            return RedirectToAction("Details", new { id = review.CourseReviewId});
+            return RedirectToAction("Index", new { courseId = review.CourseId });
 
         }
         

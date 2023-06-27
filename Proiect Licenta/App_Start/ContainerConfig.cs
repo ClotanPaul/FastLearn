@@ -86,7 +86,6 @@ namespace Proiect_Licenta.App_Start
             builder.RegisterType<ApplicationDataDbContext>().InstancePerRequest();
             builder.RegisterType<ApplicationDbContext>().InstancePerRequest();
 
-            //builder.RegisterType<Principal>();
 
             builder.RegisterType<ApplicationUser>()
                 .As<IdentityUser>().InstancePerRequest();

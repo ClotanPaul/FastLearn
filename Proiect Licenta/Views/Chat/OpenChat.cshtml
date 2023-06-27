@@ -192,7 +192,7 @@
                                         <div class="message-content">
                                             <p class="mb-1">@message.MessageContent</p>
                                             <p class="small text-muted">@message.TimeStamp.ToString("HH:mm")</p>
-                                            @if (Context.User.Identity.Name == senderEmail)
+                                            @if (Context.User.Identity.Name == senderEmail && !Model.IssueSolved)
                                             {
                                                 @Html.ActionLink("Edit", "EditMessage", "Message", new { messageId = message.MessageId }, new { @class = "small text-muted" }) <text> | </text>
                                                 @Html.ActionLink("Delete", "DeleteMessage", "Message", new { messageId = message.MessageId }, new { @class = "small text-muted" })
@@ -209,7 +209,7 @@
                                 <h4>No chat history.</h4>
                             }
                         </div>
-                        @if (Model.IssueSolved == false)
+                        @if (Model.IssueSolved == false && (Context.User.Identity.Name == Model.Student.Email || (Model?.HelpingStudent?.Email != null && Context.User.Identity.Name == Model?.HelpingStudent?.Email)))
                         {
                             <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3" style="margin-top: 3px;">
                                 <input type="text" class="form-control" id="newMessage" name="newMessage" placeholder="Type message">

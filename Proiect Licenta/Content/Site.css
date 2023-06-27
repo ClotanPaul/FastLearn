@@ -137,7 +137,7 @@ textarea {
 
 #button-line {
     width: auto;
-    border-bottom: 2px solid #838383;
+    border-bottom: 2px solid #b4b4b4;
     width: 358px;
     margin-left: -21px
 }
@@ -151,7 +151,7 @@ textarea {
 
 .table {
     background-color: #c7c7c7;
-    border-radius: 20px;
+    border-radius: 10px;
     overflow: hidden;
     border: 0.2rem thin #b4b4b4;
     margin-top: 20px;

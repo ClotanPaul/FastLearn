@@ -75,7 +75,7 @@
     }
 </style>
 
-<h1 id="title">Reviews</h1>
+<h1 id="h3">Reviews</h1>
 
 
 
@@ -90,7 +90,10 @@
                         <tr>
                             <th id="firstColumn">@Html.DisplayNameFor(model => model.ReviewText)</th>
                             <th>@Html.DisplayNameFor(model => model.Stars)</th>
+                            @if (User.Identity.IsAuthenticated)
+                            {
                             <th style="width:20%;">Actions</th>
+                            }
                         </tr>
                     </thead>
                     <tbody>
@@ -101,29 +104,32 @@
                                 <tr style="border-top: 0.2rem groove;">
                                     <td id="firstColumn">@Html.DisplayFor(modelItem => item.ReviewText)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Stars)</td>
-                                    <td>
-                                        @if ((string)ViewData["UserId"] == item.UserId)
-                                        {
-                                            @Html.ActionLink("Edit", "Edit", new { id = item.CourseReviewId }, new { @class = "btn btn-primary btn-sm" })
-                                            @Html.ActionLink("Delete", "Delete", new { courseReviewId = item.CourseReviewId }, new { @class = "btn btn-danger btn-sm" })
-                                        }
-                                        else if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
-                                        {
-                                            if (item.IsActive)
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <td>
+                                            @if ((string)ViewData["UserId"] == item.UserId)
                                             {
-                                                @Html.ActionLink("Deactivate Review", "DeactivateReview", new { id = item.CourseReviewId }, new { @class = "btn btn-danger btn-sm", @id = "btn-rew" })
+                                                @Html.ActionLink("Edit", "Edit", new { id = item.CourseReviewId }, new { @class = "btn btn-primary btn-sm" })
+                                                @Html.ActionLink("Delete", "Delete", new { courseReviewId = item.CourseReviewId }, new { @class = "btn btn-danger btn-sm" })
+                                            }
+                                            else if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                                            {
+                                                if (item.IsActive)
+                                                {
+                                                    @Html.ActionLink("Deactivate Review", "DeactivateReview", new { id = item.CourseReviewId }, new { @class = "btn btn-danger btn-sm", @id = "btn-rew" })
+                                                }
+                                                else
+                                                {
+                                                    @Html.ActionLink("Activate Review", "ActivateReview", new { id = item.CourseReviewId }, new { @class = "btn btn-success btn-sm", @id = "btn-rew" })
+                                                }
                                             }
                                             else
                                             {
-                                                @Html.ActionLink("Activate Review", "ActivateReview", new { id = item.CourseReviewId }, new { @class = "btn btn-success btn-sm", @id = "btn-rew" })
+                                                @:No Action
                                             }
-                                        }
-                                        else
-                                        {
-                                            @:No Action
-                                        }
-                                    </td>
-                                </tr>
+                                        </td>
+                                    }
+                                    </tr>
                             }
                         }
                     </tbody>

@@ -1197,7 +1197,6 @@
     <Content Include="Views\Users\RemoveUserSuspension.cshtml" />
     <Content Include="Views\Users\UserAlreadySuspended.cshtml" />
     <Content Include="Views\Users\UserNotSuspended.cshtml" />
-    <Content Include="Views\Users\RemoveUserSuspension - Copy.cshtml" />
     <Content Include="Views\Course\ActivateCourse - Copy.cshtml" />
     <Content Include="Views\Course\Details - Copy.cshtml" />
     <Content Include="Views\CourseReview\Edit - Copy.cshtml" />
@@ -1240,8 +1239,6 @@
     <Content Include="Views\Chat\LeaveChat.cshtml" />
     <Content Include="Views\Chat\ThisChatAlreadyHasAHelperAssigned.cshtml" />
     <Content Include="Views\Chat\ThisChatHasNoHelperAssigned.cshtml" />
-    <Content Include="Views\Chat\OpenChat - Copy.cshtml" />
-    <Content Include="Views\Chat\OpenChat - Copy %282%29.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy %283%29.cshtml" />
     <Content Include="Views\Message\EditMessage.cshtml" />
     <Content Include="Views\Message\DeleteMessage.cshtml" />
@@ -1260,11 +1257,6 @@
     <Content Include="Views\Course\GetUserInactiveCourses.cshtml" />
     <Content Include="Views\CourseReview\Index - Copy.cshtml" />
     <Content Include="Views\CourseReview\Index - Copy %282%29.cshtml" />
-    <Content Include="Views\Users\UserWarnings - Copy.cshtml" />
-    <Content Include="Views\Users\RemoveWarning - Copy.cshtml" />
-    <Content Include="Views\Users\WarnUser - Copy.cshtml" />
-    <Content Include="Views\Users\ChangeRole - Copy.cshtml" />
-    <Content Include="Views\Users\SuspendUser - Copy.cshtml" />
     <Content Include="Views\Users\SuspendUser2.cshtml" />
     <Content Include="Views\Course\DeactivateCourse - Copy.cshtml" />
     <Content Include="Views\Course\GetUserCourses - Copy.cshtml" />
@@ -1276,8 +1268,6 @@
     <Content Include="Views\Chapter\Delete - Copy.cshtml" />
     <Content Include="Views\Chapter\Create - Copy.cshtml" />
     <Content Include="Views\Course\GetUserInactiveCourses - Copy.cshtml" />
-    <Content Include="Views\Users\SeeHelpingStudentApplicationsForProfessor - Copy.cshtml" />
-    <Content Include="Views\Users\SupportHelpingStudentApplication - Copy.cshtml" />
     <Content Include="Views\Course\Index - Copy %283%29.cshtml" />
     <Content Include="Views\SubChapter\FilesForStudent.cshtml" />
     <Content Include="Views\SubChapter\Create - Copy.cshtml" />
@@ -1286,17 +1276,15 @@
     <Content Include="Views\SubChapter\GetFileList - Copy %282%29.cshtml" />
     <Content Include="Views\Test\TakeTest - Copy.cshtml" />
     <Content Include="Views\Course\GetInactiveCourses - Copy.cshtml" />
-    <Content Include="Views\Chat\GetHelpingStudentChats - Copy.cshtml" />
-    <Content Include="Views\Chat\LeaveChat - Copy.cshtml" />
     <Content Include="Views\Account\Register - Copy.cshtml" />
     <Content Include="Views\Account\Login - Copy.cshtml" />
     <Content Include="Views\Account\ForgotPassword - Copy.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation - Copy.cshtml" />
     <Content Include="Views\Manage\ChangePassword - Copy.cshtml" />
+    <Content Include="Views\SubChapter\ViewSubChapterForAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Points\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

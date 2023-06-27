@@ -204,5 +204,15 @@ namespace ProiectLicenta.Data.Services
             var courses = db.Courses.Where(c => c.OwnerId == ownerId && !c.Active).ToList();
             return courses;
         }
+
+        public bool NameNotTaken(string courseName)
+        {
+            var course = db.Courses.FirstOrDefault(c=>c.CourseName== courseName);
+            if (course != null)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

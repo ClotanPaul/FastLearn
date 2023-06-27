@@ -109,7 +109,7 @@
 </style>
 
 <center>
-    <h1 id="h3">SubChapters of the chapter @ViewData["chapterName"]</h1>
+    <h2 id="h3">SubChapters of the chapter @ViewData["chapterName"]</h2>
 </center>
 
 @if (Model != null && Model.ToList().Count > 0)
@@ -118,65 +118,81 @@
     <center>
         <div id="info-box">
             <div class="table-responsive">
-            <table class="table table-hover" style="margin-bottom: 0px;">
-                <thead class="thead-dark">
-                    <tr >
-                        <th id="username">
-                            @Html.DisplayNameFor(model => model.SubchapterTitle)
-                        </th>
+                <table class="table table-hover" style="margin-bottom: 0px;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th id="username">
+                                @Html.DisplayNameFor(model => model.SubchapterTitle)
+                            </th>
+                            @if (User.IsInRole("admin"))
+                            {
+                                <th style="width:25%;">
+                                    Actions
+                                </th>
+                            }
+                            else
+                            {
+                                <th style="width:50%;">
+                                    Actions
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr style="border-top: 0.2rem groove;">
+                                <td id="username">
+                                    @Html.DisplayFor(modelItem => item.SubchapterTitle)
+                                    @Html.HiddenFor(modelItem => item.ChapterId)
+                                </td>
 
-                        <th style="width:65%;">
-                            Actions
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr style="border-top: 0.2rem groove;">
-                            <td id="username">
-                                @Html.DisplayFor(modelItem => item.SubchapterTitle)
-                                @Html.HiddenFor(modelItem => item.ChapterId)
-                            </td>
-
-                            <td>
-                                @if (item.Chapter.Course.OwnerId == (string)ViewData["userId"])
-                                {
-                                    @Html.ActionLink("View", "ViewSubChapter", new { subchapterId = item.SubchapterId }, new { @class = "btn btn-info" })
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.SubchapterId }, new { @class = "btn btn-primary" })
-
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.SubchapterId }, new { @class = "btn btn-danger" })
-                                    @Html.ActionLink("Files", "GetFileList", new { subchapterId = item.SubchapterId }, new { @class = "btn btn-info" })
-                                    @Html.ActionLink("Test", "Index", "Test", new { subChapterId = item.SubchapterId }, new { @class = "btn btn-info" })
-
-                                }
-                                else
-                                {
-                                    if (User.IsInRole("admin"))
+                                <td>
+                                    @if (item.Chapter.Course.OwnerId == (string)ViewData["userId"])
                                     {
-                                        @Html.ActionLink("Add/View Test", "Index", "Test", new { subChapterId = item.SubchapterId }, new { @class = "btn btn-primary" })
+                                        @Html.ActionLink("View", "ViewSubChapter", new { subchapterId = item.SubchapterId }, new { @class = "btn btn-info" })
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.SubchapterId }, new { @class = "btn btn-primary" })
+
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.SubchapterId }, new { @class = "btn btn-danger" })
+                                        @Html.ActionLink("Files", "GetFileList", new { subchapterId = item.SubchapterId }, new { @class = "btn btn-info" })
+                                        @Html.ActionLink("Test", "Index", "Test", new { subChapterId = item.SubchapterId }, new { @class = "btn btn-info" })
+
                                     }
                                     else
                                     {
-                                        <text> No actions permitted. </text>
+                                        if (User.IsInRole("admin"))
+                                        {
+                                            @Html.ActionLink("View", "ViewSubChapter", new { subchapterId = item.SubchapterId }, new { @class = "btn btn-info" })
+                                            @Html.ActionLink("Test", "Index", "Test", new { subChapterId = item.SubchapterId }, new { @class = "btn btn-info" })
+                                            @Html.ActionLink("Files", "GetFileList", new { subchapterId = item.SubchapterId }, new { @class = "btn btn-info" })
+                                        }
+                                        else
+                                        {
+                                            <text> No actions permitted. </text>
+                                        }
                                     }
-                                }
-                            </td>
-                        </tr>
-                    }
+                                </td>
+                            </tr>
+                        }
 
-                </tbody>
-            </table>
-            <div id="button-line"></div>
-            @if ((string)ViewData["ownerId"] == (string)ViewData["userId"])
-            {
-                <center>
-                    @Html.ActionLink("Add a new Subchapter", "Create", new { chapterId = ViewData["chapterId"] }, new { @class = "btn btn-primary" })
+                    </tbody>
+                </table>
+                <div id="button-line"></div>
+                @if ((string)ViewData["ownerId"] == (string)ViewData["userId"])
+                {
+                    <center>
+                        @Html.ActionLink("Add a new Subchapter", "Create", new { chapterId = ViewData["chapterId"] }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Chapter List", "Index", "Chapter", new { courseId = (int)ViewData["courseId"] }, new { @class = "btn btn-info" })
+                    </center>
+                }
+                else
+                {<center>
                     @Html.ActionLink("Chapter List", "Index", "Chapter", new { courseId = (int)ViewData["courseId"] }, new { @class = "btn btn-info" })
                 </center>
-            }
+                }
 
-        </div>
+            </div>
+            </div>
     </center>
 }
 else

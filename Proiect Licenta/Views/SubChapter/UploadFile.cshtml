@@ -49,7 +49,7 @@
 
 
     #info-box {
-        background: #dedede;
+        background: #f8f9fa;
         padding: 20px;
         margin-bottom: 25px;
         border-radius: 10px;
@@ -104,14 +104,14 @@
             <div id="button-line"></div>
 
             <div class="form-group" style=" margin-left: 20px;">
-                <b>Upload File: </b>
+                <b>Choose a new File: </b>
 
                 <div class="form-group">
 
                     <input type="file" name="file" id="file" />
                 </div>
                 <center>
-                    <button type="submit" class="btn btn-success">Upload Image</button>
+                    <button type="submit" class="btn btn-success">Upload File</button>
                     @Html.ActionLink("Abort", "GetFileList","Subchapter", new { subchapterId = Model.SubchapterId }, new { @class = "btn btn-danger" })
                 </center>
             </div>

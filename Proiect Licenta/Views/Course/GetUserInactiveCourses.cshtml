@@ -9,6 +9,16 @@
 
 <style>
 
+
+
+
+    #span-style {
+        display: inline-block;
+        width: 330px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
 </style>
 
 <div class="container">
@@ -28,32 +38,37 @@
                     {
                         <img src="~/Content/images/proiectLicentaPhoto.jpg" class="card-img-top" alt="Course Image"> <text>Image</text>
                     }
-                    <div class="card-body flex-container">
+                <div class="card-body flex-container">
 
-                        <p class="card-text" id="card-desc" style="margin-bottom: 0px;">@Html.DisplayFor(modelItem => item.CourseDescription)</p>
+                    <p class="card-text" id="card-desc" style="margin-bottom: 0px;">@Html.DisplayFor(modelItem => item.CourseDescription)
+                        <span id="span-style" style="margin-top:3px;"><b>Reason: </b>@Html.DisplayFor(modelItem => item.DeactivationReason)</span>
+                    </p>
 
 
-                        <div class="text-center">
-                            <div id="ceva">
+                    <div class="text-center">
+                        <div id="ceva">
 
-                                @if (!(User.Identity.IsAuthenticated && !item.Active == true && (item.OwnerId == (string)ViewData["userId"]) && !item.IssueResolved))
-                                {
-                                    <br>
-                                }
+                            @if (!(User.Identity.IsAuthenticated && !item.Active == true && (item.OwnerId == (string)ViewData["userId"]) && !item.IssueResolved))
+                            {
+                                //<br>
+                            }
 
-                                <br>
+                            <br>
 
-                                @Html.ActionLink("Chapters", "Index", "Chapter", new { courseId = item.CourseId }, new { @class = "btn btn-info", @id = "chaptersB" })
-                                @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, new { @class = "btn btn-info", @id = "chaptersB" })
+                            @Html.ActionLink("Chapters", "Index", "Chapter", new { courseId = item.CourseId }, new { @class = "btn btn-info", @id = "chaptersB" })
+                            @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, new { @class = "btn btn-info", @id = "chaptersB" })
+                            <br>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }, new { @class = "btn btn-primary", @id = "chaptersB" })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.CourseId }, new { @class = "btn btn-danger", @id = "chaptersB" })
 
-                                @if (User.Identity.IsAuthenticated && !item.Active == true && (item.OwnerId == (string)ViewData["userId"]) && !item.IssueResolved)
-                                {
-                                    @Html.ActionLink("Request Activation", "RequestActivation", new { courseId = item.CourseId }, new { @class = "btn btn-warning", @id = "chaptersB" })
-                                }
+                            @if (User.Identity.IsAuthenticated && !item.Active == true && (item.OwnerId == (string)ViewData["userId"]) && !item.IssueResolved)
+                            {
+                                @Html.ActionLink("Request Activation", "RequestActivation", new { courseId = item.CourseId }, new { @class = "btn btn-warning", @id = "chaptersB" })
+                            }
 
-                            </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         }

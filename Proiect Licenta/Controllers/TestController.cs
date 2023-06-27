@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace Proiect_Licenta.Controllers
 {
@@ -77,23 +78,39 @@ namespace Proiect_Licenta.Controllers
 
             if (newTest.MinimumScore > 100)
             {
-                ModelState.AddModelError("MinimumScore", "Score must be smaller than 100 points.");
+                ModelState.AddModelError("MinimumScore", "The score must be smaller than 100 points.");
 
             }
             else
             {
-                if (newTest.TestDescription.Count() > 30)
+                if(newTest.MinimumScore < 50)
                 {
-                    ModelState.AddModelError("TestDescription", "Maximum 30 characters!");
+                    ModelState.AddModelError("MinimumScore", "The minimum score is 50 points.");
+                }
+                else
+                {
+                    if (newTest.TestDescription.IsEmpty())
+                    {
+                        ModelState.AddModelError("TestDescription", "Can't be empty.");
+                    }
+                    else
+                    if (newTest.TestDescription.Count() > 30)
+                    {
+                        ModelState.AddModelError("TestDescription", "Maximum 30 characters!");
+                    }
                 }
             }
+            if (!ModelState.IsValid)
+            {
+                return View(newTest);
+            }
+            
 
             if (ModelState.IsValid)
             {
                 testDb.AddTest(newTest, subChapterId);
 
             }
-
             else
             {
                 return View(newTest);
@@ -121,14 +138,26 @@ namespace Proiect_Licenta.Controllers
 
             if (Test.MinimumScore > 100)
             {
-                ModelState.AddModelError("MinimumScore", "Score must be smaller than 100 points.");
+                ModelState.AddModelError("MinimumScore", "The score must be smaller than 100 points.");
 
             }
             else
             {
-                if(Test.TestDescription.Count() > 30)
+                if (Test.MinimumScore < 50)
                 {
-                    ModelState.AddModelError("TestDescription", "Maximum 30 characters!");
+                    ModelState.AddModelError("MinimumScore", "The minimum score is 50 points.");
+                }
+                else
+                {
+                    if (Test.TestDescription.IsEmpty())
+                    {
+                        ModelState.AddModelError("TestDescription", "Can't be empty.");
+                    }
+                    else
+                    if (Test.TestDescription.Count() > 30)
+                    {
+                        ModelState.AddModelError("TestDescription", "Maximum 30 characters!");
+                    }
                 }
             }
 
@@ -299,7 +328,7 @@ namespace Proiect_Licenta.Controllers
                 {
                     enrollment.CompletedCourse = true;
                     enrollmentDb.UpdateEnrollment(enrollment);
-                    return View("YouPromotedTheCourse");
+                    return RedirectToAction("Results", new { userAnswerId = userAnswer.UserAnswerId });
                 }
 
                 enrollment.LastCompletedSubChapterId = nextSubchapter.SubchapterId;

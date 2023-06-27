@@ -1,0 +1,127 @@
+﻿@model ProiectLicenta.Data.Models.SubChapter
+
+@{
+    ViewBag.Title = "View SubChapter";
+}
+
+
+<style>
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        width: 90%;
+        text-align: left;
+        padding-left: 30px;
+        border: 1.5px solid #696767;
+        padding-bottom: 0px;
+        padding-top: 20px;
+        padding-right: 30px;
+    }
+
+    .form-control.text-area {
+        width: 300px;
+        height: 50px;
+        max-height: 70px;
+        max-width: 300px;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #button-line {
+        width: 1026px;
+        margin-left: -31px;
+        margin-bottom: 20px;
+        border-top: none;
+        border-bottom: 0.1rem groove #696767;
+        margin-top: 0px;
+        padding-top: 10px;
+        margin-bottom: 15px;
+    }
+
+    .btn-right {
+        margin-left: 160px;
+        margin-right: 0px;
+    }
+
+    .btn-left {
+        margin-right: 160px;
+    }
+
+    .btn-right2 {
+        margin-left: 300px;
+        margin-right: 0px;
+    }
+
+    .btn-left2 {
+        margin-right: 300px;
+    }
+</style>
+
+
+<h2 id="h3">
+    <center>Chapter @Model.Chapter.ChapterNumber </center>
+</h2>
+
+<center>
+    <div id="info-box">
+
+        <center>
+            <h3 style="margin-top:5px;margin-bottom: 20px;" id="h3">Subchapter @Model.SubchapterNumber: @Model.SubchapterTitle</h3>
+        </center>
+
+        <div style="margin-bottom:20px;" id="button-line"></div>
+
+        @Html.DisplayFor(model => model.SubchapterDescription)
+
+        <div style="margin-top: 25px;" id="button-line"></div>
+        <div>
+
+            <p>
+                <center>
+
+
+                    @Html.ActionLink("Courses List", "Index", "Course", null, new { @class = "btn btn-primary btn-left2" })
+
+
+                    @Html.ActionLink("SubChapter List", "Index", new { chapterId = ViewData["chapterId"] }, new { @class = "btn btn-primary btn-right2" })
+
+
+
+                </center>
+            </p>
+        </div>
+
+</center>

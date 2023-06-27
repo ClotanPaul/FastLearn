@@ -201,19 +201,9 @@ namespace Proiect_Licenta.Controllers
             return View(warnings);
         }
 
-        [HttpGet]
         public ActionResult RemoveWarning(int warningId)
         {
-
             var warning = warningDb.getWarning(warningId);
-
-
-            return View(warning);
-        }
-
-        [HttpPost]
-        public ActionResult RemoveWarning(Warning warning, FormCollection form)
-        {
             var userDataId = warningDb.getWarning(warning.WarningId).UserId; 
             if (!ModelState.IsValid)
             {
@@ -420,17 +410,8 @@ namespace Proiect_Licenta.Controllers
         }
 
         //For Admin
+
         public ActionResult ApproveHelpingStudentApplication(int applicationId)
-        {
-
-            var application = userDb.getHelpingStudentApplicationById(applicationId);
-
-
-            return View(application);
-
-        }
-        [HttpPost]
-        public ActionResult ApproveHelpingStudentApplication(int applicationId, FormCollection form)
         {
 
             var application = userDb.getHelpingStudentApplicationById(applicationId);
@@ -443,12 +424,16 @@ namespace Proiect_Licenta.Controllers
             userDb.ChangeRole("HelpingStudent", studentUserIdDb);
             roleDb.ChangeRole(studentUserIdDb, "helping_student");
 
+            if (User.IsInRole("professor"))
+            {
+                return RedirectToAction("SeeHelpingStudentApplicationsForProfessor");
 
-            return RedirectToAction("SeeHelpingStudentApplicationsForProfessor");
+            }
+            return RedirectToAction("SeeHelpingStudentApplicationsForAdmin");
 
         }
 
-        public ActionResult ProblemSolved(int chatId)
+            public ActionResult ProblemSolved(int chatId)
         {
 
             var chat = chatDb.getChatById(chatId);

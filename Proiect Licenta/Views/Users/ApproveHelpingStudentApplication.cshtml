@@ -4,56 +4,98 @@
     ViewBag.Title = "SupportHelpingStudentApplication";
 }
 
-<h2>SupportHelpingStudentApplication</h2>
+<style>
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>HelpingStudentApplication</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FinishedCoursesIds)
-        </dt>
+    .form-group {
+        margin-bottom: 15px;
+        padding-left: 10px;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.FinishedCoursesIds)
-        </dd>
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StudentId)
-        </dt>
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.StudentId)
-        </dd>
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ProfessorId)
-        </dt>
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 20px;
+        width: 55%;
+        text-align: left;
+        padding-left: 30px;
+        border: 1px solid #b4b4b4;
+        padding-bottom: 10px;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.ProfessorId)
-        </dd>
+    .btn {
+        margin-right: 20px;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsApproved)
-        </dt>
+    #button-line {
+        width: auto;
+        width: 603px;
+        margin-left: -30px;
+        margin-bottom: 20px;
+        border-top: none;
+        border-bottom: 0.1rem groove #b4b4b4;
+    }
+</style>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsApproved)
-        </dd>
+<h3 id="h3">Are you sure you want to approve this application?</h3>
+<center>
 
-    </dl>
-
-    @using (Html.BeginForm())
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
     {
-        @Html.AntiForgeryToken()
+        <div id="info-box">
+            @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
+            <div class="form-group">
+                <b>Finished Courses Ids: </b>
+                @Html.DisplayFor(model => model.FinishedCoursesIds)
+            </div>
+
+            <div class="form-group">
+                <b>Student ID: </b>
+                @Html.DisplayFor(model => model.StudentId)
+            </div>
+
+            <div class="form-group">
+                <b>Professor ID: </b>
+                @Html.DisplayFor(model => model.ProfessorId)
+            </div>
+
+            <div class="form-group">
+                <b>Is Approved? </b>
+                @Html.DisplayFor(model => model.IsApproved)
+            </div>
+
+            <div id="button-line"></div>
+
+            <center>
+                <div class="form-group" style="margin-top: 20px; margin-bottom: 10px;">
+                    <input type="submit" value="Approve?" class="btn btn-default" />
+                    @Html.ActionLink("Back to List", "SeeHelpingStudentApplicationsForAdmin", "Users", null, new { @class = "btn btn-danger", @style = "margin-right: 0px;" })
+                </div>
+            </center>
             @Html.HiddenFor(model => model.HelpingStudentApplicationId)
-            <input type="submit" value="Approve?" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "SeeHelpingStudentApplicationsForAdmin", "Users")
         </div>
     }
-</div>
 
+</center>

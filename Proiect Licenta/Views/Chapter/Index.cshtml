@@ -106,7 +106,7 @@
     }
 </style>
 
-<h1 id="h3">@ViewData["courseName"] Chapters</h1>
+<h2 id="h3">@ViewData["courseName"] Chapters</h2>
 
 @if (Model!= null && Model.ToList().Count > 0)
 {
@@ -119,7 +119,14 @@
                             <tr>
                                 <th id="chapterTitle">@Html.DisplayNameFor(model => model.ChapterTitle)</th>
                                 <th>@Html.DisplayNameFor(model => model.ChapterDescription)</th>
-                                <th style="width:30%;">Actions</th>
+                                @if (User.IsInRole("admin"))
+                                {
+                                    <th style="width:20%;">Actions</th>
+                                }
+                                else
+                                {
+                                    <th style="width:30%;">Actions</th>
+                                }
                             </tr>
                         </thead>
                         <tbody>

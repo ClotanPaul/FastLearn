@@ -51,14 +51,14 @@
     #button-line {
         width: auto;
         border-top: 1px groove #b4b4b4;
-        width: 604px;
+        width: 626px;
         margin-left: -31px;
         border-bottom: none;
         margin-bottom: 0px;
     }
 </style>
 
-<h3 id="h3">Are you sure you want to support this application?</h3>
+<h2 id="h3">Support Application</h2>
 
 <center>
     @using (Html.BeginForm())
@@ -89,7 +89,7 @@
 
             <center id="button-line">
                 <div class="form-group">
-                    <input type="submit" value="Support this student" class="btn btn-success" />
+                    <input type="submit" value="Support" class="btn btn-success" />
                     @Html.ActionLink("Abort", "SeeHelpingStudentApplicationsForProfessor", null, new { @class = "btn btn-danger" })
                 </div>
             </center>

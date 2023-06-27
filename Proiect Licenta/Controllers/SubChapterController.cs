@@ -267,12 +267,13 @@ namespace Proiect_Licenta.Controllers
         public ActionResult ViewSubChapter(int subchapterId)
         {
             var subChapter = subChapterDb.GetSubChapter(subchapterId);
+            ViewData["chapterId"] = subChapter.ChapterId;
 
             if (subChapter == null)
             {
                 return View("NoSuchSubchapterFound");
             }
-
+            /*
             if (User.IsInRole("professor"))
             {
                 var filess = subchapterFileDb.GetSubChapterFiles(subchapterId);
@@ -290,6 +291,11 @@ namespace Proiect_Licenta.Controllers
                 }
                 subChapter.SubchapterFiles = existFiless.ToArray();
                 return View(subChapter);
+            }
+            */
+            if (User.IsInRole("admin") || User.IsInRole("professor"))
+            {
+                return View("ViewSubChapterForAdmin", subChapter);
             }
 
             //user should be enrolled in course in order to be able to access this.

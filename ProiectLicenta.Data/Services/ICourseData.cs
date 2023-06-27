@@ -43,6 +43,8 @@ namespace ProiectLicenta.Data.Services
 
         string GetFinishedCoursesSerialized(int userDataId);
 
+        bool NameNotTaken(string courseName);
+
 
     }
 }

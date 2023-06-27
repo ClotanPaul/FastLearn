@@ -56,6 +56,12 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Create(Course newCourse)
         {
 
+
+            if (!courseDb.NameNotTaken(newCourse.CourseName))
+            {
+                ModelState.AddModelError("CourseName", "Name already used.");
+            }
+
             if (newCourse.CourseDescription.IsEmpty())
             {
                 ModelState.AddModelError("CourseDescription", "Can't be empty");
@@ -67,6 +73,9 @@ namespace Proiect_Licenta.Controllers
                     ModelState.AddModelError("CourseDescription", "The description of the course must be between 120 and 150 characters long.");
                 }
             }
+
+            
+
             if (!ModelState.IsValid)
             {
                 return View(newCourse);
@@ -82,7 +91,7 @@ namespace Proiect_Licenta.Controllers
                 courseDb.AddCourse(newCourse);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("GetUserCourses");
         }
 
 
@@ -120,7 +129,7 @@ namespace Proiect_Licenta.Controllers
             if (ModelState.IsValid)
             {
                 courseDb.UpdateCourse(course);
-                return RedirectToAction("Details", new { id = course.CourseId });
+                return RedirectToAction("GetUserCourses", new { id = course.CourseId });
             }
             return View();
         }

@@ -40,8 +40,11 @@
 
                         <p class="card-text" id="card-desc">@Html.DisplayFor(modelItem => item.CourseDescription)</p>
                         <div class="text-center">
-                            @Html.ActionLink("Chapters", "Index", "Chapter", new { courseId = item.CourseId }, new { @class = "btn btn-info", @id = "chaptersB" })
-                            @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, new { @class = "btn btn-info", @id = "chaptersB", @style = "margin-right:0px;" })
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, new { @class = "btn btn-info", @id = "chaptersB", @style = "margin-right:10px;" })
+                                @Html.ActionLink("Chapters", "Index", "Chapter", new { courseId = item.CourseId }, new { @class = "btn btn-info", @id = "chaptersB" })
+                            }
                             <div id="ceva">
                                 @if (User.IsInRole("admin"))
                                 {
@@ -50,8 +53,12 @@
 
                                 @if (!User.Identity.IsAuthenticated)
                                 {
+                                    <br>
                                     @Html.ActionLink("Syllabus", "CourseSyllabus", "Course", new { courseId = item.CourseId }, new { @class = "btn btn-info", @id = "chaptersB" })
+                                    @Html.ActionLink("Show Reviews", "Index", "CourseReview", new { courseId = item.CourseId }, new { @class = "btn btn-info", @id = "chaptersB", @style = "margin-right:0px;" })
+
                                 }
+
                                 @if ((User.Identity.IsAuthenticated && item.Active == true && (item.OwnerId == (string)ViewData["userId"])))
                                 {
                                     @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }, new { @class = "btn btn-primary", @id = "chaptersB" })

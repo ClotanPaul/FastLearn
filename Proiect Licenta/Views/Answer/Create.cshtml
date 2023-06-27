@@ -4,50 +4,116 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<style>
+    .form-horizontal {
+        padding: 20px;
+        border-radius: 5px;
+        margin: auto;
+    }
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Answer</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.AnswerText, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AnswerText, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AnswerText, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    .form-group {
+        margin-bottom: 15px;
+    }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsCorrect, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @if (ViewData["trueExists"].ToString() == "true")
-                    {
-                        @Html.EditorFor(model => model.IsCorrect, new { htmlAttributes = new { @disabled = "disabled" } })
-                    }
-                    else
-                    {
-                        @Html.EditorFor(model => model.IsCorrect)
-                    }
-                    @Html.ValidationMessageFor(model => model.IsCorrect, "", new { @class = "text-danger" })
+    .form-control.text-area {
+        width: 300px;
+        height: 100px;
+        max-height: 120px;
+        max-width: 300px;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+    #h3 {
+        margin-top: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    #info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        width: 55%;
+        text-align: left;
+        padding-left: 30px;
+        border: 1px solid #838383;
+        padding-bottom: 0px;
+    }
+
+    .btn {
+        margin-right: 20px;
+    }
+
+    #button-line {
+        border-top: 1px groove #838383;
+        width: 625px;
+        margin-left: -50px;
+        border-bottom: none;
+    }
+
+    .btn-danger {
+        margin-right: 0px;
+    }
+</style>
+
+<h2 id="h3">Add an answer</h2>
+<center>
+    <div id="info-box">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AnswerText, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.AnswerText, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.AnswerText, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-        </div>
-        @Html.HiddenFor(model => model.QuestionId)
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsCorrect, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @if (ViewData["trueExists"].ToString() == "true")
+                            {
+                                @Html.EditorFor(model => model.IsCorrect, new { htmlAttributes = new { @disabled = "disabled" } })
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.IsCorrect)
+                            }
+                            @Html.ValidationMessageFor(model => model.IsCorrect, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                @Html.HiddenFor(model => model.QuestionId)
+                <div id="button-line"></div>
+
+                <center>
+                    <div style="margin-top: 20px;margin-bottom: 0px;" class="form-group">
+                        <div>
+                            <input type="submit" value="Create" class="btn btn-default" />
+                            @Html.ActionLink("Abort", "Index", "Answer", new { questionId = (int)ViewData["questionId"] }, new { @class = "btn btn-danger" })
+                        </div>
+                    </div>
+                </center>
             </div>
-        </div>
+        }
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index","Answer", new {questionId = (int)ViewData["questionId"] },null)
-</div>
+</center>

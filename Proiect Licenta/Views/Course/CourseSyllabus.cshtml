@@ -144,10 +144,14 @@
         </div>
 
         <center>
-        @if (User.IsInRole("student") || User.IsInRole("helping_student"))
-        {
-            @Html.ActionLink("To Courses", "GetStudentEnrolledCourses", "Course", new {@class="btn btn-primary"})
-        }
+            @if (User.IsInRole("student") || User.IsInRole("helping_student"))
+            {
+                @Html.ActionLink("To Courses", "GetStudentEnrolledCourses", "Course", new { @class = "btn btn-primary" })
+            }
+            @if (User.IsInRole("professor"))
+            {
+                @Html.ActionLink("Back to Requests", "SeeHelpingStudentApplicationsForProfessor", "Users", null,new { @class = "btn btn-primary" })
+            }
         </center>
     </div>
     </center>

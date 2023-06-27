@@ -31,13 +31,14 @@
     #h3 {
         margin-top: 40px;
         text-align: center;
+        margin-bottom: 10px;
     }
 
     #info-box {
         background: #f8f9fa;
         padding: 20px;
         margin-bottom: 25px;
-        border-radius: 20px;
+        border-radius: 10px;
         width: 55%;
         text-align: left;
         padding-left: 30px;
@@ -59,7 +60,7 @@
 </style>
 
 
-<h3 id="h3">Your are about to remove the suspension of the following user:</h3>
+<h2 id="h3">Remove Suspension</h2>
 <center>
 @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
 {
@@ -70,12 +71,6 @@
         @Html.HiddenFor(model => model.UserDataId)
         @Html.HiddenFor(model => model.UserId)
 
-        <div>
-            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label" })<b>:</b>
-
-            @Html.DisplayFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-        </div>
         <div>
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })<b>:</b>
 
@@ -99,7 +94,7 @@
 
         <div class="form-group" style="margin-bottom: 0px;">
             <div class="text-center">
-                <input type="submit" value="Remove User Suspension" class="btn btn-success" />
+                <input type="submit" value="Remove Suspension" class="btn btn-success" />
                 @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
                 {
                     @Html.ActionLink("Abort", "UsersDetails", "Users", null, new { @class = "btn btn-danger", @style = "margin-right = 0px;" })
