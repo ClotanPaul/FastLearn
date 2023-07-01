@@ -36,11 +36,11 @@
         background: #f8f9fa;
         padding: 20px;
         margin-bottom: 25px;
-        border-radius: 20px;
+        border-radius: 10px;
         width: 55%;
         text-align: left;
         padding-left: 30px;
-        border: 1px solid #b4b4b4;
+        border: 0.1rem solid #838383;
         padding-bottom: 0px;
     }
 
@@ -61,7 +61,7 @@
     }
 </style>
 
-<h2 id="h3">Login</h2>
+<h1 id="h3">Login</h1>
 
 <center>
     @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))

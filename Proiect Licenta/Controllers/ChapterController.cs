@@ -50,7 +50,7 @@ namespace Proiect_Licenta.Controllers
         [HttpPost]
         public ActionResult Create(Chapter newChapter, int courseId)
         {
-
+            ViewData["courseId"] = courseId;
             if (newChapter.ChapterDescription.IsEmpty())
             {
                 ModelState.AddModelError("ChapterDescription", "This field can not be empty.");

@@ -42,7 +42,7 @@
         width: 55%;
         text-align: left;
         padding-left: 30px;
-        border: 1px solid #b4b4b4;
+        border: 0.1rem solid #838383;
     }
 
     .btn {
@@ -81,11 +81,11 @@
                 <b>Helping Student: </b>
                 @if (Model.HelpingStudent != null)
                 {
-                    <div>@Model.HelpingStudent.Email</div>
+                    @Model.HelpingStudent.Email
                 }
                 else
                 {
-                    <div>No Student Found</div>
+                    <text>No student found.</text>
                 }
             </div>
 

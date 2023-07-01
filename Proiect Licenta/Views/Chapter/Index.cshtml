@@ -31,6 +31,7 @@
         }
 
 
+  
     .btn-group .btn {
         margin: 10px;
     }
@@ -111,7 +112,7 @@
 @if (Model!= null && Model.ToList().Count > 0)
 {
     <center>
-        <div id="info-box" style="border: 0.1rem groove #b4b4b4;">
+        <div id="info-box" style="border: 0.1rem solid #838383;">
             <center>
                 <div class="table-responsive">
                     <table class="table table-hover" style="margin-bottom: 0px;">
@@ -132,7 +133,7 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr style="border-top: 0.2rem groove;">
+                                <tr style="border-top: 0.2rem groove #838383;">
                                     <td id="chapterTitle">@Html.DisplayFor(modelItem => item.ChapterTitle)</td>
                                     <td>@Html.DisplayFor(modelItem => item.ChapterDescription)</td>
 
@@ -191,7 +192,7 @@
 else
 {
 <center>
-    <div id="info-box" style="border: 0.1rem groove #b4b4b4;">
+    <div id="info-box" style="border: 0.1rem solid #838383;">
         <center><h3 style="margin-top: 15px; padding-top: 5px; margin-bottom: 20px;"> This course has no chapters.</h3></center>
         <center>
             @if ((string)ViewData["ownerId"] == (string)ViewData["userId"])

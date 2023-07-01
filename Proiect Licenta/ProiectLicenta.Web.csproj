@@ -1205,7 +1205,6 @@
     <Content Include="Views\CourseReview\Create - Copy.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\CourseReview\DeactivateReview - Copy.cshtml" />
-    <Content Include="Views\SubChapter\Index - Copy.cshtml" />
     <Content Include="Views\Test\Index - Copy.cshtml" />
     <Content Include="Views\Question\Index - Copy.cshtml" />
     <Content Include="Views\Course\GetUserCourses.cshtml" />
@@ -1263,17 +1262,13 @@
     <Content Include="Views\Chapter\Index - Copy.cshtml" />
     <Content Include="Views\Course\Edit - Copy.cshtml" />
     <Content Include="Views\Course\UpdateCoursePhoto - Copy.cshtml" />
-    <Content Include="Views\Chapter\Edit - Copy.cshtml" />
     <Content Include="Views\Course\Create - Copy.cshtml" />
-    <Content Include="Views\Chapter\Delete - Copy.cshtml" />
     <Content Include="Views\Chapter\Create - Copy.cshtml" />
     <Content Include="Views\Course\GetUserInactiveCourses - Copy.cshtml" />
     <Content Include="Views\Course\Index - Copy %283%29.cshtml" />
     <Content Include="Views\SubChapter\FilesForStudent.cshtml" />
-    <Content Include="Views\SubChapter\Create - Copy.cshtml" />
     <Content Include="Views\Question\Create - Copy.cshtml" />
     <Content Include="Views\Course\EnrollInCourse - Copy.cshtml" />
-    <Content Include="Views\SubChapter\GetFileList - Copy %282%29.cshtml" />
     <Content Include="Views\Test\TakeTest - Copy.cshtml" />
     <Content Include="Views\Course\GetInactiveCourses - Copy.cshtml" />
     <Content Include="Views\Account\Register - Copy.cshtml" />

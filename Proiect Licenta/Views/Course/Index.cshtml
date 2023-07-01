@@ -12,13 +12,6 @@
 <div>
     <h1 id="h3">Courses</h1>
 </div>
-@if (User.Identity.IsAuthenticated && (User.IsInRole("professor")))
-{
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-}
-
 <div class="container">
     <div class="row">
         @foreach (var item in Model)

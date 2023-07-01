@@ -20,8 +20,7 @@
         padding-top: 0px;
         padding-right: 0px;
         margin-top: 0px;
-        border: 0.1rem groove #b4b4b4;
-        
+        border: 0.1rem solid #838383;
     }
 
 
@@ -35,7 +34,7 @@
         background-color: #dedede;
         border-radius: 10px;
         overflow: hidden;
-        border: 1px groove #b4b4b4;
+        
         margin-top: 20px;
     }
 
@@ -43,6 +42,7 @@
             background-color: #4D4C4C;
             color: #fff;
         }
+
 
     .btn-group .btn {
         margin: 10px;
@@ -73,16 +73,19 @@
         border-top: none;
         border-bottom: 0.1rem groove #b4b4b4;
     }
+
+
+  
+
 </style>
 
 <h1 id="h3">Reviews</h1>
 
 
 
-
 @if ((Model.Where(p => p.IsActive == true).ToList().Count > 0) || (User.IsInRole("admin") && Model.ToList().Count > 0))
 {<center>
-    <div id="info-box" style="border:none; width: 800px;">
+    <div id="info-box" style=" width: 800px;">
         <center>
             <div class="table-responsive">
                 <table class="table table-hover" style="margin-top: 0px; border:none; margin-bottom: 0px;">
@@ -125,7 +128,7 @@
                                             }
                                             else
                                             {
-                                                @:No Action
+                                                @:<b>No Action</b>
                                             }
                                         </td>
                                     }
@@ -166,7 +169,7 @@
 else
 {
     <center>
-<div id="info-box" style="border: 0.1rem groove #b4b4b4; ">
+<div id="info-box" style="border: 0.1rem groove #838383; ">
     <center><h3 style="margin-top: 15px; padding-top: 5px; margin-bottom: 20px;">No reviews.</h3></center>
     <center>
         @if ((string)ViewData["CanAdd"] == "true" && User.Identity.IsAuthenticated)

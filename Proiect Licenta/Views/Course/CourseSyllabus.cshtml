@@ -18,7 +18,7 @@
         text-align: left;
         width: 900px;
         padding-left: 30px;
-        border: 1px solid #b4b4b4;
+        border: 0.1rem solid #838383;
         padding-bottom: 20px;
     }
 
@@ -131,7 +131,7 @@
                         {
                             <div class="subchapter-box">
                                 <span class="subchapter-title">@Html.DisplayFor(model => subchapter.SubchapterTitle)</span>
-                                @if (User.Identity.IsAuthenticated && !User.IsInRole("professor"))
+                                @if (User.Identity.IsAuthenticated && !User.IsInRole("professor") && (string)ViewData["isEnrolled"] == "true")
                                 {
                                     @Html.ActionLink(">> More", "ViewSubchapter", "SubChapter", new { subchapterId = subchapter.SubchapterId }, new { @class = "btn btn-info btn-sm" })
                                 }
@@ -161,11 +161,9 @@
 
 <script>
     $(document).ready(function () {
-        $('.arrow').click(function () {
-            // switch arrow up/down on click
+        $('.arrow').click(function () {A
             $(this).toggleClass('down');
         });
-        // change the arrow direction and highlighting when the collapse action is performed
         $('.panel-collapse').on('show.bs.collapse', function () {
             $(this).prev().find('.arrow').addClass('down');
         }).on('hide.bs.collapse', function () {

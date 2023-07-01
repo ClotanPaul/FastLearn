@@ -154,7 +154,6 @@ namespace ProiectLicenta.Data.Services
 
             var enrolledStudentInCourses = db.EnrolledStudentsInCourses.Where(u => u.UserDataId == userDataId).ToList();
 
-            // sa fie enrolled in course si sa fi dat ultimu test.
             var finishedCoursesId = new List<int>();
 
             foreach (var enrollment in enrolledStudentInCourses)

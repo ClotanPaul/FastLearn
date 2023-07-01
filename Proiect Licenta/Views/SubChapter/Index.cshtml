@@ -87,11 +87,15 @@
         margin-top: 0px;
         padding-top: 0px;
         width: 900px;
-        border: none;
+        border: 0.1rem solid #838383;
     }
 
     .btn {
         margin-right: 15px;
+    }
+
+    .table-responsive{
+        overflow-x:hidden;
     }
 
     #danger {
@@ -198,7 +202,7 @@
 else
 {
     <center>
-        <div id="info-box" style="border: 0.1rem groove #b4b4b4;">
+        <div id="info-box" style="border: 0.1rem solid #838383;">
             <center><h3 style="margin-top: 15px; padding-top: 5px; margin-bottom: 20px;"> This chapter has no subchapters.</h3></center>
             <center>
                 @if ((string)ViewData["ownerId"] == (string)ViewData["userId"])

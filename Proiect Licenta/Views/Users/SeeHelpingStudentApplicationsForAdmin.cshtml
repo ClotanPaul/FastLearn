@@ -116,7 +116,7 @@
                         </td>
                         <td id="actions">
                             @Html.ActionLink("Approve", "ApproveHelpingStudentApplication", new { applicationId = item.HelpingStudentApplicationId }, new { @class = "btn btn-success", @id = "btn_appr" })
-                            @Html.ActionLink("Delete", "DeleteApplication", new { applicationId = item.HelpingStudentApplicationId }, new { @class = "btn btn-danger" })
+                            @Html.ActionLink("Reject", "DeleteApplication", new { applicationId = item.HelpingStudentApplicationId }, new { @class = "btn btn-danger" })
                         </td>
                     </tr>
                 }
@@ -130,7 +130,7 @@ else
 
     <center>
 
-        <div id="info-box" style="border: 0.1rem groove #b4b4b4;">
+        <div id="info-box" style="border: 0.1rem solid #838383;">
             <center><h3 style="margin-top: 15px; padding-top: 5px; margin-bottom: 10px;"> No requests found at this moment.</h3></center>
         </div>
     </center>

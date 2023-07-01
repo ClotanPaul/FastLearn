@@ -74,7 +74,6 @@ namespace Proiect_Licenta.Controllers
                 }
             }
 
-            
 
             if (!ModelState.IsValid)
             {
@@ -115,6 +114,11 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Edit(Course course)
         {
 
+            if (!courseDb.NameNotTaken(course.CourseName))
+            {
+                ModelState.AddModelError("CourseName", "Name already used.");
+            }
+
             if (course.CourseDescription.IsEmpty())
             {
                 ModelState.AddModelError("CourseDescription", "Can't be empty");
@@ -131,7 +135,7 @@ namespace Proiect_Licenta.Controllers
                 courseDb.UpdateCourse(course);
                 return RedirectToAction("GetUserCourses", new { id = course.CourseId });
             }
-            return View();
+            return View(course);
         }
 
         [HttpGet]
@@ -475,6 +479,15 @@ namespace Proiect_Licenta.Controllers
         public ActionResult CourseSyllabus(int courseId)
         {
             var course = courseDb.GetCourse(courseId);
+
+            var userId = User.Identity.GetUserId();
+            var enrollment = enrollStudentInCourseDb.getEnrolledStudentInfo(courseId, userId);
+            if(enrollment == null)
+            {
+                ViewData["isEnrolled"] = "false";
+            }
+            else
+                ViewData["isEnrolled"] = "true";
 
             if (course == null)
                 return HttpNotFound();
