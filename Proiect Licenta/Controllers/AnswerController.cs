@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace Proiect_Licenta.Controllers
 {
@@ -68,6 +69,32 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Create(Answer newAnswer, int questionId)
         {
 
+            if (newAnswer.AnswerText.IsEmpty())
+            {
+                ViewData["questionId"] = questionId;
+                var question = questionDb.getQuestion(questionId);
+                var answerModel = new Answer();
+                var answers = question.Answers.ToList();
+                var trueAnswerExists = false;
+                foreach (var answer in answers)
+                {
+                    if (answer.IsCorrect)
+                        trueAnswerExists = true;
+                }
+                if (trueAnswerExists)
+                {
+                    ViewData["trueExists"] = "true";
+                    answerModel.IsCorrect = false;
+                }
+
+                ModelState.AddModelError("AnswerText", "Can't be empty");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(newAnswer);
+            }
+
             newAnswer.QuestionId = questionId;
             if (ModelState.IsValid)
             {
@@ -81,6 +108,10 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Edit(int answerId)
         {
             var model = answerDb.GetAnswer(answerId);
+            ViewData["courseTitle"] = model.Question.test.SubChapter.Chapter.Course.CourseName;
+            ViewData["chapterTitle"] = model.Question.test.SubChapter.Chapter.ChapterTitle;
+            ViewData["subchapterTitle"] = model.Question.test.SubChapter.SubchapterTitle;
+            ViewData["questionString"] = model.Question.QuestionString;
 
             if (model == null)
                 return View("NotFound");
@@ -91,10 +122,25 @@ namespace Proiect_Licenta.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Answer answer)
         {
+            if (answer.AnswerText.IsEmpty())
+            {
+                ModelState.AddModelError("AnswerText", "Can't be empty");
+            }
+
             if (ModelState.IsValid)
             {
                 answerDb.UpdateAnswer(answer);
 
+            }
+            else
+            {
+                var model = answerDb.GetAnswer(answer.AnswerId);
+                ViewData["courseTitle"] = model.Question.test.SubChapter.Chapter.Course.CourseName;
+                ViewData["chapterTitle"] = model.Question.test.SubChapter.Chapter.ChapterTitle;
+                ViewData["subchapterTitle"] = model.Question.test.SubChapter.SubchapterTitle;
+                ViewData["questionString"] = model.Question.QuestionString;
+
+                return View(answer);
             }
             return RedirectToAction("Index", new { questionId = answer.QuestionId });
         }
@@ -104,10 +150,6 @@ namespace Proiect_Licenta.Controllers
         {
             var model = answerDb.GetAnswer(answerId);
 
-            //var userId = User.Identity.GetUserId();
-
-            //if (userId != model.OwnerId)
-            //    return View("NoAcces");
 
             if (model == null)
                 return View("NotFound");

@@ -77,21 +77,23 @@
         @Html.AntiForgeryToken()
 
         <div id="info-box">
-            @Html.ValidationSummary("", new { @class = "text-danger" })
 
             <div style="margin-left: 0px;margin-right: 0px;" class="form-group">
                 <b>Email: </b>
                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
 
             <div style="margin-left: 0px;margin-right: 0px;" class="form-group">
                 <b>Password: </b>
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
 
             <div style="margin-left: 0px;margin-right: 0px;" class="form-group">
                 <b>Confirm Password: </b>
                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
             </div>
 
             <div id="button-line"></div>

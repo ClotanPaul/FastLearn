@@ -49,7 +49,6 @@ namespace Proiect_Licenta.Controllers
                 video.FileName = fileName;
                 video.UploadedDate = DateTime.Now;
 
-                // Save the video data to the database
                 videoDb.UploadVideo(video);
             }
             return RedirectToAction("Index");
@@ -58,14 +57,13 @@ namespace Proiect_Licenta.Controllers
 
         public ActionResult GetFileList()
         {
-            //set the path to the file
             string fileFolder = Server.MapPath("~/Content/Videos/");
 
-            // get the name of the files in the folder
+
             DirectoryInfo dirInfo = new DirectoryInfo(fileFolder);
             FileInfo[] files = dirInfo.GetFiles();
 
-            //initialize FileList
+
             FileListViewModel viewModel = new FileListViewModel();
 
             foreach (FileInfo file in files)
@@ -86,7 +84,7 @@ namespace Proiect_Licenta.Controllers
                 return RedirectToAction("NotFound");
             }
 
-            // folder path
+
             string contentFolderPath = Server.MapPath("~/Content/Videos/");
             string fullPath = Path.Combine(contentFolderPath, fileName);
 
@@ -95,10 +93,10 @@ namespace Proiect_Licenta.Controllers
                 return RedirectToAction("NotFound");
             }
 
-            // Set the MIME type based on the file extension
+    
             string mimeType = MimeMapping.GetMimeMapping(fileName);
 
-            // Return the file to download
+   
             return File(fullPath, mimeType, fileName);
         }
     }

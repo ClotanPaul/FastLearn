@@ -67,7 +67,7 @@
     {
         <div id="info-box">
             @Html.AntiForgeryToken()
-
+            @Html.HiddenFor(model => model.UserName)
             <div class="form-group">
                 <b>Email: </b>
                 @Html.DisplayFor(model => model.UserName)
@@ -79,14 +79,14 @@
                 @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
             </div>
             <center>
-            <div class="form-group" style="margin-top: 20px; margin-bottom: 10px;">
-                <input type="submit" value="Warn User" class="btn btn-success" />
-                @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
-                {
-                    @Html.ActionLink("Abort", "UsersDetails", "Users", null, new { @class = "btn btn-danger", @style= "margin-right: 0px;" })
-                }
-            </div>
-                </center>
+                <div class="form-group" style="margin-top: 20px; margin-bottom: 10px;">
+                    <input type="submit" value="Warn User" class="btn btn-success" />
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                    {
+                        @Html.ActionLink("Abort", "UsersDetails", "Users", null, new { @class = "btn btn-danger", @style = "margin-right: 0px;" })
+                    }
+                </div>
+            </center>
             @Html.HiddenFor(model => model.UserDataId)
         </div>
         

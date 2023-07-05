@@ -149,7 +149,7 @@
         }
 
         <div id="button-line"></div>
-        @if (Model.Where(p => p.IssueSolved == false).ToList().Count() > 0)
+        @if (Model.Where(p => p.IssueSolved == true).ToList().Count() > 0)
         {
             <center>
                 <h2>Archived Chats</h2>
@@ -181,7 +181,7 @@
         else
         {
             <center>
-                <h2 style="margin-top: 0px;margin-bottom: 20px;">No archived chats.</h2>
+                <h2 style="margin-top: 20px;margin-bottom: 20px;">No archived chats.</h2>
             </center>
         }
     </div>

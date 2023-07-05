@@ -27,16 +27,21 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Index(int courseId)
         {
             var model = chapterDb.getCourseChapters(courseId);
+
+
             var course = courseDb.GetCourse(courseId);
+
+
+            if (model == null || course == null)
+            {
+                return View("Error");
+            }
+
             ViewData["courseName"] = course.CourseName;
             ViewData["courseId"] = courseId;
             ViewData["userId"] = User.Identity.GetUserId();
             ViewData["ownerId"] = course.OwnerId;
 
-            if (model == null)
-            {
-                // to implement
-            }
 
             return View(model);
         }

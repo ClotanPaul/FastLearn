@@ -32,7 +32,6 @@ namespace ProiectLicenta.Data.Services
             return db.Courses
                 .Include("Chapters.Subchapters")
                 .FirstOrDefault(x=> x.CourseId == courseId);
-            // to add checks for the user owner.
         }
 
         public List<Course> GetAll()
@@ -42,7 +41,6 @@ namespace ProiectLicenta.Data.Services
 
         public void AddCourse(Course course)
         {
-            //default image
             db.Courses.Add(course);
             db.SaveChanges();
         }
@@ -59,7 +57,6 @@ namespace ProiectLicenta.Data.Services
         public void DeleteCourse(int courseId)
         {
             var currentCourse = db.Courses.FirstOrDefault(x=> x.CourseId == courseId);
-            // daca are test creat nu poate fi sters cursul??
             db.Courses.Remove(currentCourse);
             db.SaveChanges();
         }
@@ -131,7 +128,6 @@ namespace ProiectLicenta.Data.Services
 
             var enrolledStudentInCourses = db.EnrolledStudentsInCourses.Where(u => u.UserDataId == userDataId).ToList();
 
-            // sa fie enrolled in course si sa fi dat ultimu test.
             var finishedCoursesId = new List<Course>();
 
             foreach (var enrollment in enrolledStudentInCourses) {

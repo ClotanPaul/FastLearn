@@ -50,7 +50,7 @@ namespace Proiect_Licenta.Controllers
                 chapterId = test.SubChapter.ChapterId;
             }
 
-            ViewData["subChapterId"] = subChapterId; // when the controller is called from the subchapter controller, there is not subchapterId initially
+            ViewData["subChapterId"] = subChapterId; 
             ViewData["chapterId"] = chapterId;
             ViewData["ownerId"] = subChapter.Chapter.Course.OwnerId;
             ViewData["userId"] = User.Identity.GetUserId();
@@ -218,7 +218,6 @@ namespace Proiect_Licenta.Controllers
 
         public ActionResult TakeTest(int testId)
         {
-            // Fetch questions and choices from the database
             var test = testDb.getTestById(testId);
             var questions = questionDb.getQuestions(test.TestId);
             ViewData["subchapterId"] = test.SubChapter.SubchapterId;
@@ -228,7 +227,6 @@ namespace Proiect_Licenta.Controllers
 
 
 
-            // Map the questions and choices to the TestViewModel
             var testViewModel = new TestViewModel
             {
                 TestId = test.TestId,
@@ -263,7 +261,6 @@ namespace Proiect_Licenta.Controllers
                 RedirectToAction("TakeTest", testViewModel);
             }
 
-            //computing the score
             int correctAnswerNumber = 0;
             foreach (var question in testViewModel.Questions)
             {
@@ -324,7 +321,7 @@ namespace Proiect_Licenta.Controllers
 
                 var nextSubchapter = subChapterDb.GetNextSubChapter(test.SubChapter.SubchapterId);
 
-                if (nextSubchapter == null) // either the course was finished, or an error occured
+                if (nextSubchapter == null) 
                 {
                     enrollment.CompletedCourse = true;
                     enrollmentDb.UpdateEnrollment(enrollment);

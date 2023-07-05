@@ -18,16 +18,16 @@ namespace Proiect_Licenta.Models
         public string UserId { get; set; }
 
         [DisplayName("Username")]
-        public string UserName { get; set; } // special username
+        public string UserName { get; set; }
 
-        public string Email { get; set; } // username from the other database
+        public string Email { get; set; } 
 
         public int Points { get; set; }
 
         [DisplayName("Role")]
         public string UserRole { get; set; }
 
-        // for now not used
+       
         public int EnrolledCourseId { get; set; }
 
         public virtual ICollection<Warning> Warnings { get; set; }

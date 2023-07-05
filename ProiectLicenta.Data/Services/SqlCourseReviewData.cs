@@ -23,7 +23,6 @@ namespace ProiectLicenta.Data.Services
         public void AddReview(CourseReview review)
         {
             var course = db.Courses.FirstOrDefault(c => c.CourseId == review.CourseId);
-            //course.CourseReviews.Append(review);
             review.IsActive = false;
             db.CourseReviews.Add(review);
             db.SaveChanges();

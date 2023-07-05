@@ -84,8 +84,9 @@ namespace Proiect_Licenta.Controllers
 
 
             var user = userDataDb.getUserByUserName(model.Email);
-            if (user != null && user.IsSuspended && DateTime.Compare(DateTime.Now, user.SuspendedUntil) < 0) // to remove user!= null
+            if (user != null && user.IsSuspended && DateTime.Compare(DateTime.Now, user.SuspendedUntil) < 0) 
             {
+                ViewData["suspendedUntil"] = user.SuspendedUntil.ToString();
                 return View("AccountSuspended");
             }
 
@@ -96,7 +97,7 @@ namespace Proiect_Licenta.Controllers
             if(result == SignInStatus.Success)
             {
                 user = userDataDb.getUserByUserName(model.Email);
-                if(user != null && user.IsSuspended && DateTime.Compare(DateTime.Now, user.SuspendedUntil) < 0) // to remove user!= null
+                if(user != null && user.IsSuspended && DateTime.Compare(DateTime.Now, user.SuspendedUntil) < 0) 
                 {
                     return View("AccountSuspended");
                 }

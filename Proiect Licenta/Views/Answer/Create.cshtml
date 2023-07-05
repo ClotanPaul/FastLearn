@@ -90,7 +90,7 @@
                     @Html.LabelFor(model => model.IsCorrect, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         <div class="checkbox">
-                            @if (ViewData["trueExists"].ToString() == "true")
+                            @if ((string)ViewData["trueExists"] == "true")
                             {
                                 @Html.EditorFor(model => model.IsCorrect, new { htmlAttributes = new { @disabled = "disabled" } })
                             }

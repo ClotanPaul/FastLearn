@@ -11,7 +11,7 @@ namespace ProiectLicenta.Data.Models
     {
         [Required]
         public int QuestionId { get; set; }
-
+        [Required]
         public string QuestionString { get; set; }
 
         public int questionPointPercentage { get; set; }

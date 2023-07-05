@@ -112,12 +112,23 @@
             <p>
                 <center>
 
+                    @if (User.IsInRole("professor"))
+                    {
+                        @Html.ActionLink("Courses List", "GetUserCourses", "Course", null, new { @class = "btn btn-primary btn-left2" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Courses List", "Index", "Course", null, new { @class = "btn btn-primary btn-left2" })
+                    }
 
-                    @Html.ActionLink("Courses List", "Index", "Course", null, new { @class = "btn btn-primary btn-left2" })
-
-
-                    @Html.ActionLink("SubChapter List", "Index", new { chapterId = ViewData["chapterId"] }, new { @class = "btn btn-primary btn-right2" })
-
+                    @if ((string)ViewData["IsOwner"] == "true" || User.IsInRole("admin"))
+                    {
+                        @Html.ActionLink("SubChapter List", "Index", new { chapterId = ViewData["chapterId"] }, new { @class = "btn btn-primary btn-right2" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Requests", "SeeHelpingStudentApplicationsForProfessor", "Users",null, new { @class = "btn btn-primary btn-right2" })
+                    }
 
 
                 </center>

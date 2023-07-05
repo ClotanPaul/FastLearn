@@ -131,7 +131,7 @@
                         {
                             <div class="subchapter-box">
                                 <span class="subchapter-title">@Html.DisplayFor(model => subchapter.SubchapterTitle)</span>
-                                @if (User.Identity.IsAuthenticated && !User.IsInRole("professor") && (string)ViewData["isEnrolled"] == "true")
+                                @if (User.Identity.IsAuthenticated && ((string)ViewData["isEnrolled"] == "true") || User.IsInRole("professor"))
                                 {
                                     @Html.ActionLink(">> More", "ViewSubchapter", "SubChapter", new { subchapterId = subchapter.SubchapterId }, new { @class = "btn btn-info btn-sm" })
                                 }
@@ -144,13 +144,17 @@
         </div>
 
         <center>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                @Html.ActionLink("To Courses", "Index", "Course", new { @class = "btn btn-primary" })
+            }
             @if (User.IsInRole("student") || User.IsInRole("helping_student"))
             {
                 @Html.ActionLink("To Courses", "GetStudentEnrolledCourses", "Course", new { @class = "btn btn-primary" })
             }
             @if (User.IsInRole("professor"))
             {
-                @Html.ActionLink("Back to Requests", "SeeHelpingStudentApplicationsForProfessor", "Users", null,new { @class = "btn btn-primary" })
+                @Html.ActionLink("Back to Requests", "SeeHelpingStudentApplicationsForProfessor", "Users", null, new { @class = "btn btn-primary" })
             }
         </center>
     </div>

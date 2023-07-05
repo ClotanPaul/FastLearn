@@ -84,27 +84,16 @@
 
 
             <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
-                <b>Course name: </b>
-                @Html.DisplayFor(model => model.test.SubChapter.Chapter.Course.CourseName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.test.SubChapter.Chapter.Course.CourseName, "", new { @class = "text-danger" })
+                <b>Course: </b> @ViewData["courseTitle"]
             </div>
 
             <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
-                <b>Chapter: </b>
-                @Html.DisplayFor(model => @Model.test.SubChapter.Chapter.ChapterTitle, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => @Model.test.SubChapter.Chapter.ChapterTitle, "", new { @class = "text-danger" })
+                <b>Chapter: </b> @ViewData["chapterTitle"]
             </div>
-        <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
-            <b>Subchapter: </b>
-            @Html.DisplayFor(model => model.test.SubChapter.SubchapterTitle, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.test.SubChapter.SubchapterTitle, "", new { @class = "text-danger" })
-        </div>
+            <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
+                <b>SubChapter: </b> @ViewData["subchapterTitle"]
+            </div>
 
-        <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
-            <b>Chapter: </b>
-            @Html.DisplayFor(model => @Model.test.SubChapter.Chapter.ChapterTitle, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => @Model.test.SubChapter.Chapter.ChapterTitle, "", new { @class = "text-danger" })
-        </div>
 
 
 

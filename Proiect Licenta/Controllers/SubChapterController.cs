@@ -46,10 +46,6 @@ namespace Proiect_Licenta.Controllers
             ViewData["ownerId"] = chapter.Course.OwnerId;
             ViewData["courseId"] = chapter.CourseId;
 
-            if (model == null)
-            {
-                // to implement
-            }
 
             return View(model);
         }
@@ -63,10 +59,6 @@ namespace Proiect_Licenta.Controllers
             ViewData["userId"] = User.Identity.GetUserId();
  
 
-            if (model == null)
-            {
-                // to implement
-            }
 
             return View(model);
         }
@@ -89,6 +81,14 @@ namespace Proiect_Licenta.Controllers
             {
                 subChapterDb.AddSubChapter(newSubChapter);
 
+            }
+            else
+            {
+                var chapter = chapterDb.GetChapter(chapterId);
+                ViewData["chapterName"] = chapter.ChapterTitle;
+                ViewData["chapterId"] = chapterId;
+                ViewData["userId"] = User.Identity.GetUserId();
+                return View(newSubChapter);
             }
             return RedirectToAction("Index", new { chapterId = newSubChapter.ChapterId });
         }
@@ -116,7 +116,11 @@ namespace Proiect_Licenta.Controllers
                 subChapterDb.UpdateSubChapter(subChapter);
 
             }
-            return RedirectToAction("Details", new { id = subChapter.SubchapterId });
+            else {
+                ViewData["chapterId"] = subChapter.ChapterId;
+                return View(subChapter); }
+
+            return RedirectToAction("Index", new { chapterId = subChapter.ChapterId });
         }
 
         public ActionResult Details(int id)
@@ -173,7 +177,6 @@ namespace Proiect_Licenta.Controllers
             {
 
                 string folderName = subChapter.Chapter.Course.CourseName;
-                //string extension = Path.GetExtension(file.FileName);
                 string fileName = file.FileName;
                 string dirPath = Path.Combine(Server.MapPath("~/Content/Images/Courses"), folderName);
 
@@ -190,11 +193,10 @@ namespace Proiect_Licenta.Controllers
                 subChapterFile.FilePath = urlPath;
                 subChapterFile.SubChapter = subChapter;
 
-                // Save the video data to the database
                 file.SaveAs(path);
                 subchapterFileDb.UploadFile(subChapterFile);
             }
-            return RedirectToAction("Index", new { chapterId = subChapter.ChapterId });
+            return RedirectToAction("GetFileList", new { subchapterId = subChapterId });
         }
 
 
@@ -206,7 +208,6 @@ namespace Proiect_Licenta.Controllers
             ViewData["chapterId"] = subchapter.ChapterId;
             ViewData["subchapterName"] = subchapter.SubchapterTitle;
 
-            // get file list from database and check if they exist.
 
             var files = subchapterFileDb.GetSubChapterFiles(subchapterId);
 
@@ -216,7 +217,7 @@ namespace Proiect_Licenta.Controllers
             {
                 var path = Server.MapPath(file.FilePath);
 
-                if (System.IO.File.Exists(path))
+                if (System.IO.File.Exists(path) && existFiles.FirstOrDefault(f=>f.Title == file.Title) == null) // !!! sa nu contina deja fisierul in lista.
                 {
                     existFiles.Add(file);
                 }
@@ -227,7 +228,6 @@ namespace Proiect_Licenta.Controllers
                 return View("FilesForStudent", existFiles);
             }
 
-            //return the files to the view:
             return View(existFiles);
 
         }
@@ -248,7 +248,7 @@ namespace Proiect_Licenta.Controllers
             // folder path
             string fullPath = file.FilePath;
 
-            fullPath = Server.MapPath(fullPath); // we need the physical path, not the url
+            fullPath = Server.MapPath(fullPath); 
 
             if (!System.IO.File.Exists(fullPath))
             {
@@ -273,28 +273,11 @@ namespace Proiect_Licenta.Controllers
             {
                 return View("NoSuchSubchapterFound");
             }
-            /*
-            if (User.IsInRole("professor"))
-            {
-                var filess = subchapterFileDb.GetSubChapterFiles(subchapterId);
 
-                var existFiless = new List<SubChapterFiles>();
-
-                foreach (var file in filess)
-                {
-                    var path = Server.MapPath(file.FilePath);
-
-                    if (System.IO.File.Exists(path))
-                    {
-                        existFiless.Add(file);
-                    }
-                }
-                subChapter.SubchapterFiles = existFiless.ToArray();
-                return View(subChapter);
-            }
-            */
             if (User.IsInRole("admin") || User.IsInRole("professor"))
             {
+                if (subChapter.Chapter.Course.OwnerId == User.Identity.GetUserId())
+                    ViewData["IsOwner"] = "true";
                 return View("ViewSubChapterForAdmin", subChapter);
             }
 
@@ -305,8 +288,6 @@ namespace Proiect_Licenta.Controllers
             var enrollmentData = enrollmentDb.getEnrolledStudentInfo(subChapter.Chapter.CourseId, studentId);
             var lastsubchapterId = enrollmentData.LastCompletedSubChapterId;
 
-
-            /////////////////
 
 
             var files = subchapterFileDb.GetSubChapterFiles(subchapterId);
@@ -325,7 +306,6 @@ namespace Proiect_Licenta.Controllers
 
 
             subChapter.SubchapterFiles= existFiles.ToArray();
-            ////////////
 
             if (subchapterId == lastsubchapterId && !enrollmentData.CompletedCourse)
             {
@@ -365,7 +345,7 @@ namespace Proiect_Licenta.Controllers
                 return RedirectToAction("GetStudentFinishedCourses","Course");
             }
 
-            if (nextSubChapter == null) // either the course was finished, or an error occured
+            if (nextSubChapter == null) 
             {
                 return View("YouPromotedTheCourse");
             }

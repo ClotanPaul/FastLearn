@@ -60,7 +60,6 @@ namespace Proiect_Licenta.Controllers
             return View(users);
         }
 
-        //not done
         [HttpGet]
         public ActionResult Edit()
         {
@@ -157,7 +156,7 @@ namespace Proiect_Licenta.Controllers
 
 
         [HttpGet]
-        public ActionResult WarnUser(int userDataId) // userDataId
+        public ActionResult WarnUser(int userDataId) 
         {
             var userData = userDb.getUserByUserDataId(userDataId);
 
@@ -276,7 +275,6 @@ namespace Proiect_Licenta.Controllers
             return RedirectToAction("UsersDetails", "Users");
         }
 
-        // method used to apply for helping student role as a student
         public ActionResult ApplyForHelpingStudent()
         {
             var userId = User.Identity.GetUserId();

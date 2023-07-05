@@ -19,7 +19,6 @@ namespace ProiectLicenta.Data.Services
             this.db = db;
         }
 
-        //returns the id of the userdata table, given the string userid from the proiectLicenta.Web id
         public int getUserId(string userId)
         {
             var user = db.UsersData.FirstOrDefault(x=> x.UserId== userId);

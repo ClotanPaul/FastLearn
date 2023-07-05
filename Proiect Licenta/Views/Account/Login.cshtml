@@ -68,7 +68,7 @@
     {
         <div id="info-box">
             @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
 
             <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
                 <b>Email: </b>
@@ -90,7 +90,7 @@
                 @Html.ActionLink("Forgot Password?", "ForgotPassword", null, new { @class = "btn btn-link" })
 
             </div>
-
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div id="button-line"></div>
 
             <center>

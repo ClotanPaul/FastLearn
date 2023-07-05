@@ -13,10 +13,6 @@ namespace ProiectLicenta.Data.Models
 
         public int EnrolledStudentInCourseId { get; set; }
 
-        //relatie cu curs - one to many
-
-        //last chapter completedid
-        //last subchapter completedId
 
         public int CourseId { get; set; }
 

@@ -21,15 +21,6 @@ namespace ProiectLicenta.Data.Services
         void UpdateQuestion(Question question);
 
         void DeleteQuestion(int questionId);
-        /*
-        Test getTest(int subChapterId);
-        void AddTest(Test test, int subChapterId);
-
-        void UpdateTest(Test test, int subChapterId);
-
-        void DeleteTest(Test test);
-
-        */
 
     }
 }

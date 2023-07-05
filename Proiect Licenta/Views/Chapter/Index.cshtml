@@ -133,7 +133,7 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr style="border-top: 0.2rem groove #838383;">
+                                <tr style="border-top: 0.2rem groove ;">
                                     <td id="chapterTitle">@Html.DisplayFor(modelItem => item.ChapterTitle)</td>
                                     <td>@Html.DisplayFor(modelItem => item.ChapterDescription)</td>
 
@@ -158,7 +158,7 @@
 
                                             else
                                             {
-                                                < b > No actions possible.</ b >
+                                                <b> No actions possible.</b>
                                             }
                                         }
 

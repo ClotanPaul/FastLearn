@@ -81,6 +81,10 @@
             @Html.HiddenFor(model => model.UserId)
             @Html.HiddenFor(model => model.CourseId)
 
+            <div style="margin-bottom: 5px;">
+                <b>Course Name:</b> @Html.DisplayFor(model => model.Course.CourseName)
+            </div>
+
             <div class="form-group" style="margin-left: 0px;margin-right: 0px;">
                 <b>Review Text: </b>
                 @Html.EditorFor(model => model.ReviewText, new { htmlAttributes = new { @class = "form-control" } })

@@ -157,7 +157,7 @@ namespace Proiect_Licenta.Controllers
         {
             var course = courseDb.GetCourse(id);
             courseDb.DeleteCourse(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("GetUserCourses");
 
         }
         public ActionResult Details(int id)
@@ -245,7 +245,7 @@ namespace Proiect_Licenta.Controllers
             {
                 ModelState.AddModelError("DeactivationReason", "No more than 35 characters allowed.");
             }
-            if (!ModelState.IsValid)// or courseid-int is null
+            if (!ModelState.IsValid)
             {
                 var userdata = userDb.getUserData(course.OwnerId);
                 course.Owner = userdata;
@@ -393,7 +393,7 @@ namespace Proiect_Licenta.Controllers
 
             var courseStudentData = enrollStudentInCourseDb.getEnrolledStudentInfo(courseId, userId);
 
-            if (courseStudentData == null)// student not enrolled/ no data of student
+            if (courseStudentData == null)
             {
                 var course = courseDb.GetCourse(courseId);
 
@@ -407,7 +407,6 @@ namespace Proiect_Licenta.Controllers
                     }
                 }
 
-                // If there's no chapter or subchapter, show an error or some kind of placeholder
                 return View("NoContent");
             }
 

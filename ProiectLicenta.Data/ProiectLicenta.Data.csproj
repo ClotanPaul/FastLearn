@@ -243,6 +243,10 @@
     <Compile Include="Migrations\202306101711003_WarningReasonLength2.designer.cs">
       <DependentUpon>202306101711003_WarningReasonLength2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202307050919043_test.cs" />
+    <Compile Include="Migrations\202307050919043_test.designer.cs">
+      <DependentUpon>202307050919043_test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Chapter.cs" />
@@ -402,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202306101711003_WarningReasonLength2.resx">
       <DependentUpon>202306101711003_WarningReasonLength2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307050919043_test.resx">
+      <DependentUpon>202307050919043_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

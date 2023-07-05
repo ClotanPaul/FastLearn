@@ -82,7 +82,6 @@ namespace ProiectLicenta.Data.Services
             }
             else
             {
-                // to implement;
                 return null;
             }
         }
@@ -149,8 +148,7 @@ namespace ProiectLicenta.Data.Services
             }
         }
 
-        // if the chapter is finished, the subchapter of the next course will be returned.
-        // null if the course is finished
+
         public SubChapter GetNextSubChapter(int currentsubChapterId)
         {
             var currentSubchapter = getSubChapter(currentsubChapterId);
@@ -159,12 +157,11 @@ namespace ProiectLicenta.Data.Services
 
             if(currentSubchapter.SubchapterNumber == numberOfSubchapters)
             {
-                //the user has promoted the chapter!
 
                 var currentChapter = currentSubchapter.Chapter;
                 var numberOfChapters = currentChapter.Course.Chapters.Count();
 
-                if(numberOfChapters < currentChapter.ChapterNumber + 1) // the student finished the course
+                if(numberOfChapters < currentChapter.ChapterNumber + 1)
                 {
                     return null;
                 } 
@@ -176,7 +173,6 @@ namespace ProiectLicenta.Data.Services
                 return subchapterToReturn;
             }
 
-            //caz clasic
             var nextSubChapterId = db.SubChapterList.
                 FirstOrDefault(ch => ch.ChapterId == currentSubchapter.ChapterId && 
                 ch.SubchapterNumber == (currentSubchapter.SubchapterNumber + 1)).SubchapterId;

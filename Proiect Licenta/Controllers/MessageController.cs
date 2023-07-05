@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace Proiect_Licenta.Controllers
 {
@@ -31,8 +32,8 @@ namespace Proiect_Licenta.Controllers
             Message.ChatId = chatId;
             Message.MessageContent = newMessage;
             Message.UserId = userDataId; 
-            //Message.TimeStamp = DateTime.Now;
-            messageDb.addMessage(Message, chatId);
+            if(Message.MessageContent != null && !Message.MessageContent.IsEmpty())
+                messageDb.addMessage(Message, chatId);
             return RedirectToAction("OpenChat", "Chat", new { chatId = chatId });
         }
 
@@ -43,6 +44,7 @@ namespace Proiect_Licenta.Controllers
 
             if (message == null)
                 return View("NotFound");
+
             return View(message);
         }
 
@@ -50,12 +52,18 @@ namespace Proiect_Licenta.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditMessage(Message message)
         {
+            if (message.MessageContent.IsEmpty())
+            {
+                ModelState.AddModelError("MessageContent", "Message can't be empty.");
+            }
             if (ModelState.IsValid)
             {
                 messageDb.EditMessage(message);
                 return RedirectToAction("OpenChat","Chat", new { chatId = message.ChatId });
             }
-            return View();
+            else
+
+            return View(message);
         }
 
 

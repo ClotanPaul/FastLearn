@@ -56,7 +56,8 @@ namespace Proiect_Licenta.Controllers
             if (test == null)
                 return View("NotFound");
             if(!ModelState.IsValid) {
-                return View("ModelStateNotValid");
+                ViewData["testId"] = testId;
+                return View(question);
             }
 
             questionDb.AddQuestion(question, test);
@@ -69,6 +70,9 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Edit(int questionId)
         {
             var model = questionDb.getQuestion(questionId);
+            ViewData["courseTitle"] = model.test.SubChapter.Chapter.Course.CourseName;
+            ViewData["chapterTitle"] = model.test.SubChapter.Chapter.ChapterTitle;
+            ViewData["subchapterTitle"] = model.test.SubChapter.SubchapterTitle;
 
             if (model == null)
                 return View("NotFound");
@@ -83,6 +87,14 @@ namespace Proiect_Licenta.Controllers
             {
                 questionDb.UpdateQuestion(question);
 
+            }
+            else
+            {
+                var model = questionDb.getQuestion(question.QuestionId);
+                ViewData["courseTitle"] = model.test.SubChapter.Chapter.Course.CourseName;
+                ViewData["chapterTitle"] = model.test.SubChapter.Chapter.ChapterTitle;
+                ViewData["subchapterTitle"] = model.test.SubChapter.SubchapterTitle;
+                return View(question);
             }
             return RedirectToAction("Index", new { testId = question.TestId });
         }

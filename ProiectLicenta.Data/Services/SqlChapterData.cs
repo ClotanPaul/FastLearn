@@ -39,14 +39,11 @@ namespace ProiectLicenta.Data.Services
 
         public void UpdateChapter(Chapter chapter)
         {
-            //see if the chapter number was affected
             var oldchapter = GetChapter(chapter.ChapterId);
 
             if (oldchapter.ChapterNumber != chapter.ChapterNumber)
             {
-                // ce e inainte ramane la fel
-                // ce e dupa creste cu unu.
-                //courseNr>=
+
                 var course = db.Courses.FirstOrDefault(c => c.CourseId == chapter.CourseId);
                 var numberOfChapters = course.Chapters.Where(ch => ch.ChapterId != chapter.ChapterId).Max(ch => ch.ChapterNumber );
                 if (numberOfChapters <= chapter.ChapterNumber)
@@ -69,11 +66,9 @@ namespace ProiectLicenta.Data.Services
 
                 }
             }
-            //chapter.ChapterNumber += 1; // 1->3
-            db.ChapterList.AddOrUpdate(chapter);
-            //3->1 - ca inainte
 
-            // make sure the chapter numbers have no gap and start from 1
+            db.ChapterList.AddOrUpdate(chapter);
+
             int firstChp = 1;
             Chapter lastChp = null;
             var chapters = oldchapter.Course.Chapters.OrderBy(ch => ch.ChapterNumber).ToList();
@@ -121,7 +116,6 @@ namespace ProiectLicenta.Data.Services
                 chapter.ChapterNumber= numberOfChapters + 1;
 
                 course.Chapters.Add(chapter);
-                //db.ChapterList.Add(chapter);
                 db.SaveChanges();
             }
                

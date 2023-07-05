@@ -27,12 +27,17 @@ namespace Proiect_Licenta.Controllers
         public ActionResult Index(int courseId)
         {
             var reviews = courseReviewDb.getReviews(courseId);
+
+            if(reviews == null)
+            {
+                return View("NotFound", "Shared");
+            }
+
             ViewData["courseId"] = courseId;
             ViewData["UserId"] = User.Identity.GetUserId();
             var course = courseDb.GetCourse(courseId);
 
 
-            // determine if the user can add a new review or not
             if (!User.IsInRole("admin") && !User.IsInRole("professor"))
             {
                 ViewData["CanAdd"] = "true";
@@ -129,7 +134,7 @@ namespace Proiect_Licenta.Controllers
                 courseReview.Course = course;
                 return View(courseReview);
             }
-            return RedirectToAction("Details", new { id = courseReview.CourseReviewId });
+            return RedirectToAction("Index", new { courseId = courseReview.CourseId });
         }
 
 
