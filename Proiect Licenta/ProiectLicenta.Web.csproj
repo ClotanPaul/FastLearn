@@ -1277,7 +1277,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProiectLicenta.Data\ProiectLicenta.Data.csproj">
-      <Project>{1E86B288-9DA0-4DD8-9E70-1FAC8A862C86}</Project>
+      <Project>{1e86b288-9da0-4dd8-9e70-1fac8a862c86}</Project>
       <Name>ProiectLicenta.Data</Name>
     </ProjectReference>
   </ItemGroup>
