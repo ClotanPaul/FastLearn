@@ -23,7 +23,36 @@ To run the project, ensure you have the following dependencies installed:
 - **SQLite**
 - **Visual Studio 2022**
 
-Detailed steps for setting up the project can be found in the documentation.
+## Project Setup Instructions
+
+### 1. Open the Project in Visual Studio
+1. Launch **Visual Studio 2022**.
+2. Open the solution file (`.sln`) located in the repository.
+
+### 2. Restore Dependencies
+1. Open **NuGet Package Manager** in Visual Studio:
+   - Go to **Tools > NuGet Package Manager > Manage NuGet Packages for Solution**.
+2. Restore all missing dependencies by clicking **Restore**.
+
+### 3. Configure the Database
+The project uses **SQLite** for the backend. To set it up:
+1. Open the **Package Manager Console** in Visual Studio:
+   - Go to **Tools > NuGet Package Manager > Package Manager Console**.
+2. Run the following commands to apply database migrations:
+   ```bash
+   Add-Migration InitialCreate
+   Update-Database
+   ```
+### 4. Run the Application
+1. Set the `ProiectLicenta.Web` project as the **startup project**:
+   - Right-click on the `ProiectLicenta.Web` project in **Solution Explorer**.
+   - Select **Set as Startup Project**.
+
+2. Run the application:
+   - Press `F5` or click the **Run** button in Visual Studio.
+
+### Accessing the Application
+Once the application is running, open a web browser and navigate to the URL provided by Visual Studio (e.g., `http://localhost:5000`).
 
 ---
 
