@@ -5,7 +5,7 @@ This repository contains the implementation of **FastLearn**, a web-based platfo
 
 The project includes features like progress tracking, course creation, one-on-one tutoring sessions, and comprehensive course management. The platform is built using modern technologies such as **ASP.NET**, **Entity Framework**, and **SQLite**.
 
-A detailed project report, outlining the design, implementation, and results, is included in the repository under `Annex2_Diploma_thesis_ClotanPaul_Licenta_finala_Semnata.pdf`.
+A detailed project report, outlining the design, implementation, and results, is included in the repository under `Documentation/ThesisDocumentation.pdf`.
 
 ---
 
