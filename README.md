@@ -13,7 +13,6 @@ A detailed project report, outlining the design, implementation, and results, is
 - **`Web`**: Contains the main application code, including controllers, views, and frontend components.
 - **`Data`**: Handles the database structure and operations using Entity Framework with a Code-First approach.
 - **`Documentation`**: Includes the project report and related files.
-- **`Resources`**: Additional resources such as media and configuration files.
 
 ---
 
